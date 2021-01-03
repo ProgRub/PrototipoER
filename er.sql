@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01-Jan-2021 às 18:35
+-- Tempo de geração: 03-Jan-2021 às 17:38
 -- Versão do servidor: 10.4.11-MariaDB
 -- versão do PHP: 7.4.6
 
@@ -17,15 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
--- -----------------------------------------------------
--- Schema er
--- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `er` ;
--- -----------------------------------------------------
--- Schema er
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `er` DEFAULT CHARACTER SET utf8 ;
-USE `er` ;
+--
+-- Banco de dados: `er`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -44,7 +39,14 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `user_type`) VALUES
-(1, '.', '.', 'explicando');
+(2, 'filipe', 'filipe', 'explicador'),
+(3, 'mary', 'mary', 'explicador'),
+(4, 'diego', 'diego', 'explicando'),
+(5, 'ruben', 'ruben', 'explicando'),
+(6, 'orlando', 'orlando', 'explicando'),
+(7, 'alejandro', 'alejandro', 'explicando'),
+(8, 'mae', 'mae', 'encarregado_educacao'),
+(9, 'pai', 'pai', 'encarregado_educacao');
 
 --
 -- Índices para tabelas despejadas
@@ -64,7 +66,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de tabela `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
