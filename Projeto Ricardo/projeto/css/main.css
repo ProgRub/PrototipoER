@@ -1,0 +1,29 @@
+#associateCode {
+    padding-top: 0.5cm;
+    position: relative;
+}
+
+#code,
+#selectedText,
+#textarea {
+    position: relative;
+    width: 10cm;
+    height: 4cm;
+}
+
+#editor {
+    width: 500px;
+    height: 400px;
+}
+
+#selectedText {
+    width: 500px;
+    height: 300px;
+    background-color: rgb(141, 140, 140);
+}
+
+#code {
+    width: 500px;
+    height: 300px;
+    background-color: rgb(141, 140, 140);
+}

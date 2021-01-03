@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CodeMent - Editar Ficheiro</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1,
+            shrink-to-fit=no"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+    <script src="../verificaLogin.js"></script>
+  </head>
+
+  <body onload="carregarPaginaGravarAudio()">
+    <div class="wrapper d-flex align-items-stretch">
+      <nav id="sidebar">
+        <div class="p-4 pt-5">
+          <img
+            src="Login/images/Logo.png"
+            style="width: 100%; margin-bottom: 15%;"
+          />
+          <ul class="list-unstyled components mb-5">
+            <li>
+              <a href="./index.html">Inicio</a>
+            </li>
+            <li>
+              <a href="./grupos.html">Grupos</a>
+            </li>
+            <li>
+              <a href="./disciplinas.html">Vídeo-aulas</a>
+            </li>
+            <li>
+              <a href="./Avaliacao.html">Avaliações/Dúvidas</a>
+            </li>
+            <li>
+              <a href="#" onclick="logout()">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+              <i class="fa fa-bars"></i>
+              <span class="sr-only">Toggle Menu</span>
+            </button>
+            <button
+              class="btn btn-dark d-inline-block d-lg-none ml-auto"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+              onclick="teste()"
+              id="btnDir"
+            >
+              <i class="fa fa-bars"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="./index.html">Inicio</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./grupos.html">Grupos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./disciplinas.html">Vídeo-aulas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./Avaliacao.html"
+                    >Avaliações/Dúvidas</a
+                  >
+                </li>
+                <li class="nav-item active">
+                  <img
+                    href="#"
+                    src="images/logout.png"
+                    class="mt-1 ml-1"
+                    style="width: 35px; height: 35px; cursor: pointer;"
+                    onclick="logout()"
+                  />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <h2 class="mb-4">Ficheiro</h2>
+        <div class="container">
+          <div
+            id="editor"
+            class="block ace_editor ace-monokai ace_dark"
+            style="width: 100%; border-radius: 5px;"
+          >
+            <textarea
+              class="ace_text-input"
+              wrap="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              style="
+                opacity: 0;
+                font-size: 1px;
+                height: 1px;
+                width: 1px;
+                top: 14px;
+                left: 44px;
+              "
+            ></textarea>
+            <div
+              class="ace_gutter"
+              aria-hidden="true"
+              style="left: 0px; width: 40px;"
+            >
+              <div
+                class="ace_layer ace_gutter-layer ace_folding-enabled"
+                style="height: 1e6px; top: 0px; left: 0px; width: 40px;"
+              >
+                <div
+                  class="ace_gutter-cell ace_gutter-active-line"
+                  style="height: 14px; top: 0px;"
+                >
+                  1<span style="display: none;"></span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="ace_scroller"
+              style="line-height: 14px; left: 40px; right: 0px; bottom: 0px;"
+            >
+              <div
+                class="ace_content"
+                style="top: 0px; left: 0px; width: 786px; height: 428px;"
+              >
+                <div class="ace_layer ace_print-margin-layer">
+                  <div
+                    class="ace_print-margin"
+                    style="left: 532px; visibility: visible;"
+                  ></div>
+                </div>
+                <div class="ace_layer ace_marker-layer">
+                  <div
+                    class="ace_active-line"
+                    style="height: 14px; top: 0px; left: 0px; right: 0px;"
+                  ></div>
+                </div>
+                <div
+                  class="ace_layer ace_text-layer"
+                  style="height: 1e6px; margin: 0px 4px; top: 0px; left: 0px;"
+                >
+                  <div class="ace_line" style="height: 14px; top: 0px;"></div>
+                </div>
+                <div class="ace_layer ace_marker-layer"></div>
+                <div class="ace_layer ace_cursor-layer ace_hidden-cursors">
+                  <div
+                    class="ace_cursor"
+                    style="
+                      display: block;
+                      top: 0px;
+                      left: 4px;
+                      width: 7px;
+                      height: 14px;
+                    "
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="ace_scrollbar ace_scrollbar-v"
+              style="display: none; width: 22px; bottom: 0px;"
+            >
+              <div
+                class="ace_scrollbar-inner"
+                style="width: 22px; height: 14px;"
+              >
+                &nbsp;
+              </div>
+            </div>
+            <div
+              class="ace_scrollbar ace_scrollbar-h"
+              style="display: none; height: 22px; left: 40px; right: 0px;"
+            >
+              <div
+                class="ace_scrollbar-inner"
+                style="height: 22px; width: 786px;"
+              >
+                &nbsp;
+              </div>
+            </div>
+            <div
+              style="
+                height: auto;
+                width: auto;
+                top: 0px;
+                left: 0px;
+                visibility: hidden;
+                position: absolute;
+                white-space: pre;
+                font: inherit;
+                overflow: hidden;
+              "
+            >
+              <div
+                style="
+                  height: auto;
+                  width: auto;
+                  top: 0px;
+                  left: 0px;
+                  visibility: hidden;
+                  position: absolute;
+                  white-space: pre;
+                  font: inherit;
+                  overflow: visible;
+                "
+              >
+                הההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההה
+              </div>
+              <div
+                style="
+                  height: auto;
+                  width: auto;
+                  top: 0px;
+                  left: 0px;
+                  visibility: hidden;
+                  position: absolute;
+                  white-space: pre;
+                  font-style: inherit;
+                  font-variant: inherit;
+                  font-stretch: inherit;
+                  font-size: inherit;
+                  line-height: inherit;
+                  font-family: inherit;
+                  overflow: visible;
+                "
+              >
+                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div id="btn-group-record" class="col-md-auto text-center">
+            <div class="col-md-auto">
+              <br />
+              <h5 class="text-center">Gravador de comentários</h5>
+              <button id="recordButton" class="btn btn-primary">
+                Iniciar gravação
+              </button>
+              <button id="stopButton" class="btn btn-danger" disabled="">
+                Terminar gravação
+              </button>
+              <button id="pauseButton" class="btn btn-warning" disabled="">
+                Pausar gravação
+              </button>
+              <br /><br />
+            </div>
+            <div id="teste" style="display: none;">
+              <h5 class="text-center">
+                Tradução automática do ficheiro de voz
+              </h5>
+              <br /><textarea
+                id="textarea"
+                class="text-center"
+                style="width: 95%;"
+              ></textarea
+              ><br />
+              <h5 class="text-center">
+                Edite o comentário se achar pertinente...
+              </h5>
+              <button
+                class="btn btn-primary text-center"
+                onclick="insertComment()"
+              >
+                Inserir Comentário no código
+              </button>
+            </div>
+          </div>
+          <br /><br />
+          <h5 class="text-center">Ficheiros de audio gravados</h5>
+          <br />
+          <div id="recordingsList"></div>
+          <br />
+        </div>
+        <div class="container">
+          <div
+            id="formularioDocente"
+            class="text-center"
+            style="display: none;"
+          >
+            <h4>Avaliação</h4>
+            <form
+              class="needs-validation"
+              novalidate=""
+              action="Avaliacao.html"
+            >
+              <br />
+              <div class="form-group w-25 text-center mx-auto">
+                <label for="validationCustom05">Nota 0-20</label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  max="20"
+                  class="form-control"
+                  id="validationCustom05"
+                  required=""
+                />
+                <div class="invalid-feedback">
+                  Por favor, indique uma nota de 0 a 20 valores.
+                </div>
+              </div>
+              <div class="form-group text-center">
+                <div class="form-check">
+                  <br />
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="invalidCheck"
+                    required=""
+                  />
+                  <label class="form-check-label" for="invalidCheck">
+                    Confirmar avaliação
+                  </label>
+                  <div class="invalid-feedback">
+                    Deve confirmar a avaliação antes de continuar.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group text-center">
+                <button id="btnFormDocente" class="btn btn-success">
+                  Avaliar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.$ = window.jQuery = require("./js/jquery.min.js");
+
+      (function () {
+        "use strict";
+        window.addEventListener(
+          "load",
+          function () {
+            var forms = document.getElementsByClassName("needs-validation");
+            var validation = Array.prototype.filter.call(forms, function (
+              form
+            ) {
+              form.addEventListener(
+                "submit",
+                function (event) {
+                  if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                  } else {
+                    updateNota();
+                  }
+                  form.classList.add("novalidate");
+                },
+                false
+              );
+            });
+          },
+          false
+        );
+      })();
+    </script>
+    <script src="js/main.js"></script>
+    <script src="../FuncoesDb.js"></script>
+    <script src="./gravar-traduzir/gravarAudio.js"></script>
+    <script src="./gravar-traduzir/selecionarCodigo.js"></script>
+    <script src="./gravar-traduzir/traduzirAudio.js"></script>
+    <script
+      src="./src-ide/ace.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <script src="./gravar-traduzir/IDE.js"></script>
+  </body>
+</html>

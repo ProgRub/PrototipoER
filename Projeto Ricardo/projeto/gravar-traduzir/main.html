@@ -1,0 +1,75 @@
+<html lang="en">
+
+<head>
+    <!-- META -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- JS -->
+    <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+    <script src="./js/gravarAudio.js"></script>
+    <script src="./js/traduzirAudio.js"></script>
+    <script src="./js/selecionarCodigo.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/main.css">
+
+    <title>CodeMent - Grupo 1</title>
+</head>
+
+<body>
+    <div id="associateCode">
+        <textarea id="code">const { app, BrowserWindow } =
+                require('electron');
+                const path = require('path');
+                function createWindow() {
+                //instancia da janela
+                const mainWindow = new BrowserWindow({
+                width: 1300,
+                height: 600,
+                webPreferences: {
+                nodeIntegration: true,
+                preload: path.join(__dirname, 'preload.js'),
+                }
+                });
+
+                //carregar o ficheiro html
+                mainWindow.loadFile('main.html');
+
+                // abrir DevTools.
+                mainWindow.webContents.openDevTools();
+                }
+
+                //quando a app carrega, a janela é criada
+                app.whenReady().then(createWindow);
+
+                //Quandoa app é fechada,a janela fecha.
+                app.on('window-all-closed', function() {
+
+                if (process.platform !== 'darwin') app.quit()
+                });
+
+                // quando a app é ativada obtemos a janela
+                app.on('activate', function() {
+                if (BrowserWindow.getAllWindows().length === 0)
+                createWindow()
+                });</textarea>
+        <textarea id="selectedText">
+            </textarea>
+    </div>
+
+    <button id="confirmAssociation">Confirmar seleção</button>
+    <br><br><br>
+
+    <button id="recordButton" onclick="startRecognition();">Iniciar gravação
+        </button>
+    <button id="stopButton" onclick="stopRecognition();">Terminar gravação
+        </button>
+    <button id="pauseButton">Pausar gravação
+        </button>
+    <p><strong>Ficheiros de audio gravados</strong></p>
+    <ol id="recordingsList"></ol>
+    <p><strong>Tradução automática do ficheiro de voz</strong></p>
+    <textarea id="textarea"></textarea>
+
+</body>
+
+</html>
