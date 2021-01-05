@@ -11,7 +11,8 @@ function login() {
         else{
             if (result.length == 0) {
                 alert("Os dados não estão corretos.")
-                window.location.replace("../html/login.html")
+                //window.location.replace("../html/login.html")
+                window.location.replace("../html/pagamento.html")
             } else {
                 sessionStorage.setItem("idUser", result[0].id);
                 sessionStorage.setItem("username", result[0].username);
