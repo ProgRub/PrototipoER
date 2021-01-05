@@ -4,9 +4,11 @@ function createWindow () {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    icon: "images/Icon.png",
     webPreferences: {
       nodeIntegration: true
     }
+    
   })
 
   win.loadFile('html/login.html') //quando inicia o programa
