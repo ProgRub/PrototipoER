@@ -1,20 +1,14 @@
-const { app, BrowserWindow } = require('electron')
+const electron = require('electron')
+const { app, BrowserWindow } = electron
 
-function createWindow () {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    icon: "images/Icon.png",
-    webPreferences: {
-      nodeIntegration: true
-    }
-    
-  })
+let win
 
-  win.loadFile('html/login.html') //quando inicia o programa
-}
-
-app.whenReady().then(createWindow)
+app.on('ready', () => {
+  const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize
+  win = new BrowserWindow({width, height, icon: "images/Icon.png",webPreferences: {
+    nodeIntegration: true}})
+    win.loadFile('html/login.html') //quando inicia o programa
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
