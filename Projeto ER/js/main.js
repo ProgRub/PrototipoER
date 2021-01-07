@@ -1,4 +1,5 @@
 const electron = require('electron')
+require('electron-reload')('..');
 const { app, BrowserWindow } = electron
 
 let win
