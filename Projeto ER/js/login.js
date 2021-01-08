@@ -13,11 +13,6 @@ function login() {
                 $("#dadosIncorretos").fadeTo(2000, 500).slideUp(500, function(){
                     $("#dadosIncorretos").slideUp(500);
                 });
-                
-                setTimeout(function () {
-                    window.location.replace("../html/login.html")
-                }, 3000);
-                
             } else {
                 sessionStorage.setItem("idUser", result[0].id);
                 sessionStorage.setItem("username", result[0].username);
