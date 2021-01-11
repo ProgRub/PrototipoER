@@ -1,3 +1,15 @@
+document.getElementById("username").addEventListener("keyup", function (event) {
+    if (e.key === "Enter" || event.keyCode === 13) {
+      login();
+    }
+});
+
+document.getElementById("password").addEventListener("keyup", function (event) {
+    if (e.key === "Enter" || event.keyCode === 13) {
+      login();
+    }
+});
+
 function login() {
     connectDataBase();
     var username = document.getElementById("username").value;

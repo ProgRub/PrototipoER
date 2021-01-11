@@ -17,9 +17,15 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Banco de dados: `er`
---
+-- -----------------------------------------------------
+-- Schema er
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `er` ;
+-- -----------------------------------------------------
+-- Schema er
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `er` DEFAULT CHARACTER SET utf8 ;
+USE `er` ;
 
 -- --------------------------------------------------------
 
@@ -27,6 +33,7 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `administrador`
 --
 
+DROP TABLE IF EXISTS `administrador`;
 CREATE TABLE `administrador` (
   `user_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -44,6 +51,7 @@ INSERT INTO `administrador` (`user_id`) VALUES
 -- Estrutura da tabela `disciplina`
 --
 
+DROP TABLE IF EXISTS `disciplina`;
 CREATE TABLE `disciplina` (
   `id` int(10) UNSIGNED NOT NULL,
   `nome` varchar(45) DEFAULT NULL,
@@ -88,6 +96,7 @@ INSERT INTO `disciplina` (`id`, `nome`, `explicador_user_id`) VALUES
 -- Estrutura da tabela `encarregado_educacao`
 --
 
+DROP TABLE IF EXISTS `encarregado_educacao`;
 CREATE TABLE `encarregado_educacao` (
   `user_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -106,6 +115,7 @@ INSERT INTO `encarregado_educacao` (`user_id`) VALUES
 -- Estrutura da tabela `explicador`
 --
 
+DROP TABLE IF EXISTS `explicador`;
 CREATE TABLE `explicador` (
   `user_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -124,6 +134,7 @@ INSERT INTO `explicador` (`user_id`) VALUES
 -- Estrutura da tabela `explicando`
 --
 
+DROP TABLE IF EXISTS `explicando`;
 CREATE TABLE `explicando` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `planoAcesso_id` int(10) UNSIGNED NOT NULL
@@ -145,6 +156,7 @@ INSERT INTO `explicando` (`user_id`, `planoAcesso_id`) VALUES
 -- Estrutura da tabela `explicando_has_encarregado_educacao`
 --
 
+DROP TABLE IF EXISTS `explicando_has_encarregado_educacao`;
 CREATE TABLE `explicando_has_encarregado_educacao` (
   `explicando_user_id` int(10) UNSIGNED NOT NULL,
   `encarregado_educacao_user_id` int(10) UNSIGNED NOT NULL
@@ -166,6 +178,7 @@ INSERT INTO `explicando_has_encarregado_educacao` (`explicando_user_id`, `encarr
 -- Estrutura da tabela `explicando_tem_explicador`
 --
 
+DROP TABLE IF EXISTS `explicando_tem_explicador`;
 CREATE TABLE `explicando_tem_explicador` (
   `explicando_user_id` int(10) UNSIGNED NOT NULL,
   `explicador_user_id` int(10) UNSIGNED NOT NULL,
@@ -187,6 +200,7 @@ INSERT INTO `explicando_tem_explicador` (`explicando_user_id`, `explicador_user_
 -- Estrutura da tabela `explicando_tem_ficheiro`
 --
 
+DROP TABLE IF EXISTS `explicando_tem_ficheiro`;
 CREATE TABLE `explicando_tem_ficheiro` (
   `ficheiro_id` int(10) UNSIGNED NOT NULL,
   `explicando_user_id` int(10) UNSIGNED NOT NULL
@@ -198,6 +212,7 @@ CREATE TABLE `explicando_tem_ficheiro` (
 -- Estrutura da tabela `ficheiro`
 --
 
+DROP TABLE IF EXISTS `ficheiro`;
 CREATE TABLE `ficheiro` (
   `id` int(10) UNSIGNED NOT NULL,
   `nome` varchar(45) DEFAULT NULL,
@@ -210,6 +225,7 @@ CREATE TABLE `ficheiro` (
 -- Estrutura da tabela `marcacao`
 --
 
+DROP TABLE IF EXISTS `marcacao`;
 CREATE TABLE `marcacao` (
   `explicando_user_id` int(10) UNSIGNED NOT NULL,
   `explicador_user_id` int(10) UNSIGNED NOT NULL,
@@ -224,6 +240,7 @@ CREATE TABLE `marcacao` (
 -- Estrutura da tabela `periododisponibilidade`
 --
 
+DROP TABLE IF EXISTS `periododisponibilidade`;
 CREATE TABLE `periododisponibilidade` (
   `explicador_user_id` int(10) UNSIGNED NOT NULL,
   `tempoInicio` time DEFAULT NULL,
@@ -237,6 +254,7 @@ CREATE TABLE `periododisponibilidade` (
 -- Estrutura da tabela `planoacesso`
 --
 
+DROP TABLE IF EXISTS `planoacesso`;
 CREATE TABLE `planoacesso` (
   `id` int(10) UNSIGNED NOT NULL,
   `tipo` enum('mensal','anual') DEFAULT NULL,
@@ -257,6 +275,7 @@ INSERT INTO `planoacesso` (`id`, `tipo`, `custo`) VALUES
 -- Estrutura da tabela `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(10) UNSIGNED NOT NULL,
   `username` varchar(45) DEFAULT NULL,
