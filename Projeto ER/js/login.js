@@ -1,11 +1,11 @@
 document.getElementById("username").addEventListener("keyup", function (event) {
-    if (e.key === "Enter" || event.keyCode === 13) {
+    if (event.key === "Enter" || event.keyCode === 13) {
       login();
     }
 });
 
 document.getElementById("password").addEventListener("keyup", function (event) {
-    if (e.key === "Enter" || event.keyCode === 13) {
+    if (event.key === "Enter" || event.keyCode === 13) {
       login();
     }
 });
