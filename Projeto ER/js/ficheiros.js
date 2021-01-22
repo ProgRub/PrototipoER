@@ -9,19 +9,19 @@
     reader.readAsDataURL(ficheiro);
     reader.onloadend = function () {
       conteudo_base64 = reader.result;
-      console.log(conteudo_base64);
       conteudo_base64 = conteudo_base64.replace("data:application/pdf;base64,", "");
-      console.log(conteudo_base64);
     };
-
+    
     connectDataBase();
     var id = sessionStorage.getItem("idUser");
     var disciplina = sessionStorage.getItem("disciplina_id");
     console.log(id);
-    query = "INSERT INTO ficheiro (id, nome, explicador_user_id, conteudo, data_insercao, disciplina_id) VALUES ("+ null +", '" + nomeFicheiro + "','" + id + "','"+ conteudo_base64 +"', CURRENT_TIMESTAMP(),'"+ disciplina+"');";
+    query = "INSERT INTO ficheiro (id, nome, explicador_user_id, conteudo, data_insercao, disciplina_id) VALUES ("+ null +", '" + nomeFicheiro + "','" + id + "', '"+ conteudo_base64 +"' , CURRENT_TIMESTAMP(),'"+ disciplina+"');";
       connection.query(query, function (err, result, fields) {
         if (err) {
+          console.log(err);
         } else {
+          console.log(query);
           alert("Ficheiro partilhado com sucesso.");
         }
       });
@@ -83,7 +83,6 @@ function tituloNomeDisciplina(){
   var text = document.createTextNode("Recursos - "+ sessionStorage.getItem("disciplina_nome"));
   console.log(sessionStorage.getItem("disciplina_id"));
   titulo.appendChild(text);
-  console.log(titulo);
   document.getElementById("carregarFile").appendChild(titulo);
 
 }
@@ -115,11 +114,11 @@ function mostraDisciplinasAluno(){
 
         //NOME DISCIPLINA:
         var nome = document.createElement("button");
-        nome.setAttribute("class", "card border-left-primary shadow h-100 py-2");
+        nome.setAttribute("class", "card border-left-warning shadow h-100 py-2");
         var nomeAux = document.createElement("div");
         nomeAux.setAttribute("class", "card-body");
         var nomeAux2 = document.createElement("div");
-        nomeAux2.setAttribute("class", "text-x font-weight-bold text-primary text-uppercase mb-1");
+        nomeAux2.setAttribute("class", "text-x font-weight-bold text-danger text-uppercase mb-1");
         nomeAux2.innerHTML = disciplina.disciplinaNome;
         nomeAux.appendChild(nomeAux2);
         //NOME EXPLICADOR:
@@ -129,11 +128,12 @@ function mostraDisciplinasAluno(){
         console.log(disciplina.explicadorNome);
 
         nomeAux.appendChild(explicador);
-        
+
         nome.onclick = function(){
           sessionStorage.setItem("disciplina_id", disciplina.disciplinaId);
           sessionStorage.setItem("disciplina_nome", disciplina.disciplinaNome);
-          window.location.replace("../html/recursoExtra.html")
+          sessionStorage.setItem("explicador_id", disciplina.explicadorID);
+          window.location.replace("../html/recursoExtraAluno.html")
         };
         nome.appendChild(nomeAux);
 
@@ -144,4 +144,54 @@ function mostraDisciplinasAluno(){
     });
     closeConnectionDataBase();
 }
-  
+
+
+function ficheirosDisciplinaAluno(){
+  var idAluno = sessionStorage.getItem("idUser");
+  var idExplicador = sessionStorage.getItem("explicador_id");
+  var idDisciplina = sessionStorage.getItem("disciplina_id");
+
+  query = "SELECT * FROM ficheiro WHERE explicador_user_id = '"+ idExplicador +"' AND disciplina_id ='"+ idDisciplina +"'";
+  console.log(query);
+  connectDataBase();
+
+  connection.query(query, function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+
+      var div1 = document.createElement("div");
+      div1.setAttribute("class","card-header");
+      var titulo = document.createElement("H3");
+      titulo.setAttribute("class", "h3 mb-0 text-gray-800");
+      titulo.innerHTML = "Ficheiros - "+sessionStorage.getItem("disciplina_nome");
+      div1.appendChild(titulo);
+      document.getElementById("ficheirosDisciplinaAluno").appendChild(div1);
+
+      var div2 = document.createElement("div");
+      div2.setAttribute("class","card-body");
+
+      var listing = document.createElement("ul");
+
+      result.forEach((ficheiro) => {
+        console.log(ficheiro);
+        var ficheiroPDF = document.createElement("li");
+        var downloadLink = document.createElement("a");
+        var link = document.createTextNode(""+ficheiro.nome);
+        downloadLink.appendChild(link);
+        downloadLink.download = ""+ficheiro.nome;
+        downloadLink.href = ""+ficheiro.conteudo;
+        downloadLink.title = ""+ficheiro.nome;
+        console.log(downloadLink);
+        ficheiroPDF.appendChild(downloadLink);
+
+        listing.appendChild(ficheiroPDF);
+      });
+
+      div2.appendChild(listing);
+      document.getElementById("ficheirosDisciplinaAluno").appendChild(div2);
+      
+    }
+  });
+  closeConnectionDataBase();
+}

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 22-Jan-2021 às 13:41
+-- Tempo de geração: 22-Jan-2021 às 21:40
 -- Versão do servidor: 10.4.17-MariaDB
 -- versão do PHP: 8.0.0
 
@@ -28,15 +28,16 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `administrador` (
-  `user_id` int(10) UNSIGNED NOT NULL
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `nome` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `administrador`
 --
 
-INSERT INTO `administrador` (`user_id`) VALUES
-(1);
+INSERT INTO `administrador` (`user_id`, `nome`) VALUES
+(1, 'Administrador');
 
 -- --------------------------------------------------------
 
@@ -89,16 +90,17 @@ INSERT INTO `disciplina` (`id`, `nome`, `explicador_user_id`) VALUES
 --
 
 CREATE TABLE `encarregado_educacao` (
-  `user_id` int(10) UNSIGNED NOT NULL
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `nome` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `encarregado_educacao`
 --
 
-INSERT INTO `encarregado_educacao` (`user_id`) VALUES
-(8),
-(9);
+INSERT INTO `encarregado_educacao` (`user_id`, `nome`) VALUES
+(8, 'Rita Barros'),
+(9, 'Luís Santos');
 
 -- --------------------------------------------------------
 
@@ -107,16 +109,17 @@ INSERT INTO `encarregado_educacao` (`user_id`) VALUES
 --
 
 CREATE TABLE `explicador` (
-  `user_id` int(10) UNSIGNED NOT NULL
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `nome` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `explicador`
 --
 
-INSERT INTO `explicador` (`user_id`) VALUES
-(2),
-(3);
+INSERT INTO `explicador` (`user_id`, `nome`) VALUES
+(2, 'Filipe Quintal'),
+(3, 'Mary Barreto');
 
 -- --------------------------------------------------------
 
@@ -126,18 +129,19 @@ INSERT INTO `explicador` (`user_id`) VALUES
 
 CREATE TABLE `explicando` (
   `user_id` int(10) UNSIGNED NOT NULL,
-  `planoAcesso_id` int(10) UNSIGNED NOT NULL
+  `planoAcesso_id` int(10) UNSIGNED NOT NULL,
+  `nome` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `explicando`
 --
 
-INSERT INTO `explicando` (`user_id`, `planoAcesso_id`) VALUES
-(6, 3),
-(7, 3),
-(4, 4),
-(5, 4);
+INSERT INTO `explicando` (`user_id`, `planoAcesso_id`, `nome`) VALUES
+(4, 4, 'Diego'),
+(5, 4, 'Orlando'),
+(6, 3, 'Alejandro'),
+(7, 3, 'Rúben');
 
 -- --------------------------------------------------------
 
@@ -170,16 +174,18 @@ CREATE TABLE `explicando_tem_explicador` (
   `explicando_user_id` int(10) UNSIGNED NOT NULL,
   `explicador_user_id` int(10) UNSIGNED NOT NULL,
   `notas` varchar(1000) DEFAULT NULL,
-  `sumario` varchar(1000) DEFAULT NULL
+  `sumario` varchar(1000) DEFAULT NULL,
+  `disciplina_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `explicando_tem_explicador`
 --
 
-INSERT INTO `explicando_tem_explicador` (`explicando_user_id`, `explicador_user_id`, `notas`, `sumario`) VALUES
-(4, 2, NULL, NULL),
-(5, 3, NULL, NULL);
+INSERT INTO `explicando_tem_explicador` (`explicando_user_id`, `explicador_user_id`, `notas`, `sumario`, `disciplina_id`) VALUES
+(4, 2, NULL, NULL, 1),
+(4, 3, NULL, NULL, 2),
+(5, 3, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -202,7 +208,7 @@ CREATE TABLE `ficheiro` (
   `id` int(10) UNSIGNED NOT NULL,
   `nome` varchar(45) DEFAULT NULL,
   `explicador_user_id` int(10) UNSIGNED NOT NULL,
-  `conteudo` longtext DEFAULT NULL COMMENT 'Conteudo codificado em base 64',
+  `conteudo` longblob NOT NULL DEFAULT '' COMMENT 'Conteudo codificado em base 64',
   `data_insercao` timestamp NULL DEFAULT NULL,
   `disciplina_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -389,7 +395,7 @@ ALTER TABLE `disciplina`
 -- AUTO_INCREMENT de tabela `ficheiro`
 --
 ALTER TABLE `ficheiro`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de tabela `planoacesso`
