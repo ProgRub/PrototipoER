@@ -15,7 +15,7 @@
 
     connectDataBase();
     var id = sessionStorage.getItem("idUser");
-    var disciplina = sessionStorage.getItem("disciplina");
+    var disciplina = sessionStorage.getItem("disciplina_id");
     console.log(id);
     query = "INSERT INTO ficheiro (id, nome, explicador_user_id, conteudo, data_insercao, disciplina_id) VALUES ("+ null +", '" + nomeFicheiro + "','" + id + "','"+ conteudo_base64 +"', CURRENT_TIMESTAMP(),'"+ disciplina+"');";
       connection.query(query, function (err, result, fields) {
@@ -41,7 +41,7 @@ function listarDisciplinas(){
       console.log(err);
     } else {
       var select = document.createElement("select");
-      select.classList.add("form-select");
+      select.setAttribute("class", "form-select");
       select.id = "disciplinaEscolhida";
       document.getElementById("escolherDisciplina").appendChild(select);
 
@@ -63,7 +63,9 @@ function listarDisciplinas(){
       a.href = "recursoExtra.html";
       a.onclick = function() {
         var x = document.getElementById("disciplinaEscolhida").value;
-        sessionStorage.setItem("disciplina", x);
+        var x = select.options[select.selectedIndex].text;
+        sessionStorage.setItem("disciplina_id", x);
+        sessionStorage.setItem("disciplina_nome", x);
       };
       console.log(a);
       document.getElementById("escolherDisciplina").appendChild(a);
@@ -71,4 +73,14 @@ function listarDisciplinas(){
     }
   });
   closeConnectionDataBase();
+}
+
+function tituloNomeDisciplina(){
+  var titulo = document.createElement("H1");
+  titulo.setAttribute("class", "h3 mb-0 text-gray-800");
+  var text = document.createTextNode("Recursos - "+ sessionStorage.getItem("disciplina_nome"));
+  titulo.appendChild(text);
+  console.log(titulo);
+  document.getElementById("carregarFile").appendChild(titulo);
+
 }
