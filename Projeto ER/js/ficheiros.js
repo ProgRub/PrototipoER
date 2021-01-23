@@ -1,4 +1,5 @@
 
+  //CODIFICA O FICHEIRO EM BASE64:
   function getBase64(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -9,7 +10,7 @@
   }
   
   
-  
+  //INSERE FICHEIRO CARREGADO NA BASE DE DADOS:
   function ficheiro(){
     var conteudo_base64;
     var ficheiro = document.getElementById("recursoExtra").files[0];
@@ -46,6 +47,7 @@
 
   }
 
+//ESCOLHA DA DISCIPLINA LECIONADA PELO EXPLICADOR PARA INSERIR FICHEIROS:
 function listarDisciplinas(){
   var id = sessionStorage.getItem("idUser");
   query = "SELECT id, nome FROM disciplina WHERE explicador_user_id = '"+ id +"'";
@@ -93,6 +95,7 @@ function listarDisciplinas(){
   closeConnectionDataBase();
 }
 
+//TITULO DA PÁGINA DE CARREGAR RECURSOS DE UMA DISCIPLINA:
 function tituloNomeDisciplina(){
   var titulo = document.createElement("H1");
   titulo.setAttribute("class", "h3 mb-0 text-gray-800");
@@ -109,6 +112,7 @@ function paragrafo(elemento){
 }
 
 
+//LISTA DISCIPLINAS DO ALUNO:
 function mostraDisciplinasAluno(){
   var id = sessionStorage.getItem("idUser");
   query = "SELECT disciplina.id as disciplinaId, disciplina.nome as disciplinaNome, explicador.user_id as explicadorID, explicador.nome as explicadorNome "+
@@ -130,9 +134,9 @@ function mostraDisciplinasAluno(){
 
         //NOME DISCIPLINA:
         var nome = document.createElement("button");
-        nome.setAttribute("class", "card border-left-warning shadow h-100 py-2");
+        nome.setAttribute("class", "card border-left-warning shadow h-100 py-2 w-100");
         var nomeAux = document.createElement("div");
-        nomeAux.setAttribute("class", "card-body");
+        nomeAux.setAttribute("class", "card-body w-100");
         var nomeAux2 = document.createElement("div");
         nomeAux2.setAttribute("class", "text-x font-weight-bold text-danger text-uppercase mb-1");
         nomeAux2.innerHTML = disciplina.disciplinaNome;
@@ -161,6 +165,7 @@ function mostraDisciplinasAluno(){
     closeConnectionDataBase();
 }
 
+//DESCODIFICA O BASE64:
 function base64ToArrayBuffer(base64) {
   var binary_string = window.atob(base64);
   var len = binary_string.length;
@@ -171,6 +176,7 @@ function base64ToArrayBuffer(base64) {
   return bytes.buffer;
 }
 
+//LISTA FICHEIROS DISPONIBILIZADOS NA DISCIPLINA ESCOLHIDA:
 function ficheirosDisciplinaAluno(){
   var idAluno = sessionStorage.getItem("idUser");
   var idExplicador = sessionStorage.getItem("explicador_id");
@@ -197,7 +203,7 @@ function ficheirosDisciplinaAluno(){
       div2.setAttribute("class","card-body");
 
       var listing = document.createElement("dl");
-      
+
       var fichaExercicios = document.createElement("dt");
       fichaExercicios.innerHTML = "Fichas de Exercícios";
       var apontamentos = document.createElement("dt");
