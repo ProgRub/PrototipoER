@@ -196,13 +196,24 @@ function ficheirosDisciplinaAluno(){
       var div2 = document.createElement("div");
       div2.setAttribute("class","card-body");
 
-      var listing = document.createElement("ul");
+      var listing = document.createElement("dl");
+      
+      var fichaExercicios = document.createElement("dt");
+      fichaExercicios.innerHTML = "Fichas de Exercícios";
+      var apontamentos = document.createElement("dt");
+      apontamentos.innerHTML = "<br>Apontamentos";
+      var outros = document.createElement("dt");
+      outros.innerHTML = "<br>Outros";
+
+      var semFichas = true;
+      var semApontamentos = true;
+      var semOutros = true;
 
       result.forEach((ficheiro) => {
         console.log(ficheiro);
         var ficheiroPDF = document.createElement("li");
         var downloadLink = document.createElement("a");
-        var link = document.createTextNode(""+ficheiro.nome);
+        var link = document.createTextNode(""+ficheiro.Titulo);
         downloadLink.appendChild(link);
 
         downloadLink.download = ficheiro.nome;
@@ -216,8 +227,38 @@ function ficheirosDisciplinaAluno(){
         downloadLink.title = ficheiro.nome;
         console.log(downloadLink);
         ficheiroPDF.appendChild(downloadLink);
-        listing.appendChild(ficheiroPDF);
+        if(ficheiro.tipo == "Ficha de Exercicios"){
+          fichaExercicios.appendChild(ficheiroPDF);
+          semFichas = false;
+        }else if (ficheiro.tipo == "Teórico"){
+          apontamentos.appendChild(ficheiroPDF);
+          semApontamentos = false;
+        }else{
+          outros.appendChild(ficheiroPDF);
+          semOutros = false;
+        }
+        
       });
+      if(semFichas){
+        var info = document.createElement("li");
+        info.innerHTML = "Não há fichas de exercícios.";
+        fichaExercicios.appendChild(info);
+      }
+      if(semApontamentos){
+        var info = document.createElement("li");
+        info.innerHTML = "Não há apontamentos.";
+        apontamentos.appendChild(info);
+      }
+      if(semOutros){
+        var info = document.createElement("li");
+        info.innerHTML = "Não há outros ficheiros.";
+        outros.appendChild(info);
+      }
+
+
+      listing.appendChild(fichaExercicios);
+      listing.appendChild(apontamentos);
+      listing.appendChild(outros);
 
       div2.appendChild(listing);
       document.getElementById("ficheirosDisciplinaAluno").appendChild(div2);
