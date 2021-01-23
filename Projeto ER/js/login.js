@@ -18,7 +18,7 @@ function login() {
     connection.query(query, function(err, result, fields) {
     
         if (err) {
-            console.log("Erro na query.");
+            console.log(err);
         }
         else{
             if (result.length == 0) {

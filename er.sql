@@ -17,10 +17,15 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Banco de dados: `er`
---
-
+-- -----------------------------------------------------
+-- Schema er
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `er` ;
+-- -----------------------------------------------------
+-- Schema er
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `er` DEFAULT CHARACTER SET utf8 ;
+USE `er` ;
 -- --------------------------------------------------------
 
 --
