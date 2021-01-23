@@ -273,3 +273,119 @@ function ficheirosDisciplinaAluno(){
   });
   closeConnectionDataBase();
 }
+
+
+function editar_apagar_ficheiros(){
+
+
+  var idExplicador = sessionStorage.getItem("idUser");
+
+  query = "SELECT ficheiro.id, ficheiro.nome as fileName, ficheiro.Titulo, ficheiro.tipo, disciplina.nome as disciName FROM ficheiro, disciplina "+
+  "WHERE ficheiro.explicador_user_id = '"+ idExplicador +"' AND ficheiro.disciplina_id =disciplina.id AND disciplina.explicador_user_id = ficheiro.explicador_user_id";
+  console.log(query);
+  connectDataBase();
+
+  connection.query(query, function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+
+      var titulo = document.createElement("H3");
+      titulo.setAttribute("class", "h3 mb-0 text-gray-800");
+      titulo.innerHTML = "Edição de Ficheiros";
+      document.getElementById("tituloPagina").appendChild(titulo);
+
+      var div = document.createElement("div");
+      div.setAttribute("class","card-body");
+      var descricao = document.createElement("p");
+      descricao.innerHTML="Clique no nome de um ficheiro para <b>editar</b> ou <b>apagar</b>.";
+      document.getElementById("listaFicheiros").appendChild(descricao);
+      result.forEach((ficheiro) => {
+
+        var collapsable = document.createElement("div");
+        collapsable.setAttribute("class","card shadow mb-0");
+        var collapseName = document.createElement("a");
+        collapseName.href="#"+ficheiro.fileName+ficheiro.Titulo;
+        collapseName.setAttribute("class", "d-block card-header py-3");
+        collapseName.setAttribute("data-toggle","collapse");
+        collapseName.setAttribute("role","button");
+        collapseName.setAttribute("aria-expanded","false");
+        collapseName.setAttribute("aria-controls",""+ficheiro.fileName+ficheiro.Titulo);
+
+        var nome = document.createElement("H6");
+        nome.setAttribute("class","m-0 font-weight text-primary");
+        nome.innerHTML=""+ficheiro.Titulo+" ("+ ficheiro.disciName+")";
+        collapseName.appendChild(nome);
+        console.log(collapseName);
+
+        collapsable.appendChild(collapseName);
+        document.getElementById("listaFicheiros").appendChild(collapsable);
+        
+        var formulario = document.createElement("div");
+        formulario.setAttribute("class","collapse");
+        formulario.id = ""+ficheiro.fileName+ficheiro.Titulo;
+        var formularioAux = document.createElement("div");
+        formularioAux.setAttribute("class","card-body shadow");
+
+        var p = document.createElement("p");
+        p.innerHTML = "<b>Novo título:</b>"
+        formularioAux.appendChild(p);
+        
+        var form = document.createElement("input");
+        form.type="text";
+        form.setAttribute("class","form-control");
+        form.id = "novoTitulo"
+        formularioAux.appendChild(form);
+        var paragrafo = document.createElement("br");
+        formularioAux.appendChild(paragrafo);
+
+        var a = document.createElement("button");
+        var link = document.createTextNode("Confirmar Edição");
+        a.appendChild(link);
+        a.title = "Confirmar";
+        a.setAttribute("class", "btn btn-success");
+        a.onclick = function() {
+          query = "UPDATE ficheiro SET Titulo='"+ document.getElementById("novoTitulo").value +"' WHERE id='"+ ficheiro.id +"'";
+          console.log(query);
+          connectDataBase();
+          connection.query(query, function (err, result) {
+            if (err) {
+              console.log(err);
+            } else {
+              window.location.replace("editarFicheiros.html");
+            }
+          });
+        };
+
+        formularioAux.appendChild(a);
+
+        var apagar = document.createElement("a");
+        apagar.setAttribute("class","btn btn-danger btn-xs");
+        apagar.setAttribute("style","float: right");
+        console.log(apagar);
+        var auxApagar = document.createElement("i");
+        auxApagar.setAttribute("class","fas fa-trash");
+        console.log(auxApagar);
+        auxApagar.onclick = function(){
+          query = "DELETE FROM ficheiro WHERE id = '"+ ficheiro.id +"'";
+          console.log(query);
+          connectDataBase();
+          connection.query(query, function (err, result) {
+            if (err) {
+              console.log(err);
+            } else {
+              window.location.replace("editarFicheiros.html");
+            }
+         });
+        };
+        console.log(auxApagar);
+        apagar.appendChild(auxApagar);
+        formularioAux.appendChild(apagar);
+        formulario.appendChild(formularioAux);
+        console.log(formulario);
+        document.getElementById("listaFicheiros").appendChild(formulario);
+      });
+    }
+  });
+  closeConnectionDataBase();
+}

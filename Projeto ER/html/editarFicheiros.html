@@ -25,7 +25,7 @@
 
 </head>
 
-<body id="page-top" onload = tituloNomeDisciplina();>
+<body id="page-top" onload = editar_apagar_ficheiros();>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -290,24 +290,10 @@
                 </div>
 
                 <div class="card shadow mb-4 w-75" style="margin:auto">
-                    <div id ="carregarFile" class="card-header">
+                    <div id ="tituloPagina" class="card-header">
                     </div>
-                    <div class="card-body">
-                        <p class="card-text"><b>Ficheiro em formato PDF</b>:</p>
-                        <div class="custom-file">
-
-                                <input type="file" accept=".pdf" id="recursoExtra" class="custom-file-input">
-                                <label class="custom-file-label" for="recursoExtra">Escolha o ficheiro</label>
-                           
-                        </div>
-                        <div class="my-2"></div>
-                            <br><p class="card-text"><b>Título do Ficheiro: </b><input class="form-control" id="tituloFicheiro" type="text" placeholder="Título"></p><br>
-                            <p class="card-text"><b>Tipo de ficheiro: </b></p>
-                            <input id="tipoFicheiro" name="tipoFicheiro" type="radio" value="Ficha de Exercicios" checked><label > Ficha de Exercícios</label><br>
-                            <input id="tipoFicheiro" name="tipoFicheiro" type="radio" value="Teorico" ><label> Apontamento</label ><br>
-                            <input id="tipoFicheiro" name="tipoFicheiro" type="radio" value="Outros" ><label> Outros</label><br></br>
-                            <button type="submit" class="btn btn-success w-100" onclick=ficheiro(); ><span class="icon text-white-50"><i class="fas fa-arrow-right"></i></span><span class="text"> Carregar</span></button>
-                         </div>
+                    <div class="card-body" id="listaFicheiros">
+                        
                   </div>
 
                 
