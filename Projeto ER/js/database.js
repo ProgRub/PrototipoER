@@ -13,9 +13,6 @@ function connectDataBase() {
             console.log(err)
             console.log(err.code);
             console.log(err.fatal);
-
-        } else {
-            //console.log("Conexão efetuada")
         }
 
     })
