@@ -1,22 +1,38 @@
 
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+  
+  
+  
   function ficheiro(){
+    var conteudo_base64;
     var ficheiro = document.getElementById("recursoExtra").files[0];
     var ficheiroAux = document.getElementById("recursoExtra").value;
+    var tipoFicheiro = document.querySelector('input[name="tipoFicheiro"]:checked').value;
+    var titulo = document.getElementById("tituloFicheiro").value;
+
     var nomeFicheiro = ficheiroAux.split("C:\\fakepath\\")[1];
 
-    var conteudo_base64;
     var reader = new FileReader();
     reader.readAsDataURL(ficheiro);
     reader.onloadend = function () {
       conteudo_base64 = reader.result;
       conteudo_base64 = conteudo_base64.replace("data:application/pdf;base64,", "");
+      console.log(conteudo_base64);
     };
-    
+
     connectDataBase();
     var id = sessionStorage.getItem("idUser");
     var disciplina = sessionStorage.getItem("disciplina_id");
     console.log(id);
-    query = "INSERT INTO ficheiro (id, nome, explicador_user_id, conteudo, data_insercao, disciplina_id) VALUES ("+ null +", '" + nomeFicheiro + "','" + id + "', '"+ conteudo_base64 +"' , CURRENT_TIMESTAMP(),'"+ disciplina+"');";
+    setTimeout(function(){
+    query = "INSERT INTO ficheiro (id, nome, explicador_user_id, conteudo, data_insercao, disciplina_id, tipo, titulo) VALUES ("+ null +", '" + nomeFicheiro + "','" + id + "', '"+ conteudo_base64 +"' , CURRENT_TIMESTAMP(),'"+ disciplina+"','"+ tipoFicheiro +"','"+ titulo+"');";
       connection.query(query, function (err, result, fields) {
         if (err) {
           console.log(err);
@@ -25,8 +41,8 @@
           alert("Ficheiro partilhado com sucesso.");
         }
       });
-      
       closeConnectionDataBase();
+    }, 2000);
 
   }
 
@@ -145,6 +161,15 @@ function mostraDisciplinasAluno(){
     closeConnectionDataBase();
 }
 
+function base64ToArrayBuffer(base64) {
+  var binary_string = window.atob(base64);
+  var len = binary_string.length;
+  var bytes = new Uint8Array(len);
+  for (var i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
+  }
+  return bytes.buffer;
+}
 
 function ficheirosDisciplinaAluno(){
   var idAluno = sessionStorage.getItem("idUser");
@@ -179,12 +204,18 @@ function ficheirosDisciplinaAluno(){
         var downloadLink = document.createElement("a");
         var link = document.createTextNode(""+ficheiro.nome);
         downloadLink.appendChild(link);
-        downloadLink.download = ""+ficheiro.nome;
-        downloadLink.href = ""+ficheiro.conteudo;
-        downloadLink.title = ""+ficheiro.nome;
+
+        downloadLink.download = ficheiro.nome;
+        var base64str = ficheiro.conteudo;
+
+        // create the blob object with content-type "application/pdf"               
+        var blob = new Blob( [base64ToArrayBuffer(base64str)], { type: "application/pdf" });
+        var url = URL.createObjectURL(blob);
+
+        downloadLink.href = window.URL.createObjectURL(blob);
+        downloadLink.title = ficheiro.nome;
         console.log(downloadLink);
         ficheiroPDF.appendChild(downloadLink);
-
         listing.appendChild(ficheiroPDF);
       });
 

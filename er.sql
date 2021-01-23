@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 22-Jan-2021 às 21:40
+-- Tempo de geração: 23-Jan-2021 às 01:44
 -- Versão do servidor: 10.4.17-MariaDB
 -- versão do PHP: 8.0.0
 
@@ -210,7 +210,9 @@ CREATE TABLE `ficheiro` (
   `explicador_user_id` int(10) UNSIGNED NOT NULL,
   `conteudo` longblob NOT NULL DEFAULT '' COMMENT 'Conteudo codificado em base 64',
   `data_insercao` timestamp NULL DEFAULT NULL,
-  `disciplina_id` int(11) NOT NULL
+  `disciplina_id` int(11) NOT NULL,
+  `tipo` enum('Ficha de Exercicios','Teórico','Outros','') NOT NULL,
+  `Titulo` char(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -395,7 +397,7 @@ ALTER TABLE `disciplina`
 -- AUTO_INCREMENT de tabela `ficheiro`
 --
 ALTER TABLE `ficheiro`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de tabela `planoacesso`

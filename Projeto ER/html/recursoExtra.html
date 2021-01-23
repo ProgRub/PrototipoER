@@ -283,15 +283,20 @@
                     <div id ="carregarFile" class="card-header">
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Escolha o ficheiro (<b>formato PDF</b>) e pressione no "<b>Carregar"</b> para confirmar.</p>
+                        <p class="card-text">Escolha o ficheiro (<b>formato PDF</b>):</p>
                         <div class="custom-file">
-                            <form>
+
                                 <input type="file" accept=".pdf" id="recursoExtra" class="custom-file-input">
                                 <label class="custom-file-label" for="recursoExtra">Escolha o ficheiro</label>
-                            </form>
+                           
                         </div>
                         <div class="my-2"></div>
-                            <button class="btn btn-success" onclick=ficheiro(); ><span class="icon text-white-50"><i class="fas fa-arrow-right"></i></span><span class="text"> Carregar</span></button>
+                            <br><p class="card-text"><b></b>Título do Ficheiro: <input class="form-control" id="tituloFicheiro" type="text" placeholder="Título"></p><br>
+                            <p class="card-text"><b>Tipo de ficheiro: </b></p>
+                            <input id="tipoFicheiro" name="tipoFicheiro" type="radio" value="Ficha de Exercicios" checked><label > Ficha de Exercícios</label><br>
+                            <input id="tipoFicheiro" name="tipoFicheiro" type="radio" value="Teorico" ><label> Teórico</label ><br>
+                            <input id="tipoFicheiro" name="tipoFicheiro" type="radio" value="Outros" ><label> Outros</label><br></br>
+                            <button type="submit" class="btn btn-success w-100" onclick=ficheiro(); ><span class="icon text-white-50"><i class="fas fa-arrow-right"></i></span><span class="text"> Carregar</span></button>
                          </div>
                   </div>
 
