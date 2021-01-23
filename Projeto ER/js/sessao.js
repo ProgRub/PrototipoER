@@ -66,17 +66,74 @@ form.addEventListener("click", function (event) {
 												}
 											}
 										});
-										console.log(explicadoresDisponiveis);
+										// console.log(explicadoresDisponiveis);
 										let headerListaExplicadores = document.createElement("dt");
 										headerListaExplicadores.innerHTML = "Explicadores disponíveis";
 										if (explicadoresDisponiveis.length > 0) {
-											explicadoresDisponiveis.forEach((explicadorBD) => {
-												var explicador = document.createElement("li");
-												explicador.innerHTML = explicadorBD;
-												headerListaExplicadores.appendChild(explicador);
+											inputData.parentNode.removeChild(inputData);
+											inputTempoFinal.parentNode.removeChild(inputTempoFinal);
+											inputTempoInicial.parentNode.removeChild(inputTempoInicial);
+											document.getElementById("label1").parentNode.removeChild(document.getElementById("label1"));
+											document.getElementById("label2").parentNode.removeChild(document.getElementById("label2"));
+											document.getElementById("label3").parentNode.removeChild(document.getElementById("label3"));
+											document.getElementById("submitData").parentNode.removeChild(document.getElementById("submitData"));
+											explicadoresDisponiveis.forEach((explicadorID) => {
+												query = "SELECT nome FROM explicador WHERE user_id=" + explicadorID;
+												connection.query(query, function (err, result) {
+													if (err) {
+														console.log(err);
+													} else {
+														var explicador = document.createElement("li");
+														explicador.innerHTML = result[0].nome;
+														headerListaExplicadores.appendChild(explicador);
+														document.getElementById("formSessao").appendChild(headerListaExplicadores);
+														closeConnectionDataBase();
+													}
+												});
 											});
-											document.getElementById("formSessao").appendChild(headerListaExplicadores);
+											var data_js = {
+												access_token: "y2ju54usv2ct8w0shn2jmsnp", // sent after you sign up
+											};
+											function toParams(data_js) {
+												var form_data = [];
+												for (var key in data_js) {
+													form_data.push(encodeURIComponent(key) + "=" + encodeURIComponent(data_js[key]));
+												}
+
+												return form_data.join("&");
+											}
+											function js_send() {
+												var request = new XMLHttpRequest();
+												request.onreadystatechange = function () {
+													if (request.readyState == 4 && request.status == 200) {
+														console.log("GOOD");
+													} else if (request.readyState == 4) {
+														console.log("BAD");
+													}
+												};
+
+												var subject = "Confirmação sessão";
+												var message = "Teste";
+												data_js["subject"] = subject;
+												data_js["text"] = message;
+												var params = toParams(data_js);
+
+												request.open("POST", "https://postmail.invotes.com/send", true);
+												request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+												request.send(params);
+
+												return false;
+											}
+											js_send();
 										} else {
+											inputData.parentNode.removeChild(inputData);
+											inputTempoFinal.parentNode.removeChild(inputTempoFinal);
+											inputTempoInicial.parentNode.removeChild(inputTempoInicial);
+											document.getElementById("label1").parentNode.removeChild(document.getElementById("label1"));
+											document.getElementById("label2").parentNode.removeChild(document.getElementById("label2"));
+											document.getElementById("label3").parentNode.removeChild(document.getElementById("label3"));
+											document.getElementById("submitData").parentNode.removeChild(document.getElementById("submitData"));
 											var explicador = document.createElement("li");
 											explicador.innerHTML = "Não há explicadores disponíveis";
 											headerListaExplicadores.appendChild(explicador);
@@ -84,8 +141,6 @@ form.addEventListener("click", function (event) {
 										}
 									}
 								});
-								
-								closeConnectionDataBase();
 							} else {
 								closeConnectionDataBase();
 							}
