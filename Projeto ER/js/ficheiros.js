@@ -1,3 +1,4 @@
+const { format } = require("mysql");
 
   //CODIFICA O FICHEIRO EM BASE64:
   function getBase64(file) {
@@ -17,7 +18,15 @@
     var ficheiroAux = document.getElementById("recursoExtra").value;
     var tipoFicheiro = document.querySelector('input[name="tipoFicheiro"]:checked').value;
     var titulo = document.getElementById("tituloFicheiro").value;
-
+    console.log(titulo);
+    if(!ficheiroAux.endsWith(".pdf")){
+      alert("Por favor, insira um ficheiro no formato PDF.");
+      return;
+    }
+    if(ficheiro == null || titulo == ""){
+      alert("Campos em falta.");
+      return;
+    }
     var nomeFicheiro = ficheiroAux.split("C:\\fakepath\\")[1];
 
     var reader = new FileReader();
@@ -37,6 +46,7 @@
       connection.query(query, function (err, result, fields) {
         if (err) {
           console.log(err);
+          alert("O ficheiro é muito grande.");
         } else {
           console.log(query);
           alert("Ficheiro partilhado com sucesso.");
@@ -60,6 +70,7 @@ function listarDisciplinas(){
     } else {
       var select = document.createElement("select");
       select.setAttribute("class", "form-control");
+      select.required;
       select.id = "disciplinaEscolhida";
       select.size = 5;
       document.getElementById("escolherDisciplina").appendChild(select);
@@ -290,20 +301,8 @@ function editar_apagar_ficheiros(){
       console.log(err);
     } else {
 
-      var titulo = document.createElement("H3");
-      titulo.setAttribute("class", "h3 mb-0 text-gray-800");
-      titulo.innerHTML = "Edição de Ficheiros";
-      document.getElementById("tituloPagina").appendChild(titulo);
-
-      var div = document.createElement("div");
-      div.setAttribute("class","card-body");
-      var descricao = document.createElement("p");
-      descricao.innerHTML="Clique no nome de um ficheiro para <b>editar</b> ou <b>apagar</b>.";
-      document.getElementById("listaFicheiros").appendChild(descricao);
       result.forEach((ficheiro) => {
 
-        var collapsable = document.createElement("div");
-        collapsable.setAttribute("class","card shadow mb-0");
         var collapseName = document.createElement("a");
         collapseName.href="#"+ficheiro.fileName+ficheiro.Titulo;
         collapseName.setAttribute("class", "d-block card-header py-3");
@@ -313,17 +312,17 @@ function editar_apagar_ficheiros(){
         collapseName.setAttribute("aria-controls",""+ficheiro.fileName+ficheiro.Titulo);
 
         var nome = document.createElement("H6");
-        nome.setAttribute("class","m-0 font-weight text-primary");
+        nome.setAttribute("class","m-2 font-weight text-info");
         nome.innerHTML=""+ficheiro.Titulo+" ("+ ficheiro.disciName+")";
         collapseName.appendChild(nome);
         console.log(collapseName);
 
-        collapsable.appendChild(collapseName);
-        document.getElementById("listaFicheiros").appendChild(collapsable);
+        document.getElementById("listaFicheiros").appendChild(collapseName);
         
         var formulario = document.createElement("div");
         formulario.setAttribute("class","collapse");
         formulario.id = ""+ficheiro.fileName+ficheiro.Titulo;
+
         var formularioAux = document.createElement("div");
         formularioAux.setAttribute("class","card-body shadow");
 
@@ -333,7 +332,7 @@ function editar_apagar_ficheiros(){
         
         var form = document.createElement("input");
         form.type="text";
-        form.setAttribute("class","form-control");
+        form.setAttribute("class","form-control w-75");
         form.id = "novoTitulo"
         formularioAux.appendChild(form);
         var paragrafo = document.createElement("br");
@@ -358,7 +357,6 @@ function editar_apagar_ficheiros(){
         };
 
         formularioAux.appendChild(a);
-
         var apagar = document.createElement("a");
         apagar.setAttribute("class","btn btn-danger btn-xs");
         apagar.setAttribute("style","float: right");
