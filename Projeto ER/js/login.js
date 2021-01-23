@@ -34,8 +34,7 @@ function login() {
                     $("#dadosCorretos").slideUp(500);
                 });
                 setTimeout(function () {
-                    //window.location.replace("../html/dashboard_"+result[0].user_type+".html")
-                    window.location.replace("../html/editarFicheiros.html")
+                    window.location.replace("../html/dashboard_"+result[0].user_type+".html")
                 }, 3000);
             }
         }
