@@ -109,8 +109,8 @@ function listarDisciplinas(){
 //TITULO DA PÁGINA DE CARREGAR RECURSOS DE UMA DISCIPLINA:
 function tituloNomeDisciplina(){
   var titulo = document.createElement("H1");
-  titulo.setAttribute("class", "h3 mb-0 text-gray-800");
-  var text = document.createTextNode("Recursos - "+ sessionStorage.getItem("disciplina_nome"));
+  titulo.setAttribute("class", "h3 mb-0 text-light");
+  var text = document.createTextNode("Inserir Ficheiro - "+ sessionStorage.getItem("disciplina_nome"));
   console.log(sessionStorage.getItem("disciplina_id"));
   titulo.appendChild(text);
   document.getElementById("carregarFile").appendChild(titulo);
@@ -300,27 +300,34 @@ function editar_apagar_ficheiros(){
     if (err) {
       console.log(err);
     } else {
-
+      var i=1;
       result.forEach((ficheiro) => {
+        var accordion = document.createElement("div");
+        accordion.setAttribute("class","card-header alert-primary btn-link shadow");
+        accordion.id = "ficheiroNº"+i;
+        
 
-        var collapseName = document.createElement("a");
+        var collapseName = document.createElement("button");
         collapseName.href="#"+ficheiro.fileName+ficheiro.Titulo;
-        collapseName.setAttribute("class", "d-block card-header py-3");
+        collapseName.setAttribute("class", "btn btn-link");
         collapseName.setAttribute("data-toggle","collapse");
-        collapseName.setAttribute("role","button");
+        collapseName.setAttribute("data-target","#"+ficheiro.fileName+ficheiro.Titulo);
         collapseName.setAttribute("aria-expanded","false");
         collapseName.setAttribute("aria-controls",""+ficheiro.fileName+ficheiro.Titulo);
-
+        console.log(collapseName);
+        
         var nome = document.createElement("H6");
-        nome.setAttribute("class","m-2 font-weight text-info");
+        nome.setAttribute("class","m-0 font-weight-bold text-dark");
         nome.innerHTML=""+ficheiro.Titulo+" ("+ ficheiro.disciName+")";
         collapseName.appendChild(nome);
-        console.log(collapseName);
 
-        document.getElementById("listaFicheiros").appendChild(collapseName);
+        accordion.appendChild(collapseName);
+        document.getElementById("listaFicheiros").appendChild(accordion);
         
         var formulario = document.createElement("div");
         formulario.setAttribute("class","collapse");
+        formulario.setAttribute("aria-labelledby","ficheiroNº"+i);
+        formulario.setAttribute("data-parent","#accordioned");
         formulario.id = ""+ficheiro.fileName+ficheiro.Titulo;
 
         var formularioAux = document.createElement("div");
@@ -360,10 +367,9 @@ function editar_apagar_ficheiros(){
         var apagar = document.createElement("a");
         apagar.setAttribute("class","btn btn-danger btn-xs");
         apagar.setAttribute("style","float: right");
-        console.log(apagar);
+
         var auxApagar = document.createElement("i");
         auxApagar.setAttribute("class","fas fa-trash");
-        console.log(auxApagar);
         auxApagar.onclick = function(){
           query = "DELETE FROM ficheiro WHERE id = '"+ ficheiro.id +"'";
           console.log(query);
@@ -376,13 +382,13 @@ function editar_apagar_ficheiros(){
             }
          });
         };
-        console.log(auxApagar);
         apagar.appendChild(auxApagar);
         formularioAux.appendChild(apagar);
         formulario.appendChild(formularioAux);
-        console.log(formulario);
         document.getElementById("listaFicheiros").appendChild(formulario);
+        i++;
       });
+      
     }
   });
   closeConnectionDataBase();
