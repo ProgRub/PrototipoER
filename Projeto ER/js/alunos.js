@@ -97,7 +97,7 @@ function escrevaSumario() {
   var id = sessionStorage.getItem("idUser");
   var idDisc = sessionStorage.getItem("idDisciplina");
   var idExpndo = sessionStorage.getItem("idExplicando");
-  query = "SELECT explicando_tem_explicador.sumario as sum FROM explicando_tem_explicador WHERE explicando_tem_explicador.explicando_user_id = '" + idExpndo + "' AND explicando_tem_explicador.explicador_user_id = '" + id + "' AND explicando_tem_explicador.disciplina_id = '" + idDisc + "'";
+  query = "SELECT sumario.id, sumario.sumario as sum, sumario.data as data FROM sumario WHERE sumario.id_explicando = '" + idExpndo + "' AND sumario.id_explicador = '" + id + "' AND sumario.id_disciplina = '" + idDisc + "'";
   console.log(query);
   connectDataBase();
   connection.query(query, function (err, result) {
@@ -106,7 +106,41 @@ function escrevaSumario() {
     } else {
         result.forEach((sumario) => {
         console.log(sumario);
-        var textarea = document.createElement("TEXTAREA");
+
+        sumario.data = sumario.data.toISOString().split("T")[0]
+        //CARD:
+        var sumariocard = document.createElement("div");
+        sumariocard.value = sumario.id;
+        sumariocard.setAttribute("class", "col-xl-10 col-md-10 mb-2");
+
+        //DATA:
+        var data = document.createElement("div");
+        data.setAttribute("class", "card shadow h-100 py-2 w-100");
+        var dataAux = document.createElement("div");
+        dataAux.setAttribute("class", "card-body");
+        var dataAux2 = document.createElement("div");
+        dataAux2.setAttribute("class", "text-x font-weight-bold text-danger mb-1");
+        dataAux2.setAttribute("align","justify");
+        dataAux2.innerHTML = sumario.data;
+        dataAux.appendChild(dataAux2);
+
+        //SUMARIO:
+        var sumariocnt = document.createElement("div");
+        sumariocnt.setAttribute("class", "class", "h9 mb-0 font-weight");
+        sumariocnt.setAttribute("align","justify");
+        sumariocnt.innerHTML = sumario.sum;
+        console.log(sumario.sum);
+
+        dataAux.appendChild(sumariocnt);
+
+        data.appendChild(dataAux);
+
+        sumariocard.appendChild(data);
+
+        document.getElementById("conteudo").appendChild(sumariocard);
+      });
+    }
+    var textarea = document.createElement("TEXTAREA");
         textarea.setAttribute("class", "w-100");
         if(sumario.sum == null){
           var conteudotextarea = document.createTextNode("");
@@ -115,22 +149,24 @@ function escrevaSumario() {
           var conteudotextarea = document.createTextNode(sumario.sum);
         }
         textarea.appendChild(conteudotextarea);
-        document.getElementById("conteudo").appendChild(textarea);
+        
         var btn = document.createElement("button");
+        btn.setAttribute("class", "card shadow");
         var btntext = document.createTextNode("Guardar");
         btn.appendChild(btntext);
         btn.onclick = function () {
           guardaconteudo(id,idExpndo,idDisc,textarea.value);
         };
+        
+        document.getElementById("conteudo").appendChild(textarea);
         document.getElementById("sumario").appendChild(btn);
-      });
-    }
   });
   closeConnectionDataBase();
 }
 
 function guardaconteudo(id,idExpndo,idDisc,textarea) {
-  query = "UPDATE explicando_tem_explicador SET sumario = '" + textarea + "' WHERE explicando_tem_explicador.explicando_user_id = '" + idExpndo + "' AND explicando_tem_explicador.explicador_user_id = '" + id + "' AND explicando_tem_explicador.disciplina_id = '" + idDisc + "'";
+  var data = new Date();
+  query = "INSERT INTO sumario (id_explicando, id_explicador, id_disciplina, sumario, data) VALUES ('"+idExpndo+"', '"+id+"', '"+idDisc+"', '"+textarea+"', CURDATE())";
   console.log(query);
   connectDataBase();
   connection.query(query, function (err, result) {
