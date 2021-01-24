@@ -1,12 +1,13 @@
 //INSERE NOTAS NA BD:
-function tomarNotas(nota){
+function tomarNotas(){
     connectDataBase();
     var id_explicandor = sessionStorage.getItem("idUser");
     var id_disciplina = sessionStorage.getItem("disciplina_id");
     var id_explicando = sessionStorage.getItem("aluno_id");
+    var nota = document.getElementById("textbox").value;
 
     setTimeout(function(){
-    query = "UPDATE explicando_tem_explicador SET notas = '"+nota+"' WHERE explicando_user_id = '"+id_explicando+"' AND explicador_user_id = '"+id_explicandor+"' AND disciplina_id = '"+id_disciplina+"';";
+    query = "UPDATE explicando_tem_explicador SET notas = '"+nota+"' WHERE explicando_user_id = "+id_explicando+" AND explicador_user_id = "+id_explicandor+" AND disciplina_id = "+id_disciplina+";";
         connection.query(query, function (err, result, fields) {
             if (err) {
                 console.log(err);
@@ -22,10 +23,9 @@ function tomarNotas(nota){
 //listar alunos do explicando
 function listarAlunosExplicando(){
     var id_explicador = sessionStorage.getItem("idUser");
-    query = "SELECT explicando_user_id, explicador_user_id FROM explicando_tem_explicador WHERE explicador_user_id= '"+id_explicador+"'";
+    query = "SELECT explicando_user_id, explicador_user_id FROM explicando_tem_explicador WHERE explicador_user_id= "+id_explicador+" AND disciplina_id = "+ sessionStorage.getItem("disciplina_id")+" ";
     console.log(query);
     connectDataBase();
-
     connection.query(query, function (err, result) {
         if (err) {
           console.log(err);
@@ -52,10 +52,8 @@ function listarAlunosExplicando(){
             });
           });
           document.getElementById("escolherAluno").appendChild(select);
-
           paragrafo("escolherAluno");
           paragrafo("escolherAluno");
-    
           var a = document.createElement("a");
           var link = document.createTextNode("Continuar");
           a.appendChild(link);
@@ -128,4 +126,25 @@ function listarDisciplinas(){
     }
   });
   closeConnectionDataBase();
+}
+
+
+
+function listarEditarApagarNotas(){
+  var idExplicador = sessionStorage.getItem("idUser");
+  query = "SELECT * FROM explicando_tem_explicador WHERE explicador_user_id = "+idExplicador+"";
+  console.log(query);
+  connectDataBase();
+  connection.query(query, function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      result.forEach((explicando_tem_explicador) => {
+        
+
+      })
+
+    }
+  });
+
 }
