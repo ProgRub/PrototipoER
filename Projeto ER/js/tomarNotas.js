@@ -21,7 +21,7 @@ function tomarNotas(){
 }
 
 
-//listar alunos do explicando  //ver algo que verifique em que pagina estou com if...
+//listar alunos do explicando  //ver algo que verifique em que pagina estou(funcao listar alunos e listar disciplina) com if para nao estar a repetir funcoes iguais muda só:a.href = "editarNotas.html";
 function listarAlunosExplicando2(){
   var id_explicador = sessionStorage.getItem("idUser");
   query = "SELECT explicando_user_id, explicador_user_id FROM explicando_tem_explicador WHERE explicador_user_id= "+id_explicador+" AND disciplina_id = "+ sessionStorage.getItem("disciplina_id")+" ";
@@ -135,6 +135,7 @@ function paragrafo(elemento){
       document.getElementById(elemento).appendChild(paragrafo);
 }
 
+//listar alunos do disciplina  //ver algo que verifique em que pagina estou(funcao listar alunos e listar disciplina) com if para nao estar a repetir funcoes iguais muda só:a.href = "editarNotas.html";
 function listarDisciplinas2(){
   var id = sessionStorage.getItem("idUser");
   query = "SELECT id, nome FROM disciplina WHERE explicador_user_id = '"+ id +"'";
