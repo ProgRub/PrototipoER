@@ -3,26 +3,29 @@
 
 <head>
 
-    <title>ExplicaJa - Pagamento</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <!-- Custom fonts for this template-->
+    <title>ExplicaJa - Explicador</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     
+    <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
+        <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="../css/font-awesome.min.css">
 
 </head>
-<body id="page-top">
+
+<body id="page-top" onload=mostraExplicadoresAluno();>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -31,9 +34,9 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard_explicando.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <i class="fas fa-book"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3"> ExplicaJa </div>
             </a>
@@ -43,7 +46,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="dashboard_explicando.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Página Inicial</span></a>
             </li>
@@ -57,40 +60,34 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link" href="pagamento.html">
-                    <i class="fa fa-eur"></i>
-                    <span>Pagamento (Funciona)</span></a>
+                <a class="nav-link" href="recursoExtraAluno.html">
+                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                    <span>Recursos Extra</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="escolherPlano.html">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <span>Planos de Acesso</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-graduation-cap"></i>
+                <a class="nav-link" href="recursoExtraAluno.html">
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                     <span>Disciplinas</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-calendar-check-o"></i>
+                <a class="nav-link" href="marcarSessao.html">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
                     <span>Marcações</span></a>
             </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="#">
-                    <i class="fa fa-line-chart"></i>
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
                     <span>Progresso</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="#">
-                    <i class="fa fa-calendar"></i>
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
                     <span>Horários</span></a>
             </li>
 
@@ -246,7 +243,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrador</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Explicando</span>
                                 <img class="img-profile rounded-circle"
                                     src="../img/admin_icon.png">
                             </a>
@@ -282,99 +279,16 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4 w-75" style="margin:auto">
                         <div class="card-header bg-warning">
-                            <h3 class="h3 mb-0 text-light">Pagamento do Plano</h3>
+                            <h3 class="h3 mb-0 text-light">Progresso</h3>
                         </div>
-                        <div class="card-body">
-                            <div class="container py-5">
-                                <div class="row mb-4">
-                                    <div class="col-lg-8 mx-auto text-center">
-                                        <br><p class="card-text h3 mb-0 text-secondary"><b>Escolha um método de pagamento: </b></br>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-8 mx-auto">
-                                        <div class="card ">
-                                            <div class="card-header">
-                                                <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
-                                                    <!-- Credit card form tabs -->
-                                                    <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3">
-                                                        <li class="nav-item"> <a data-toggle="pill" href="#credit-card" class="nav-link active"> <i class="fas fa-credit-card mr-2"></i> Cartão de Crédito </a> </li>
-                                                        <li class="nav-item"> <a data-toggle="pill" href="#paypal" class="nav-link "> <i class="fab fa-paypal mr-2"></i> Paypal </a> </li>
-                                                        <li class="nav-item"> <a data-toggle="pill" href="#net-banking" class="nav-link "> <i class="fas fa-mobile-alt mr-2"></i> Net Banking </a> </li>
-                                                    </ul>
-                                                </div> <!-- End -->
-                                                <!-- Credit card form content -->
-                                                <div class="tab-content">
-                                                    <!-- credit card info-->
-                                                    <div id="credit-card" class="tab-pane fade show active pt-3">
-                                                        <form role="form">
-                                                            <div class="form-group"> <label for="username">
-                                                                    <h6><b>Nome no cartão</b></h6>
-                                                                </label> <input type="text" name="username" placeholder="Nome no cartão" required class="form-control "> </div>
-                                                            <div class="form-group"> <label for="cardNumber">
-                                                                    <h6><b>Número do cartão</b></h6>
-                                                                </label>
-                                                                <div class="input-group"> <input type="text" name="cardNumber" placeholder="Número do cartão" class="form-control " required>
-                                                                    <div class="input-group-append"> <span class="input-group-text text-muted"> <i class="fab fa-cc-visa mx-1"></i> <i class="fab fa-cc-mastercard mx-1"></i> <i class="fab fa-cc-amex mx-1"></i> </span> </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-sm-8">
-                                                                    <div class="form-group"> <label><span class="hidden-xs">
-                                                                                <h6><b>Data de validade</b></h6>
-                                                                            </span></label>
-                                                                        <div class="input-group"> <input type="number" placeholder="MM" name="" class="form-control" required> <input type="number" placeholder="AA" name="" class="form-control" required> </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <div class="form-group mb-4"> <label data-toggle="tooltip" title="Código com 3 dígitos atrás do cartão.">
-                                                                            <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
-                                                                        </label> <input type="text" required class="form-control"> </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="card-footer"> <button type="button" class="subscribe btn btn-primary btn-block shadow-sm"> Confirmar Pagamento </button>
-                                                        </form>
-                                                    </div>
-                                                </div> <!-- End -->
-                                                <!-- Paypal info -->
-                                                <div id="paypal" class="tab-pane fade pt-3">
-                                                    <h6 class="pb-2"><b>Escolha o seu tipo de conta paypal</b></h6>
-                                                    <div class="form-group "> <label class="radio-inline"> <input type="radio" name="optradio" checked> Pessoal </label> <label class="radio-inline"> <input type="radio" name="optradio" class="ml-5"> Comercial </label></div>
-                                                    <p> <button type="button" onclick="window.open('https://www.paypal.com/pt/signin')" class="btn btn-primary"><i class="fab fa-paypal mr-2"></i> Iniciar Sessão no Paypal </button> </p>
-                                                    <p class="text-muted"> <b> Observação:</b> Você será redirecionado ao site do Paypal para completar o pagamento. </p>
-                                                </div> <!-- End -->
-                                                <!-- bank transfer info -->
-                                                <div id="net-banking" class="tab-pane fade pt-3">
-                                                    <div class="form-group "> <label for="Escolha o seu banco">
-                                                            <h6><b> Escolha o seu banco </b></h6>
-                                                        </label> <select class="form-control" id="ccmonth">
-                                                            <option value="" selected disabled> Escolha o seu banco </option>
-                                                            <option>Millennium bcp</option>
-                                                            <option>EuroBic</option>
-                                                            <option>BPI</option>
-                                                            <option>Santander Totta</option>
-                                                            <option>Novo Banco</option>
-                                                            <option>Caixa Geral de Depósitos</option>
-                                                            <option>Montepio</option>
-                                                        </select> </div>
-                                                    <div class="form-group">
-                                                        <p> <button type="button" class="btn btn-primary "><i class="fas fa-mobile-alt mr-2"></i> Efetuar Pagamento</button> </p>
-                                                    </div>
-                                                    <p class="text-muted"><b>Observação:</b> Após clicar no botão, você será redirecionado para um site seguro para completar o pagamento. </p>
-                                                </div> <!-- End -->
-                                                <!-- End -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                      </div>
-                      </div>
+                        <div class="card-body" id="explicadoresAluno">
+                            
+                        </div>
                     </div>
-                    <!-- Page Heading -->
-                   
+                </div>
+                
                      <!-- Footer -->
-            <footer class="sticky-footer bg-white" style="margin:20px">
+            <footer class="sticky-footer bg-white w-75" style="margin:auto">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Grupo 3 - Projeto de Engenharia de Requisitos - ExplicaJa 2021</span>
@@ -385,7 +299,8 @@
 
         </div>
         <!-- End of Content Wrapper -->
-    
+
+    </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -414,6 +329,11 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -430,10 +350,10 @@
     
     <script src="../js/database.js"></script>
     <script src="../js/logout.js"></script>
-    <script>$(function() {
-        $('[data-toggle="tooltip"]').tooltip()
-        })</script>
+    <script src="../js/notasAluno.js"></script>
+    
 
 </body>
 
 </html>
+
