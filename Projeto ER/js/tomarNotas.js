@@ -21,7 +21,6 @@ function tomarNotas(nota){
 
 //listar alunos do explicando
 function listarAlunosExplicando(){
-    let idsExplicandos = [];
     var id_explicador = sessionStorage.getItem("idUser");
     query = "SELECT explicando_user_id, explicador_user_id FROM explicando_tem_explicador WHERE explicador_user_id= '"+id_explicador+"'";
     console.log(query);
@@ -31,56 +30,51 @@ function listarAlunosExplicando(){
         if (err) {
           console.log(err);
         } else {
+          var select = document.createElement("select");
+          select.setAttribute("class", "form-control");
+          select.id = "alunoEscolhido";
+          select.size = 5;
+          
             result.forEach(explicando_tem_explicador => {
-              idsExplicandos.push(explicando_tem_explicador.explicando_user_id);
-              console.log("CERTO");
-            });
-        }
-        query = "SELECT * FROM explicando";
-        console.log(query);
-        connection.query(query, function (err, result) {
-          if (err) {
-            console.log(err);
-          } else {
-            var select = document.createElement("select");
-            select.setAttribute("class", "form-control");
-            select.id = "alunoEscolhido";
-            select.size = 5;
-            document.getElementById("escolherAluno").appendChild(select);
-      
-            result.forEach((explicando) => {
-              if(idsExplicandos.includes(explicando.user_id)){
-                console.log(explicando);
+            query2 = "SELECT * FROM explicando WHERE user_id='"+ explicando_tem_explicador.explicando_user_id +"'";
+            console.log(query2);
+            connection.query(query2, function (err, result2) {
+              if (err) {
+                console.log(err);
+                closeConnectionDataBase();
+              } else {
                 var opcao = document.createElement("option");
-                opcao.value = explicando.user_id;
-                opcao.innerHTML = explicando.nome;
+                opcao.value = result2[0].user_id;
+                opcao.innerHTML = result2[0].nome;
+                console.log(opcao);
                 select.appendChild(opcao);
-              } 
+              }
             });
-      
-            paragrafo("escolherAluno");
-            paragrafo("escolherAluno");
-      
-            var a = document.createElement("a");
-            var link = document.createTextNode("Continuar");
-            a.appendChild(link);
-            a.title = "Continuar";
-            a.setAttribute("class", "btn btn-primary");
-            a.href = "recursoExtra.html";
-            a.onclick = function() {
-              var x = document.getElementById("alunoEscolhido").value;
-              var y = select.options[select.selectedIndex].text;
-              sessionStorage.setItem("aluno_id", x);
-              sessionStorage.setItem("aluno_nome", y);
-            };
-            console.log(a);
-            document.getElementById("escolherAluno").appendChild(a);
-            
-          }
-        });
+          });
+          document.getElementById("escolherAluno").appendChild(select);
+
+          paragrafo("escolherAluno");
+          paragrafo("escolherAluno");
+    
+          var a = document.createElement("a");
+          var link = document.createTextNode("Continuar");
+          a.appendChild(link);
+          a.title = "Continuar";
+          a.setAttribute("class", "btn btn-primary");
+          a.href = "tomarNotas.html";
+          a.onclick = function() {
+            var x = document.getElementById("alunoEscolhido").value;
+            var y = select.options[select.selectedIndex].text;
+            sessionStorage.setItem("aluno_id", x);
+            sessionStorage.setItem("aluno_nome", y);
+          };
+          console.log(a);
+          document.getElementById("escolherAluno").appendChild(a);
+          closeConnectionDataBase();
+        }
+        
       });
-      closeConnectionDataBase();
-}
+    }
 
 function paragrafo(elemento){
   var paragrafo = document.createElement("br");

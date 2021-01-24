@@ -315,7 +315,7 @@ function editar_apagar_ficheiros(){
         
 
         var collapseName = document.createElement("button");
-        collapseName.href="#"+ficheiro.fileName+ficheiro.Titulo;
+        collapseName.setAttribute("href", "#"+ficheiro.fileName+ficheiro.Titulo);
         collapseName.setAttribute("class", "btn btn-link");
         collapseName.setAttribute("data-toggle","collapse");
         collapseName.setAttribute("data-target","#"+ficheiro.fileName+ficheiro.Titulo+i);
