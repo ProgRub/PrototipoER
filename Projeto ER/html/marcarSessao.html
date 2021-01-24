@@ -26,7 +26,7 @@
 
     </head>
 
-    <body id="page-top" onload=mostraDisciplinasAluno();>
+    <body id="page-top" onload="obterDisciplinas()">
 
         <!-- Page Wrapper -->
         <div id="wrapper">
@@ -293,7 +293,7 @@
                                         type="time" id="inputTempoInicial"><br>
                                     <label for="inputTempoFinal"  id="label3">Tempo de fim da sessão: </label><br><input type="time"
                                         id="inputTempoFinal"><br><br>
-                                    <input type="button" value="Marcar Sessão" id="submitData">
+
                                 <!-- </form> -->
                                 </p>
                             </div>
@@ -353,6 +353,10 @@
             <!-- Core plugin JavaScript-->
             <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
             <!-- Custom scripts for all pages-->
+
+            <script src="../js/database.js"></script>
+            <script src="../js/logout.js"></script>
+            <script src="../js/ficheiros.js"></script>
             <script src="../js/sb-admin-2.min.js"></script>
             <script src="../js/sessao.js"></script>
             <!-- Page level plugins -->
@@ -361,10 +365,6 @@
             <!-- Page level custom scripts -->
             <!-- <script src="../js/demo/chart-area-demo.js"></script>
     <script src="../js/demo/chart-pie-demo.js"></script> -->
-
-            <script src="../js/database.js"></script>
-            <script src="../js/logout.js"></script>
-            <script src="../js/ficheiros.js"></script>
 
 
     </body>
