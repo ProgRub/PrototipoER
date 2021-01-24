@@ -23,7 +23,7 @@
 
 </head>
 
-<body id="page-top" onload=listarDisciplinas();>
+<body id="page-top" onload=listarAlunosExplicando();>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -72,6 +72,12 @@
                     </div>
                 </div>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="tomarNotas.html">
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                    <span>Tomar Notas</span></a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="#">
@@ -99,18 +105,6 @@
                     <span>Horários</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="alunos.html">
-                    <i class="fa fa-alunos" aria-hidden="true"></i>
-                    <span>Alunos</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="tomarNotas.html">
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                    <span>Tomar Notas</span></a>
-            </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -298,11 +292,11 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="card shadow mb-4 w-75" style="margin:auto">
-                        <div class="card-header bg-warning">
-                            <h3 class="h3 mb-0 text-light">Disciplinas</h3>
+                        <div class="card-header">
+                            <h3 class="h3 mb-0 text-gray-800">Alunos</h3>
                         </div>
-                        <div class="card-body" id="escolherDisciplina">
-                            <p class="card-text">Escolha a disciplina e clique em <b>"Continuar"</b>.</p>
+                        <div class="card-body" id="escolherAluno">
+                            <p class="card-text">Escolha o Aluno e clique em <b>"Continuar"</b>.</p>
                         </div>
                     </div>
                 </div>
@@ -369,9 +363,8 @@
     
     <script src="../js/database.js"></script>
     <script src="../js/logout.js"></script>
-    <script src="../js/ficheiros.js"></script>
+    <script src="../js/tomarNotas.js"></script>
 
 </body>
 
 </html>
-
