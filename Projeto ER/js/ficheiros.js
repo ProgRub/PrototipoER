@@ -315,12 +315,12 @@ function editar_apagar_ficheiros(){
         
 
         var collapseName = document.createElement("button");
-        collapseName.setAttribute("href", "#"+ficheiro.fileName+ficheiro.Titulo);
+        collapseName.setAttribute("href", "#"+ficheiro.disciName+ficheiro.Titulo+i);
         collapseName.setAttribute("class", "btn btn-link");
         collapseName.setAttribute("data-toggle","collapse");
-        collapseName.setAttribute("data-target","#"+ficheiro.fileName+ficheiro.Titulo+i);
+        collapseName.setAttribute("data-target","#"+ficheiro.disciName+ficheiro.Titulo+i);
         collapseName.setAttribute("aria-expanded","false");
-        collapseName.setAttribute("aria-controls",""+ficheiro.fileName+ficheiro.Titulo+i);
+        collapseName.setAttribute("aria-controls",""+ficheiro.disciName+ficheiro.Titulo+i);
 
         
         var data = document.createElement("h8");
@@ -344,8 +344,8 @@ function editar_apagar_ficheiros(){
         formulario.setAttribute("class","collapse");
         formulario.setAttribute("aria-labelledby","ficheiroNº"+i);
         formulario.setAttribute("data-parent","#accordioned");
-        formulario.id = ""+ficheiro.fileName+ficheiro.Titulo+i;
-
+        formulario.id = ""+ficheiro.disciName+ficheiro.Titulo+i;
+        console.log(formulario);
         var formularioAux = document.createElement("div");
         formularioAux.setAttribute("class","card-body shadow");
 
