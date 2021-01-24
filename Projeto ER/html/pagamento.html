@@ -280,95 +280,99 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Pagamento do Plano</h1></div>
-                    
-                    <div class="container py-5">
-                        <div class="row mb-4">
-                            <div class="col-lg-8 mx-auto text-center">
-                                <h1 class="display-4"><b>Pagamento do Plano</b></h1>
-                                <h4 style="font-size:2rem; font-weight:300; line-height:1.2">Escolha um método de pagamento</h4>
-                            </div>
+                    <div class="card shadow mb-4 w-75" style="margin:auto">
+                        <div class="card-header bg-warning">
+                            <h3 class="h3 mb-0 text-light">Pagamento do Plano</h3>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6 mx-auto">
-                                <div class="card ">
-                                    <div class="card-header">
-                                        <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
-                                            <!-- Credit card form tabs -->
-                                            <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3">
-                                                <li class="nav-item"> <a data-toggle="pill" href="#credit-card" class="nav-link active "> <i class="fas fa-credit-card mr-2"></i> Cartão de Crédito </a> </li>
-                                                <li class="nav-item"> <a data-toggle="pill" href="#paypal" class="nav-link "> <i class="fab fa-paypal mr-2"></i> Paypal </a> </li>
-                                                <li class="nav-item"> <a data-toggle="pill" href="#net-banking" class="nav-link "> <i class="fas fa-mobile-alt mr-2"></i> Net Banking </a> </li>
-                                            </ul>
-                                        </div> <!-- End -->
-                                        <!-- Credit card form content -->
-                                        <div class="tab-content">
-                                            <!-- credit card info-->
-                                            <div id="credit-card" class="tab-pane fade show active pt-3">
-                                                <form role="form">
-                                                    <div class="form-group"> <label for="username">
-                                                            <h6><b>Nome no cartão</b></h6>
-                                                        </label> <input type="text" name="username" placeholder="Nome no cartão" required class="form-control "> </div>
-                                                    <div class="form-group"> <label for="cardNumber">
-                                                            <h6><b>Número do cartão</b></h6>
-                                                        </label>
-                                                        <div class="input-group"> <input type="text" name="cardNumber" placeholder="Número do cartão" class="form-control " required>
-                                                            <div class="input-group-append"> <span class="input-group-text text-muted"> <i class="fab fa-cc-visa mx-1"></i> <i class="fab fa-cc-mastercard mx-1"></i> <i class="fab fa-cc-amex mx-1"></i> </span> </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-8">
-                                                            <div class="form-group"> <label><span class="hidden-xs">
-                                                                        <h6><b>Data de validade</b></h6>
-                                                                    </span></label>
-                                                                <div class="input-group"> <input type="number" placeholder="MM" name="" class="form-control" required> <input type="number" placeholder="AA" name="" class="form-control" required> </div>
+                        <div class="card-body">
+                            <div class="container py-5">
+                                <div class="row mb-4">
+                                    <div class="col-lg-8 mx-auto text-center">
+                                        <br><p class="card-text h3 mb-0 text-secondary"><b>Escolha um método de pagamento: </b></br>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-8 mx-auto">
+                                        <div class="card ">
+                                            <div class="card-header">
+                                                <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
+                                                    <!-- Credit card form tabs -->
+                                                    <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3">
+                                                        <li class="nav-item"> <a data-toggle="pill" href="#credit-card" class="nav-link active "> <i class="fas fa-credit-card mr-2"></i> Cartão de Crédito </a> </li>
+                                                        <li class="nav-item"> <a data-toggle="pill" href="#paypal" class="nav-link "> <i class="fab fa-paypal mr-2"></i> Paypal </a> </li>
+                                                        <li class="nav-item"> <a data-toggle="pill" href="#net-banking" class="nav-link "> <i class="fas fa-mobile-alt mr-2"></i> Net Banking </a> </li>
+                                                    </ul>
+                                                </div> <!-- End -->
+                                                <!-- Credit card form content -->
+                                                <div class="tab-content">
+                                                    <!-- credit card info-->
+                                                    <div id="credit-card" class="tab-pane fade show active pt-3">
+                                                        <form role="form">
+                                                            <div class="form-group"> <label for="username">
+                                                                    <h6><b>Nome no cartão</b></h6>
+                                                                </label> <input type="text" name="username" placeholder="Nome no cartão" required class="form-control "> </div>
+                                                            <div class="form-group"> <label for="cardNumber">
+                                                                    <h6><b>Número do cartão</b></h6>
+                                                                </label>
+                                                                <div class="input-group"> <input type="text" name="cardNumber" placeholder="Número do cartão" class="form-control " required>
+                                                                    <div class="input-group-append"> <span class="input-group-text text-muted"> <i class="fab fa-cc-visa mx-1"></i> <i class="fab fa-cc-mastercard mx-1"></i> <i class="fab fa-cc-amex mx-1"></i> </span> </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="form-group mb-4"> <label data-toggle="tooltip" title="Código com 3 dígitos atrás do cartão.">
-                                                                    <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
-                                                                </label> <input type="text" required class="form-control"> </div>
-                                                        </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-8">
+                                                                    <div class="form-group"> <label><span class="hidden-xs">
+                                                                                <h6><b>Data de validade</b></h6>
+                                                                            </span></label>
+                                                                        <div class="input-group"> <input type="number" placeholder="MM" name="" class="form-control" required> <input type="number" placeholder="AA" name="" class="form-control" required> </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-group mb-4"> <label data-toggle="tooltip" title="Código com 3 dígitos atrás do cartão.">
+                                                                            <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                                                                        </label> <input type="text" required class="form-control"> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-footer"> <button type="button" class="subscribe btn btn-primary btn-block shadow-sm"> Confirmar Pagamento </button>
+                                                        </form>
                                                     </div>
-                                                    <div class="card-footer"> <button type="button" class="subscribe btn btn-primary btn-block shadow-sm"> Confirmar Pagamento </button>
-                                                </form>
+                                                </div> <!-- End -->
+                                                <!-- Paypal info -->
+                                                <div id="paypal" class="tab-pane fade pt-3">
+                                                    <h6 class="pb-2"><b>Escolha o seu tipo de conta paypal</b></h6>
+                                                    <div class="form-group "> <label class="radio-inline"> <input type="radio" name="optradio" checked> Pessoal </label> <label class="radio-inline"> <input type="radio" name="optradio" class="ml-5"> Comercial </label></div>
+                                                    <p> <button type="button" onclick="window.open('https://www.paypal.com/pt/signin')" class="btn btn-primary"><i class="fab fa-paypal mr-2"></i> Iniciar Sessão no Paypal </button> </p>
+                                                    <p class="text-muted"> <b> Observação:</b> Você será redirecionado ao site do Paypal para completar o pagamento. </p>
+                                                </div> <!-- End -->
+                                                <!-- bank transfer info -->
+                                                <div id="net-banking" class="tab-pane fade pt-3">
+                                                    <div class="form-group "> <label for="Escolha o seu banco">
+                                                            <h6><b> Escolha o seu banco </b></h6>
+                                                        </label> <select class="form-control" id="ccmonth">
+                                                            <option value="" selected disabled> Escolha o seu banco </option>
+                                                            <option>Millennium bcp</option>
+                                                            <option>EuroBic</option>
+                                                            <option>BPI</option>
+                                                            <option>Santander Totta</option>
+                                                            <option>Novo Banco</option>
+                                                            <option>Caixa Geral de Depósitos</option>
+                                                            <option>Montepio</option>
+                                                        </select> </div>
+                                                    <div class="form-group">
+                                                        <p> <button type="button" class="btn btn-primary "><i class="fas fa-mobile-alt mr-2"></i> Efetuar Pagamento</button> </p>
+                                                    </div>
+                                                    <p class="text-muted"><b>Observação:</b> Após clicar no botão, você será redirecionado para um site seguro para completar o pagamento. </p>
+                                                </div> <!-- End -->
+                                                <!-- End -->
                                             </div>
-                                        </div> <!-- End -->
-                                        <!-- Paypal info -->
-                                        <div id="paypal" class="tab-pane fade pt-3">
-                                            <h6 class="pb-2"><b>Escolha o seu tipo de conta paypal</b></h6>
-                                            <div class="form-group "> <label class="radio-inline"> <input type="radio" name="optradio" checked> Pessoal </label> <label class="radio-inline"> <input type="radio" name="optradio" class="ml-5"> Comercial </label></div>
-                                            <p> <button type="button" onclick="window.location.href='https://www.paypal.com/pt/signin'" class="btn btn-primary"><i class="fab fa-paypal mr-2"></i> Iniciar Sessão no Paypal </button> </p>
-                                            <p class="text-muted"> <b> Observação:</b> Você será redirecionado ao site do Paypal para completar o pagamento. </p>
-                                        </div> <!-- End -->
-                                        <!-- bank transfer info -->
-                                        <div id="net-banking" class="tab-pane fade pt-3">
-                                            <div class="form-group "> <label for="Escolha o seu banco">
-                                                    <h6><b> Escolha o seu banco </b></h6>
-                                                </label> <select class="form-control" id="ccmonth">
-                                                    <option value="" selected disabled> Escolha o seu banco </option>
-                                                    <option>Millennium bcp</option>
-                                                    <option>EuroBic</option>
-                                                    <option>BPI</option>
-                                                    <option>Santander Totta</option>
-                                                    <option>Novo Banco</option>
-                                                    <option>Caixa Geral de Depósitos</option>
-                                                    <option>Montepio</option>
-                                                </select> </div>
-                                            <div class="form-group">
-                                                <p> <button type="button" class="btn btn-primary "><i class="fas fa-mobile-alt mr-2"></i> Efetuar Pagamento</button> </p>
-                                            </div>
-                                            <p class="text-muted"><b>Observação:</b> Após clicar no botão, você será redirecionado para um site seguro para completar o pagamento. </p>
-                                        </div> <!-- End -->
-                                        <!-- End -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                      </div>
+                      </div>
                     </div>
+                    <!-- Page Heading -->
+                   
                      <!-- Footer -->
             <footer class="sticky-footer bg-white" style="margin:20px">
                 <div class="container my-auto">
