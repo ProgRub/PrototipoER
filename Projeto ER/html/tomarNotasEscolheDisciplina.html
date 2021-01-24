@@ -14,9 +14,7 @@
     
     <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
         <link href="../css/sb-admin-2.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -25,7 +23,7 @@
 
 </head>
 
-<body id="page-top" onload = editar_apagar_ficheiros();>
+<body id="page-top" onload=listarDisciplinas();>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -73,6 +71,12 @@
                         <a class="collapse-item" href="editarFicheiros.html">Editar/Apagar Ficheiros</a>
                     </div>
                 </div>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="tomarNotas.html">
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                    <span>Tomar Notas</span></a>
             </li>
 
             <li class="nav-item">
@@ -286,26 +290,19 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div  class="container-fluid">
+                <div class="container-fluid">
                     <div class="card shadow mb-4 w-75" style="margin:auto">
-                        <div id ="tituloPagina" class="card-header bg-warning">
-                            <h3 class="h3 mb-0  text-light">Edição de Ficheiros</h3>
+                        <div class="card-header">
+                            <h3 class="h3 mb-0 text-gray-800">Disciplinas</h3>
                         </div>
-                        <div id="accordioned">
-                            <div class="card-body" id="listaFicheiros">
-                                <p>Clique no nome de um ficheiro para <b>editar</b> ou <b>apagar</b></p>
-                                
-                            </div>
+                        <div class="card-body" id="escolherDisciplina">
+                            <p class="card-text">Escolha a Disciplina e clique em <b>"Continuar"</b>.</p>
                         </div>
                     </div>
                 </div>
                 
-
-                
-
-                
                      <!-- Footer -->
-            <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white w-75" style="margin:auto">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Grupo 3 - Projeto de Engenharia de Requisitos - ExplicaJa 2021</span>
@@ -345,9 +342,7 @@
         </div>
     </div>
 
-    <!-- ARRANJAR!!!!!!!!!!!!!!!!!!!!!!!!!!!1 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+    <!-- Bootstrap core JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 
@@ -359,21 +354,17 @@
     <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="../js/sb-admin-2.min.js"></script>
+    <!-- Page level plugins -->
+    <!-- <script src="../vendor/chart.js/Chart.min.js"></script> -->
 
+    <!-- Page level custom scripts -->
+    <!-- <script src="../js/demo/chart-area-demo.js"></script>
+    <script src="../js/demo/chart-pie-demo.js"></script> -->
     
     <script src="../js/database.js"></script>
     <script src="../js/logout.js"></script>
-    <script src="../js/ficheiros.js"></script>
-
-    <!--Para aparecer nome do ficheiro ao selecionar:-->
-    <script>
-        $(".custom-file-input").on("change", function() {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        });
-    </script>
+    <script src="../js/tomarNotas.js"></script>
 
 </body>
 
 </html>
-

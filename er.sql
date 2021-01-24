@@ -229,9 +229,11 @@ CREATE TABLE `ficheiro` (
 CREATE TABLE `marcacao` (
   `explicando_user_id` int(10) UNSIGNED NOT NULL,
   `explicador_user_id` int(10) UNSIGNED NOT NULL,
-  `tempoInicio` datetime DEFAULT NULL,
-  `duracao` int(11) DEFAULT NULL COMMENT 'duracao em minutos',
-  `disciplina_id` int(10) UNSIGNED NOT NULL
+  `data` date NOT NULL,
+  `tempoInicio` time DEFAULT NULL,
+  `tempoFinal` time DEFAULT NULL,
+  `disciplina_id` int(10) UNSIGNED NOT NULL,
+  `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -366,6 +368,7 @@ ALTER TABLE `ficheiro`
 -- Índices para tabela `marcacao`
 --
 ALTER TABLE `marcacao`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `fk_marcacao_explicando1_idx` (`explicando_user_id`),
   ADD KEY `fk_marcacao_explicador1_idx` (`explicador_user_id`),
   ADD KEY `fk_marcacao_disciplina1_idx` (`disciplina_id`);
@@ -415,6 +418,9 @@ ALTER TABLE `planoacesso`
 --
 ALTER TABLE `user`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+ALTER TABLE `marcacao`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restrições para despejos de tabelas
