@@ -23,7 +23,7 @@
 
 </head>
 
-<body id="page-top" onload=listarDisciplinas();>
+<body id="page-top" onload= listarEditarApagarNotas() ;> <!--Adicionar funcao !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -72,12 +72,6 @@
                     </div>
                 </div>
             </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="tomarNotas.html">
-                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                    <span>Tomar Notas</span></a>
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="#">
@@ -105,6 +99,28 @@
                     <span>Horários</span></a>
             </li>
 
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="alunos.html">
+                    <i class="fa fa-alunos" aria-hidden="true"></i>
+                    <span>Alunos</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                    <span>Notas</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Ficheiros:</h6>
+                        <a class="collapse-item" href="tomarNotasEscolheDisciplina.html">Inserir Nota</a>
+                        <a class="collapse-item" href="editarNotas.html">Editar/Apagar Notas</a>
+                    </div>
+                </div>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -292,13 +308,11 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="card shadow mb-4 w-75" style="margin:auto">
-                        <div class="card-header">
-                            <h3 class="h3 mb-0 text-gray-800">Disciplinas</h3>
+                        <div class="card-header bg-warning">
+                            <h3 class="h3 mb-0 text-light">Editar Notas</h3>
                         </div>
-                        <div class="card-body" id="escolherDisciplina">
-                            <p class="card-text">Nota:</b>
-                            <textarea id="textbox" name="nota" rows="10" cols="110"></textarea>
-                            <input type="button" onclick="tomarNotas()" value="Submit">
+                        <div class="card-body" id="listaNotas">
+                            <p class="card-text">Escolha a Notas para <b>editar</b> ou <b>apagar</b></p>
                         </div>
                     </div>
                 </div>
@@ -370,3 +384,4 @@
 </body>
 
 </html>
+
