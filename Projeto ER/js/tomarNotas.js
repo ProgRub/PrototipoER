@@ -21,7 +21,6 @@ function tomarNotas(nota){
 
 //listar alunos do explicando
 function listarAlunosExplicando(){
-    let idsExplicandos = [];
     var id_explicador = sessionStorage.getItem("idUser");
     query = "SELECT explicando_user_id, explicador_user_id FROM explicando_tem_explicador WHERE explicador_user_id= '"+id_explicador+"'";
     console.log(query);
@@ -37,7 +36,6 @@ function listarAlunosExplicando(){
           select.size = 5;
           
             result.forEach(explicando_tem_explicador => {
-            //idsExplicandos.push(explicando_tem_explicador.explicando_user_id);
             query2 = "SELECT * FROM explicando WHERE user_id='"+ explicando_tem_explicador.explicando_user_id +"'";
             console.log(query2);
             connection.query(query2, function (err, result2) {
