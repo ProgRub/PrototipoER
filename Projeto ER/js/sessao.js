@@ -1,67 +1,155 @@
-let form = document.getElementById("formSessao");
-form.addEventListener("submit", function (event) {
-  let prevenirSubmit = false;
-  let inputData = document.getElementById("inputData");
-  console.log(inputData.value);
-  let inputTempoInicial = document.getElementById("inputTempoInicial");
-  console.log(inputTempoInicial.value);
-  let inputTempoFinal = document.getElementById("inputTempoFinal");
-  console.log(inputTempoFinal.value);
-  if (new Date(inputData.value) < new Date()) {
-    console.log("Data passada!");
-    prevenirSubmit = true;
-  }
-  let tempoInicial =
-    parseInt(inputTempoInicial.value.split(":")[0], 10) * 60 +
-    parseInt(inputTempoInicial.value.split(":")[1], 10);
-  let tempoFinal =
-    parseInt(inputTempoFinal.value.split(":")[0], 10) * 60 +
-    parseInt(inputTempoFinal.value.split(":")[1], 10);
-  if (tempoInicial > tempoFinal) {
-    console.log("Tempo Final inferior ao Tempo Inicial!");
-    prevenirSubmit = true;
-  }
-  //  console.log(sessionStorage.getItem("idUser"));
-  connectDataBase();
-  let query =
-    "SELECT planoAcesso_id FROM explicando WHERE user_id=" +
-    sessionStorage.getItem("idUser");
-  var planoAcessoID = -1;
-  connection.query(query, function (err, result, fields) {
-    if (err) {
-      console.log(err);
-    } else {
-      planoAcessoID = result[0].planoAcesso_id;
-    console.log(planoAcessoID);
-    if (planoAcessoID != -1) {
-      query = "SELECT tipo FROM planoacesso WHERE id=" + planoAcessoID;
-      // console.log(query);
-      let diaHoje = new Date();
-      let diaSelecionado = new Date(inputData.value);
-      connection.query(query, function (err, result, fields) {
-        if (err) {
-          console.log(err);
-        } else {
-          if (result[0].tipo == "mensal") {
-            if (diaHoje.getMonth() != diaSelecionado.getMonth()) {
-              console.log("Fim do plano mensal");
-              prevenirSubmit = true;
-            }
-          } else if (result[0].tipo == "anual") {
-            if (diaHoje.getFullYear() != diaSelecionado.getFullYear()) {
-              console.log("Fim do plano anual");
-              prevenirSubmit = true;
-            }
-          }
-        }
-      });
-      closeConnectionDataBase();
-    } else {
-      prevenirSubmit = true;
-    }
-    }
-  });
-  if (prevenirSubmit || true) {
-    event.preventDefault();
-  }
+let form = document.getElementById("submitData");
+form.addEventListener("click", function (event) {
+	let prevenirSubmit = false;
+	let inputData = document.getElementById("inputData");
+	console.log(inputData.value);
+	let inputTempoInicial = document.getElementById("inputTempoInicial");
+	console.log(inputTempoInicial.value);
+	let inputTempoFinal = document.getElementById("inputTempoFinal");
+	console.log(inputTempoFinal.value);
+	if (new Date(inputData.value) < new Date()) {
+		console.log("Data passada!");
+		prevenirSubmit = true;
+	}
+	let tempoInicial = parseInt(inputTempoInicial.value.split(":")[0], 10) * 60 + parseInt(inputTempoInicial.value.split(":")[1], 10);
+	let tempoFinal = parseInt(inputTempoFinal.value.split(":")[0], 10) * 60 + parseInt(inputTempoFinal.value.split(":")[1], 10);
+	if (tempoInicial > tempoFinal) {
+		console.log("Tempo Final inferior ao Tempo Inicial!");
+		prevenirSubmit = true;
+	}
+	//  console.log(sessionStorage.getItem("idUser"));
+	if (!prevenirSubmit) {
+		connectDataBase();
+		let query = "SELECT planoAcesso_id FROM explicando WHERE user_id=" + sessionStorage.getItem("idUser");
+		var planoAcessoID = -1;
+		connection.query(query, function (err, result) {
+			if (err) {
+				console.log(err);
+			} else {
+				planoAcessoID = result[0].planoAcesso_id;
+				let diaHoje = new Date();
+				let diaSelecionado = new Date(inputData.value);
+				if (planoAcessoID != -1) {
+					query = "SELECT tipo FROM planoacesso WHERE id=" + planoAcessoID;
+					// console.log(query);
+					connection.query(query, function (err, result) {
+						if (err) {
+							console.log(err);
+						} else {
+							if (result[0].tipo == "mensal") {
+								if (diaHoje.getMonth() != diaSelecionado.getMonth()) {
+									console.log("Fim do plano mensal");
+									prevenirSubmit = true;
+								}
+							} else if (result[0].tipo == "anual") {
+								if (diaHoje.getFullYear() != diaSelecionado.getFullYear()) {
+									console.log("Fim do plano anual");
+									prevenirSubmit = true;
+								}
+							}
+							if (!prevenirSubmit) {
+								var diasSemana = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
+								query = "SELECT * FROM periododisponibilidade";
+								let explicadoresDisponiveis = [];
+								// console.log(query);
+								connection.query(query, function (err, result) {
+									if (err) {
+										console.log(err);
+									} else {
+										result.forEach((periododisponibilidade) => {
+											if (diasSemana[diaSelecionado.getDay()] == periododisponibilidade.diaSemana) {
+												let tempoInicialDisponibilidade = parseInt(periododisponibilidade.tempoInicio.split(":")[0], 10) * 60 + parseInt(periododisponibilidade.tempoInicio.split(":")[1], 10);
+												let tempoFinalDisponibilidade = parseInt(periododisponibilidade.tempoFim.split(":")[0], 10) * 60 + parseInt(periododisponibilidade.tempoFim.split(":")[1], 10);
+												if (tempoInicial > tempoInicialDisponibilidade && tempoFinal < tempoFinalDisponibilidade) {
+													explicadoresDisponiveis.push(periododisponibilidade.explicador_user_id);
+													console.log("VALIDO");
+												}
+											}
+										});
+										// console.log(explicadoresDisponiveis);
+										let headerListaExplicadores = document.createElement("dt");
+										headerListaExplicadores.innerHTML = "Explicadores disponíveis";
+										if (explicadoresDisponiveis.length > 0) {
+											inputData.parentNode.removeChild(inputData);
+											inputTempoFinal.parentNode.removeChild(inputTempoFinal);
+											inputTempoInicial.parentNode.removeChild(inputTempoInicial);
+											document.getElementById("label1").parentNode.removeChild(document.getElementById("label1"));
+											document.getElementById("label2").parentNode.removeChild(document.getElementById("label2"));
+											document.getElementById("label3").parentNode.removeChild(document.getElementById("label3"));
+											document.getElementById("submitData").parentNode.removeChild(document.getElementById("submitData"));
+											explicadoresDisponiveis.forEach((explicadorID) => {
+												query = "SELECT nome FROM explicador WHERE user_id=" + explicadorID;
+												connection.query(query, function (err, result) {
+													if (err) {
+														console.log(err);
+													} else {
+														var explicador = document.createElement("li");
+														explicador.innerHTML = result[0].nome;
+														headerListaExplicadores.appendChild(explicador);
+														document.getElementById("formSessao").appendChild(headerListaExplicadores);
+														closeConnectionDataBase();
+													}
+												});
+											});
+											var data_js = {
+												access_token: "y2ju54usv2ct8w0shn2jmsnp", // sent after you sign up
+											};
+											function toParams(data_js) {
+												var form_data = [];
+												for (var key in data_js) {
+													form_data.push(encodeURIComponent(key) + "=" + encodeURIComponent(data_js[key]));
+												}
+
+												return form_data.join("&");
+											}
+											function js_send() {
+												var request = new XMLHttpRequest();
+												request.onreadystatechange = function () {
+													if (request.readyState == 4 && request.status == 200) {
+														console.log("GOOD");
+													} else if (request.readyState == 4) {
+														console.log("BAD");
+													}
+												};
+
+												var subject = "Confirmação sessão";
+												var message = "Teste";
+												data_js["subject"] = subject;
+												data_js["text"] = message;
+												var params = toParams(data_js);
+
+												request.open("POST", "https://postmail.invotes.com/send", true);
+												request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+												request.send(params);
+
+												return false;
+											}
+											js_send();
+										} else {
+											inputData.parentNode.removeChild(inputData);
+											inputTempoFinal.parentNode.removeChild(inputTempoFinal);
+											inputTempoInicial.parentNode.removeChild(inputTempoInicial);
+											document.getElementById("label1").parentNode.removeChild(document.getElementById("label1"));
+											document.getElementById("label2").parentNode.removeChild(document.getElementById("label2"));
+											document.getElementById("label3").parentNode.removeChild(document.getElementById("label3"));
+											document.getElementById("submitData").parentNode.removeChild(document.getElementById("submitData"));
+											var explicador = document.createElement("li");
+											explicador.innerHTML = "Não há explicadores disponíveis";
+											headerListaExplicadores.appendChild(explicador);
+											document.getElementById("formSessao").appendChild(headerListaExplicadores);
+										}
+									}
+								});
+							} else {
+								closeConnectionDataBase();
+							}
+						}
+					});
+				} else {
+					prevenirSubmit = true;
+				}
+			}
+		});
+	}
 });
