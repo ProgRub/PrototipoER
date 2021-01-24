@@ -141,15 +141,15 @@ function mostraDisciplinasAluno(){
         //CARD:
         var disci = document.createElement("div");
         disci.value = disciplina.id;
-        disci.setAttribute("class", "col-xl-6 col-md-6 mb-2");
+        disci.setAttribute("class", "col-xl-12 col-md-6 mb-0");
 
         //NOME DISCIPLINA:
         var nome = document.createElement("button");
-        nome.setAttribute("class", "card border-left-warning shadow h-100 py-2 w-100");
+        nome.setAttribute("class", "card border-left-warning shadow h-100 py-0 w-100");
         var nomeAux = document.createElement("div");
         nomeAux.setAttribute("class", "card-body w-100");
         var nomeAux2 = document.createElement("div");
-        nomeAux2.setAttribute("class", "text-x font-weight-bold text-danger text-uppercase mb-1");
+        nomeAux2.setAttribute("class", "text-x font-weight-bold text-danger text-uppercase mb-0");
         nomeAux2.innerHTML = disciplina.disciplinaNome;
         nomeAux.appendChild(nomeAux2);
         //NOME EXPLICADOR:
@@ -203,9 +203,9 @@ function ficheirosDisciplinaAluno(){
     } else {
 
       var div1 = document.createElement("div");
-      div1.setAttribute("class","card-header");
+      div1.setAttribute("class","card-header bg-warning");
       var titulo = document.createElement("H3");
-      titulo.setAttribute("class", "h3 mb-0 text-gray-800");
+      titulo.setAttribute("class", "h3 mb-0 text-light");
       titulo.innerHTML = "Ficheiros - "+sessionStorage.getItem("disciplina_nome");
       div1.appendChild(titulo);
       document.getElementById("ficheirosDisciplinaAluno").appendChild(div1);
@@ -215,12 +215,12 @@ function ficheirosDisciplinaAluno(){
 
       var listing = document.createElement("dl");
 
-      var fichaExercicios = document.createElement("dt");
-      fichaExercicios.innerHTML = "Fichas de Exercícios";
-      var apontamentos = document.createElement("dt");
-      apontamentos.innerHTML = "<br>Apontamentos";
-      var outros = document.createElement("dt");
-      outros.innerHTML = "<br>Outros";
+      var fichaExercicios = document.createElement("lu");
+      fichaExercicios.innerHTML = "<b>Fichas de Exercícios</b>";
+      var apontamentos = document.createElement("lu");
+      apontamentos.innerHTML = "<br><b>Apontamentos</b>";
+      var outros = document.createElement("lu");
+      outros.innerHTML = "<br><b>Outros</b>";
 
       var semFichas = true;
       var semApontamentos = true;
@@ -231,8 +231,14 @@ function ficheirosDisciplinaAluno(){
         var ficheiroPDF = document.createElement("li");
         var downloadLink = document.createElement("a");
         var link = document.createTextNode(""+ficheiro.Titulo);
+        var data = document.createElement("h8");
+        data.setAttribute("class", "text-secondary");
+        data.setAttribute("style", "float:right");
+        data.innerHTML = ""+(ficheiro.data_insercao.toString()).substring(4,24)+"";
+        
+        
         downloadLink.appendChild(link);
-
+    
         downloadLink.download = ficheiro.nome;
         var base64str = ficheiro.conteudo;
 
@@ -244,6 +250,7 @@ function ficheirosDisciplinaAluno(){
         downloadLink.title = ficheiro.nome;
         console.log(downloadLink);
         ficheiroPDF.appendChild(downloadLink);
+        ficheiroPDF.appendChild(data);
         if(ficheiro.tipo == "Ficha de Exercicios"){
           fichaExercicios.appendChild(ficheiroPDF);
           semFichas = false;
@@ -291,8 +298,8 @@ function editar_apagar_ficheiros(){
 
   var idExplicador = sessionStorage.getItem("idUser");
 
-  query = "SELECT ficheiro.id, ficheiro.nome as fileName, ficheiro.Titulo, ficheiro.tipo, disciplina.nome as disciName FROM ficheiro, disciplina "+
-  "WHERE ficheiro.explicador_user_id = '"+ idExplicador +"' AND ficheiro.disciplina_id =disciplina.id AND disciplina.explicador_user_id = ficheiro.explicador_user_id";
+  query = "SELECT ficheiro.id, ficheiro.nome as fileName, ficheiro.data_insercao, ficheiro.Titulo, ficheiro.tipo, disciplina.nome as disciName FROM ficheiro, disciplina "+
+  "WHERE ficheiro.explicador_user_id = '"+ idExplicador +"' AND ficheiro.disciplina_id =disciplina.id AND disciplina.explicador_user_id = ficheiro.explicador_user_id ORDER BY disciName, ficheiro.tipo";
   console.log(query);
   connectDataBase();
 
@@ -311,14 +318,23 @@ function editar_apagar_ficheiros(){
         collapseName.href="#"+ficheiro.fileName+ficheiro.Titulo;
         collapseName.setAttribute("class", "btn btn-link");
         collapseName.setAttribute("data-toggle","collapse");
-        collapseName.setAttribute("data-target","#"+ficheiro.fileName+ficheiro.Titulo);
+        collapseName.setAttribute("data-target","#"+ficheiro.fileName+ficheiro.Titulo+i);
         collapseName.setAttribute("aria-expanded","false");
-        collapseName.setAttribute("aria-controls",""+ficheiro.fileName+ficheiro.Titulo);
+        collapseName.setAttribute("aria-controls",""+ficheiro.fileName+ficheiro.Titulo+i);
+
+        
+        var data = document.createElement("h8");
+        data.setAttribute("class", "text-secondary");
+        data.setAttribute("style", "float:right");
+        data.innerHTML = ficheiro.tipo;
+        
+
         console.log(collapseName);
         
         var nome = document.createElement("H6");
         nome.setAttribute("class","m-0 font-weight-bold text-dark");
         nome.innerHTML=""+ficheiro.Titulo+" ("+ ficheiro.disciName+")";
+        accordion.appendChild(data);
         collapseName.appendChild(nome);
 
         accordion.appendChild(collapseName);
@@ -328,7 +344,7 @@ function editar_apagar_ficheiros(){
         formulario.setAttribute("class","collapse");
         formulario.setAttribute("aria-labelledby","ficheiroNº"+i);
         formulario.setAttribute("data-parent","#accordioned");
-        formulario.id = ""+ficheiro.fileName+ficheiro.Titulo;
+        formulario.id = ""+ficheiro.fileName+ficheiro.Titulo+i;
 
         var formularioAux = document.createElement("div");
         formularioAux.setAttribute("class","card-body shadow");
@@ -367,21 +383,25 @@ function editar_apagar_ficheiros(){
         var apagar = document.createElement("a");
         apagar.setAttribute("class","btn btn-danger btn-xs");
         apagar.setAttribute("style","float: right");
+        apagar.onclick = function(){
+          var r = confirm("Deseja apagar o ficheiro?");
+          if (r == true) {
+            query = "DELETE FROM ficheiro WHERE id = '"+ ficheiro.id +"'";
+            console.log(query);
+            connectDataBase();
+            connection.query(query, function (err, result) {
+              if (err) {
+                console.log(err);
+              } else {
+                window.location.replace("editarFicheiros.html");
+              }
+          });
+        }
+        };
 
         var auxApagar = document.createElement("i");
         auxApagar.setAttribute("class","fas fa-trash");
-        auxApagar.onclick = function(){
-          query = "DELETE FROM ficheiro WHERE id = '"+ ficheiro.id +"'";
-          console.log(query);
-          connectDataBase();
-          connection.query(query, function (err, result) {
-            if (err) {
-              console.log(err);
-            } else {
-              window.location.replace("editarFicheiros.html");
-            }
-         });
-        };
+        
         apagar.appendChild(auxApagar);
         formularioAux.appendChild(apagar);
         formulario.appendChild(formularioAux);
