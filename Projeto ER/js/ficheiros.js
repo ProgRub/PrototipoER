@@ -408,7 +408,13 @@ function editar_apagar_ficheiros(){
         document.getElementById("listaFicheiros").appendChild(formulario);
         i++;
       });
-      
+      if(i == 1){
+        var nome = document.createElement("li");
+        nome.setAttribute("class","alert alert-danger");
+        nome.innerHTML="<b>Não tem ficheiros.</b> Faça upload de ficheiros <a href='disciplinaFicheiros.html' class='alert-link'>aqui</a>.";
+
+        document.getElementById("listaFicheiros").appendChild(nome);
+      }
     }
   });
   closeConnectionDataBase();
