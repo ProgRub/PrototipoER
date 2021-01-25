@@ -19,15 +19,16 @@ function inserirSessao(idExplicador, id_disciplina) {
 	connection.query(query, function (err) {
 		if (err) {
 			console.log(err);
+		} else {
+			document.getElementById("listaExplicadores").parentNode.removeChild(document.getElementById("listaExplicadores"));
+			let sessaoMarcada = document.createElement("div");
+			sessaoMarcada.id = "sessaoMarcada";
+			sessaoMarcada.className = "alert alert-success";
+			sessaoMarcada.setAttribute("role", "alert");
+			sessaoMarcada.innerHTML = "<b>Sessão marcada</b> com Sucesso.<br>Dia: " + diaSelecionado + "<br>Tempo Início: " + sessionStorage.getItem("tempoInicial") + "<br>Tempo Fim: " + sessionStorage.getItem("tempoFinal");
+			document.getElementById("disciplinasAluno").appendChild(sessaoMarcada);
 		}
 	});
-	document.getElementById("listaExplicadores").parentNode.removeChild(document.getElementById("listaExplicadores"));
-	let sessaoMarcada = document.createElement("div");
-	sessaoMarcada.id = "sessaoMarcada";
-	sessaoMarcada.className = "alert alert-success";
-	sessaoMarcada.setAttribute("role", "alert");
-	sessaoMarcada.innerHTML = "<b>Sessão marcada</b> com Sucesso.<br>Dia: " + diaSelecionado + "<br>Tempo Início: " + sessionStorage.getItem("tempoInicial") + "<br>Tempo Fim: " + sessionStorage.getItem("tempoFinal");
-	document.getElementById("disciplinasAluno").appendChild(sessaoMarcada);
 }
 
 function obterDisciplinas() {
@@ -292,41 +293,6 @@ function obterDisciplinas() {
 													}
 												});
 											});
-											// var data_js = {
-											// 	access_token: "y2ju54usv2ct8w0shn2jmsnp", // sent after you sign up
-											// };
-											// function toParams(data_js) {
-											// 	var form_data = [];
-											// 	for (var key in data_js) {
-											// 		form_data.push(encodeURIComponent(key) + "=" + encodeURIComponent(data_js[key]));
-											// 	}
-
-											// 	return form_data.join("&");
-											// }
-											// function js_send() {
-											// 	var request = new XMLHttpRequest();
-											// 	request.onreadystatechange = function () {
-											// 		if (request.readyState == 4 && request.status == 200) {
-											// 			console.log("GOOD");
-											// 		} else if (request.readyState == 4) {
-											// 			console.log("BAD");
-											// 		}
-											// 	};
-
-											// 	var subject = "Confirmação sessão";
-											// 	var message = "Teste";
-											// 	data_js["subject"] = subject;
-											// 	data_js["text"] = message;
-											// 	var params = toParams(data_js);
-
-											// 	request.open("POST", "https://postmail.invotes.com/send", true);
-											// 	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-											// 	request.send(params);
-
-											// 	return false;
-											// }
-											// js_send();
 										} else {
 											document.getElementById("formSessao").parentNode.removeChild(document.getElementById("formSessao"));
 											var explicador = document.createElement("li");
@@ -337,8 +303,6 @@ function obterDisciplinas() {
 									}, 50);
 								}
 							});
-
-							// closeConnectionDataBase();
 						}
 					});
 				} else {
