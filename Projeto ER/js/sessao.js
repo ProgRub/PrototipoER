@@ -20,13 +20,37 @@ function inserirSessao(idExplicador, id_disciplina) {
 		if (err) {
 			console.log(err);
 		} else {
-			document.getElementById("listaExplicadores").parentNode.removeChild(document.getElementById("listaExplicadores"));
-			let sessaoMarcada = document.createElement("div");
-			sessaoMarcada.id = "sessaoMarcada";
-			sessaoMarcada.className = "alert alert-success";
-			sessaoMarcada.setAttribute("role", "alert");
-			sessaoMarcada.innerHTML = "<b>Sessão marcada</b> com Sucesso.<br>Dia: " + diaSelecionado + "<br>Tempo Início: " + sessionStorage.getItem("tempoInicial") + "<br>Tempo Fim: " + sessionStorage.getItem("tempoFinal");
-			document.getElementById("disciplinasAluno").appendChild(sessaoMarcada);
+			query = "SELECT * FROM explicando_tem_explicador WHERE explicando_user_id=" + sessionStorage.getItem("idUser") + " AND explicador_user_id=" + idExplicador + " AND disciplina_id=" + id_disciplina;
+			connection.query(query, function (err, result) {
+				if (err) {
+					console.log(err);
+				} else {
+					if (result.length == 0) {
+						query =
+							"INSERT INTO explicando_tem_explicador (explicando_user_id, explicador_user_id, notas, disciplina_id) VALUES (" +
+							sessionStorage.getItem("idUser") +
+							", " +
+							idExplicador +
+							", NULL, " +
+							id_disciplina +
+							")";
+						console.log(query);
+						connection.query(query, function (err) {
+							if (err) {
+								console.log(err);
+							}
+						});
+					}
+					document.getElementById("listaExplicadores").parentNode.removeChild(document.getElementById("listaExplicadores"));
+					let sessaoMarcada = document.createElement("div");
+					sessaoMarcada.id = "sessaoMarcada";
+					sessaoMarcada.className = "alert alert-success";
+					sessaoMarcada.setAttribute("role", "alert");
+					sessaoMarcada.innerHTML =
+						"<b>Sessão marcada</b> com Sucesso.<br>Dia: " + diaSelecionado + "<br>Tempo Início: " + sessionStorage.getItem("tempoInicial") + "<br>Tempo Fim: " + sessionStorage.getItem("tempoFinal");
+					document.getElementById("disciplinasAluno").appendChild(sessaoMarcada);
+				}
+			});
 		}
 	});
 }
@@ -235,7 +259,7 @@ function obterDisciplinas() {
 													explicadoresDisponiveis.push(periododisponibilidade.explicador_user_id);
 													console.log("VALIDO");
 												}
-												query = "SELECT * FROM marcacao WHERE explicador_user_id=" + periododisponibilidade.explicador_user_id;
+												query = "SELECT * FROM marcacao WHERE explicador_user_id=" + periododisponibilidade.explicador_user_id + " OR explicando_user_id=" + sessionStorage.getItem("idUser");
 												console.log(query);
 												connection.query(query, function (err, result) {
 													if (err) {
@@ -257,8 +281,24 @@ function obterDisciplinas() {
 																	// console.log(tempoFinalSessao);
 																	// console.log(tempoInicial < tempoInicioSessao && tempoFinal < tempoInicioSessao);
 																	// console.log(tempoInicial > tempoFinalSessao);
-																	if (!((tempoInicial < tempoInicioSessao && tempoFinal < tempoInicioSessao) || tempoInicial > tempoFinalSessao)) {
+																	if (
+																		sessao.explicador_user_id == periododisponibilidade.explicador_user_id &&
+																		!((tempoInicial < tempoInicioSessao && tempoFinal < tempoInicioSessao) || tempoInicial > tempoFinalSessao)
+																	) {
 																		explicadoresDisponiveis.splice(explicadoresDisponiveis.indexOf(periododisponibilidade.explicador_user_id));
+																	} else if (
+																		!((tempoInicial < tempoInicioSessao && tempoFinal < tempoInicioSessao) || tempoInicial > tempoFinalSessao) &&
+																		sessao.explicando_user_id == sessionStorage.getItem("idUser")
+																	) {
+																		erroSessao.innerHTML = "Não pode marcar sessão na hora de outra sessão já marcada.";
+																		$("#erroMarcar")
+																			.stop(true, true)
+																			.fadeTo(5000, 500)
+																			.slideUp(500, function () {
+																				$("#erroMarcar").slideUp(500);
+																			});
+																		closeConnectionDataBase();
+																		return;
 																	}
 																}
 															});
