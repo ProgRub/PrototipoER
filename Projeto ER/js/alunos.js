@@ -21,7 +21,7 @@ function mostraDisciplinas() {
         //CARD:
         var disci = document.createElement("div");
         disci.value = disciplina.id;
-        disci.setAttribute("class", "col-xl-12 col-md-6 mb-2");
+        disci.setAttribute("class", "wd-100 mb-2");
 
         //NOME DISCIPLINA:
         var nome = document.createElement("button");
@@ -81,7 +81,7 @@ function mostraAlunos() {
         //CARD:
         var explic = document.createElement("div");
         explic.value = explicando.user_id;
-        explic.setAttribute("class", "col-xl-12 col-md-6 mb-2");
+        explic.setAttribute("class", "wd-100 mb-2");
 
         //NOME ALUNO:
         var nome = document.createElement("button");
@@ -134,7 +134,7 @@ function escrevaSumario() {
         //CARD:
         var sumariocard = document.createElement("div");
         sumariocard.value = sumario.id;
-        sumariocard.setAttribute("class", "col-xl-12 col-md-6 mb-2");
+        sumariocard.setAttribute("class", "wd-100 mb-2");
 
         //DATA:
         var data = document.createElement("div");
@@ -164,7 +164,7 @@ function escrevaSumario() {
       });
     }
     if(texto!=false){
-      document.getElementById("conteudo").appendChild(document.createTextNode("Introduza o sumário:"));
+      document.getElementById("conteudo").appendChild(document.createTextNode("Introduza um novo sumário:"));
     }
     else{
       var div = document.createElement("div");
