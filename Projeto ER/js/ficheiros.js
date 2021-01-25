@@ -328,7 +328,7 @@ function editar_apagar_ficheiros(){
       var i=1;
       result.forEach((ficheiro) => {
         var accordion = document.createElement("div");
-        accordion.setAttribute("class","card-header alert-primary btn-link shadow rounded-top");
+        accordion.setAttribute("class","card-header alert-primary btn-link bg-gradient-light shadow rounded-top");
         accordion.id = "ficheiroNº"+i;
         
 
