@@ -331,14 +331,15 @@ function editar_apagar_ficheiros(){
         accordion.setAttribute("class","card-header alert-primary btn-link bg-gradient-light shadow rounded-top");
         accordion.id = "ficheiroNº"+i;
         
+        var aux = (ficheiro.disciName+ficheiro.Titulo+i).replaceAll(" ", "_").replaceAll(/[^\x00-\x7F]/g, "");
 
         var collapseName = document.createElement("button");
-        collapseName.setAttribute("href", "#"+(""+ficheiro.disciName+ficheiro.Titulo+i).replace(" ", "_"));
+        collapseName.setAttribute("href", "#"+aux);
         collapseName.setAttribute("class", "btn btn-link");
         collapseName.setAttribute("data-toggle","collapse");
-        collapseName.setAttribute("data-target","#"+(""+ficheiro.disciName+ficheiro.Titulo+i).replace(" ", "_"));
+        collapseName.setAttribute("data-target","#"+aux);
         collapseName.setAttribute("aria-expanded","false");
-        collapseName.setAttribute("aria-controls",(""+ficheiro.disciName+ficheiro.Titulo+i).replace(" ", "_"));
+        collapseName.setAttribute("aria-controls",aux);
 
         
         var data = document.createElement("h8");
@@ -362,7 +363,7 @@ function editar_apagar_ficheiros(){
         formulario.setAttribute("class","collapse");
         formulario.setAttribute("aria-labelledby","ficheiroNº"+i);
         formulario.setAttribute("data-parent","#accordioned");
-        formulario.id = (""+ficheiro.disciName+ficheiro.Titulo+i).replace(" ", "_");
+        formulario.id = aux;
         console.log(formulario);
         var formularioAux = document.createElement("div");
         formularioAux.setAttribute("class","card-body shadow rounded-bottom");
