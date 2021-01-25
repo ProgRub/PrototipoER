@@ -39,13 +39,10 @@
                 <div class="sidebar-brand-text mx-3"> ExplicaJa </div>
             </a>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="dashboard_explicador.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-pen"></i>
                     <span>Página Inicial</span></a>
             </li>
 
@@ -54,8 +51,14 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                ExplicaJa
+                ExplicaJa - Explicador
             </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                    <span>Disciplinas</span></a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -72,18 +75,6 @@
                     </div>
                 </div>
             </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="tomarNotas.html">
-                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                    <span>Tomar Notas</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                    <span>Disciplinas</span></a>
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="#">
@@ -91,39 +82,26 @@
                     <span>Marcações</span></a>
             </li>
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-line-chart" aria-hidden="true"></i>
-                    <span>Progresso</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                    <span>Horários</span></a>
-            </li>
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="alunos.html">
-                    <i class="fa fa-alunos" aria-hidden="true"></i>
-                    <span>Alunos</span></a>
+                    <i class="fa fa-list-ol" aria-hidden="true"></i>
+                    <span>Sumários</span></a>
             </li>
             
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNotas"
+                    aria-expanded="true" aria-controls="collapseNotas">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     <span>Notas</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                <div id="collapseNotas" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Notas:</h6>
                         <a class="collapse-item" href="tomarNotasEscolheDisciplina.html">Inserir Nota</a>
-                        <a class="collapse-item" href="tomarNotasEscolheDisciplina.html">Editar/Apagar Notas</a>
+                        <a class="collapse-item" href="editarNotasEscolheDisciplina.html">Editar/Apagar Notas</a>
                     </div>
                 </div>
             </li>
@@ -280,9 +258,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrador</span>
-                                <img class="img-profile rounded-circle"
-                                    src="../img/admin_icon.png">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Explicador</span>
+                                <i class="fas fa-user-circle fa-sm fa-fw mr-2 "></i>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -315,13 +292,14 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="card shadow mb-4 w-75" style="margin:auto">
-                        <div class="card-header">
-                            <h3 class="h3 mb-0 text-gray-800">Notas</h3>
+                        <div class="card-header bg-gradient-warning">
+                            <h3 class="h3 mb-0 text-light">Inserir Nota</h3>
                         </div>
                         <div class="card-body" id="">
-                            <p class="card-text">Nota:</b>
-                            <textarea id="textbox" name="nota" rows="10" cols="110"></textarea>
-                            <input type="button" onclick="tomarNotas()" value="Submit">
+                            <p class="card-text"><b>Nota:</b>
+                            <textarea id="textbox" class="form-control" name="nota" rows="5" cols="110"></textarea>
+                            <br>
+                            <input type="button" class="btn btn-success" style="float:right" onclick="tomarNotas()" value="Guardar">
                         </div>
                     </div>
                 </div>

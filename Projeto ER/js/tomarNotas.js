@@ -59,7 +59,7 @@ function listarAlunosExplicando2(){
         var link = document.createTextNode("Continuar");
         a.appendChild(link);
         a.title = "Continuar";
-        a.setAttribute("class", "btn btn-primary");
+        a.setAttribute("class", "btn btn-primary bg-gradient-primary");
         a.href = "editarNotas.html";
         a.onclick = function() {
           var x = document.getElementById("alunoEscolhido").value;
@@ -114,7 +114,7 @@ function listarAlunosExplicando(){
           var link = document.createTextNode("Continuar");
           a.appendChild(link);
           a.title = "Continuar";
-          a.setAttribute("class", "btn btn-primary");
+          a.setAttribute("class", "btn btn-primary bg-gradient-primary");
           a.href = "tomarNotas.html";
           a.onclick = function() {
             var x = document.getElementById("alunoEscolhido").value;
@@ -168,7 +168,7 @@ function listarDisciplinas2(){
       var link = document.createTextNode("Continuar");
       a.appendChild(link);
       a.title = "Continuar";
-      a.setAttribute("class", "btn btn-primary");
+      a.setAttribute("class", "btn btn-primary bg-gradient-primary");
       a.href = "editarNotasEscolheAluno.html";
       a.onclick = function() {
         var x = document.getElementById("disciplinaEscolhida").value;
@@ -216,7 +216,7 @@ function listarDisciplinas(){
       var link = document.createTextNode("Continuar");
       a.appendChild(link);
       a.title = "Continuar";
-      a.setAttribute("class", "btn btn-primary");
+      a.setAttribute("class", "btn btn-primary bg-gradient-primary");
       a.href = "tomarNotasEscolheAluno.html";
       a.onclick = function() {
         var x = document.getElementById("disciplinaEscolhida").value;

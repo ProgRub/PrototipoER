@@ -21,11 +21,11 @@ function mostraDisciplinas() {
         //CARD:
         var disci = document.createElement("div");
         disci.value = disciplina.id;
-        disci.setAttribute("class", "wd-100 mb-2");
+        disci.setAttribute("class", "wd-100 mb-1");
 
         //NOME DISCIPLINA:
         var nome = document.createElement("button");
-        nome.setAttribute("class", "card border-left-warning shadow h-100 py-2 w-100");
+        nome.setAttribute("class", "card border-left-warning shadow h-100 py-0 w-100");
         var nomeAux = document.createElement("div");
         nomeAux.setAttribute("class", "card-body w-100");
         var nomeAux2 = document.createElement("div");
@@ -33,13 +33,6 @@ function mostraDisciplinas() {
         nomeAux2.innerHTML = disciplina.disciplinaNome;
         nomeAux.appendChild(nomeAux2);
 
-        //NOME EXPLICADOR:
-        var explicador = document.createElement("div");
-        explicador.setAttribute("class", "h9 mb-0 font-weight text-gray-800");
-        explicador.innerHTML = "Explicador: " + disciplina.explicadorNome;
-        console.log(disciplina.explicadorNome);
-
-        nomeAux.appendChild(explicador);
 
         nome.onclick = function () {
           sessionStorage.setItem("idDisciplina", disciplina.disciplinaId);
@@ -81,11 +74,11 @@ function mostraAlunos() {
         //CARD:
         var explic = document.createElement("div");
         explic.value = explicando.user_id;
-        explic.setAttribute("class", "wd-100 mb-2");
+        explic.setAttribute("class", "wd-100 mb-1");
 
         //NOME ALUNO:
         var nome = document.createElement("button");
-        nome.setAttribute("class", "card border-left-warning shadow h-100 py-2 w-100");
+        nome.setAttribute("class", "card border-left-warning shadow h-100 py-0 w-100");
         var nomeAux = document.createElement("div");
         nomeAux.setAttribute("class", "card-body w-100");
         var nomeAux2 = document.createElement("div");
@@ -183,13 +176,15 @@ function escrevaSumario() {
         textarea.appendChild(conteudotextarea);
         
         var btn = document.createElement("button");
-        btn.setAttribute("class", "btn btn-primary w-100");
+        btn.setAttribute("class", "btn btn-primary bg-gradient-primary w-100");
         var sp = document.createElement("i");
         sp.setAttribute("class", "icon text-white-50 fas fa-floppy-o");
         btn.appendChild(sp);
         var btntext = document.createTextNode(" Guardar");
         btn.appendChild(btntext);
         btn.onclick = function () {
+
+
           guardaconteudo(id,idExpndo,idDisc,textarea.value);
         };
         document.getElementById("sumario").appendChild(textarea);

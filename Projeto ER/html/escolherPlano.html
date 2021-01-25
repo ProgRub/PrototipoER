@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <style>
         /* Make the image fully responsive */
         .carousel-inner img {
@@ -51,9 +51,9 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard_encarregado_educacao.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <i class="fas fa-book"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3"> ExplicaJa </div>
             </a>
@@ -63,8 +63,8 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                <a class="nav-link" href="dashboard_encarregado_educacao.html">
+                    <i class="fas fa-fw fa-pen"></i>
                     <span>Página Inicial</span></a>
             </li>
 
@@ -73,14 +73,8 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                ExplicaJa
+                ExplicaJa - Encarregado de Educação
             </div>
-
-            <li class="nav-item">
-                <a class="nav-link" href="pagamento.html">
-                    <i class="fa fa-eur"></i>
-                    <span>Pagamento (Funciona)</span></a>
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="escolherPlano.html">
@@ -88,22 +82,11 @@
                     <span>Planos de Acesso</span></a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-graduation-cap"></i>
-                    <span>Disciplinas</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-calendar-check-o"></i>
-                    <span>Marcações</span></a>
-            </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="#">
-                    <i class="fa fa-line-chart"></i>
+                    <i class="fa fa-laugh-wink" aria-hidden="true"></i>
                     <span>Progresso</span></a>
             </li>
 
@@ -111,7 +94,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="fa fa-calendar"></i>
-                    <span>Horários</span></a>
+                    <span>Horário</span></a>
             </li>
 
             <!-- Divider -->
@@ -266,9 +249,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrador</span>
-                                <img class="img-profile rounded-circle"
-                                    src="../img/admin_icon.png">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Encarregado de Educação</span>
+                                <i class="fas fa-user-circle"></i>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -389,6 +371,10 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -397,14 +383,15 @@
     <!-- Custom scripts for all pages-->
     <script src="../js/sb-admin-2.min.js"></script>
     <!-- Page level plugins -->
-    <script src="../vendor/chart.js/Chart.min.js"></script>
+    <!-- <script src="../vendor/chart.js/Chart.min.js"></script> -->
 
     <!-- Page level custom scripts -->
-    <script src="../js/demo/chart-area-demo.js"></script>
-    <script src="../js/demo/chart-pie-demo.js"></script>
+    <!-- <script src="../js/demo/chart-area-demo.js"></script>
+    <script src="../js/demo/chart-pie-demo.js"></script> -->
     
     <script src="../js/database.js"></script>
     <script src="../js/logout.js"></script>
+
     <script>$(function() {
         $('[data-toggle="tooltip"]').tooltip()
         })</script>
