@@ -388,13 +388,19 @@ function editar_apagar_ficheiros(){
           query = "UPDATE ficheiro SET Titulo='"+ document.getElementById("novoTitulo").value +"' WHERE id='"+ ficheiro.id +"'";
           console.log(query);
           connectDataBase();
-          connection.query(query, function (err, result) {
-            if (err) {
-              console.log(err);
-            } else {
-              window.location.replace("editarFicheiros.html");
-            }
-          });
+          if(document.getElementById("novoTitulo").value == "") {
+            alert("Escreva um Titulo.");
+          }else{
+            connection.query(query, function (err, result) {
+              if (err) {
+                console.log(err);
+              } else {
+                window.location.replace("editarFicheiros.html");
+              }
+            });
+          }
+
+          
         };
 
         formularioAux.appendChild(a);
