@@ -265,7 +265,7 @@ function listarEditarApagarNotas(){
       var data = document.createElement("h8");
       data.setAttribute("class", "text-secondary");
       data.setAttribute("style", "float:right");
-      data.innerHTML = "1";
+      //data.innerHTML = "";
 
       console.log(collapseName);
 
@@ -292,9 +292,9 @@ function listarEditarApagarNotas(){
       p.innerHTML = "<b>Nova Nota:</b>"
       formularioAux.appendChild(p);
 
-      var form = document.createElement("input");
-      form.type="text";
-      form.setAttribute("class","form-control w-75");
+      var form = document.createElement("textarea");
+      form.type="textarea";
+      form.setAttribute("class","form-control");
       form.id = "novaNota"
       formularioAux.appendChild(form);
       var paragrafo = document.createElement("br");
@@ -324,16 +324,16 @@ function listarEditarApagarNotas(){
       apagar.setAttribute("class","btn btn-danger btn-xs");
       apagar.setAttribute("style","float: right");
       apagar.onclick = function(){
-        var r = confirm("Deseja apagar o ficheiro?");
+        var r = confirm("Deseja apagar a nota?");
         if (r == true) {
-          query = "DELETE FROM explicando_tem_explicador WHERE explicador_user_id = "+idExplicador+" AND explicando_user_id = "+idAluno+" AND disciplina_id = "+IdDisciplina+"";
+          query = "UPDATE explicando_tem_explicador SET notas = NULL WHERE explicador_user_id = "+idExplicador+" AND explicando_user_id ="+idAluno+" AND disciplina_id = "+IdDisciplina+""
           console.log(query);
           connectDataBase();
           connection.query(query, function (err, result) {
             if (err) {
               console.log(err);
             } else {
-              window.location.replace("editarNotas.html");
+              window.location.replace("editarNotasDisciplina.html");
             }
           });
         }
@@ -350,7 +350,7 @@ function listarEditarApagarNotas(){
     if(verifica){
       var nome = document.createElement("li");
       nome.setAttribute("class","alert alert-danger");
-      nome.innerHTML="<b>Não tem Notas.</b> Faça upload de ficheiros <a href='disciplinaFicheiros.html' class='alert-link'>aqui</a>.";
+      nome.innerHTML="<b>Não tem Notas.</b> Faça uma nova nota em <a href='tomarNotasEscolheDisciplina.html' class='alert-link'>aqui</a>.";
   
       document.getElementById("listaNotas").appendChild(nome);
     }
