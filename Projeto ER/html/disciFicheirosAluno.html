@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>ExplicaJa - Encarregado de Educação</title>
+    <title>ExplicaJa - Explicador</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     
     <!-- Custom fonts for this template-->
@@ -25,7 +25,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" onload=mostraDisciplinasAluno();>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -34,7 +34,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard_explicando.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-book"></i>
                 </div>
@@ -46,7 +46,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="dashboard_encarregado_educacao.html">
+                <a class="nav-link" href="dashboard_explicando.html">
                     <i class="fas fa-fw fa-pen"></i>
                     <span>Página Inicial</span></a>
             </li>
@@ -56,27 +56,32 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                ExplicaJa - Encarregado de Educação
+                ExplicaJa - Explicando
             </div>
 
             <li class="nav-item">
-                <a class="nav-link" href="escolherPlano.html">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <span>Planos de Acesso</span></a>
+                <a class="nav-link" href="disciFicheirosAluno.html">
+                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                    <span>Recursos Extra</span></a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="marcarSessao.html">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <span>Marcações</span></a>
+            </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-laugh-wink" aria-hidden="true"></i>
+                <a class="nav-link" href="verNotas.html">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
                     <span>Progresso</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="#">
-                    <i class="fa fa-calendar"></i>
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
                     <span>Horário</span></a>
             </li>
 
@@ -232,8 +237,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Encarregado de Educação</span>
-                                <i class="fas fa-user-circle"></i>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Explicando</span>
+                                <i class="fas fa-user-circle fa-sm fa-fw mr-2 "></i>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -265,18 +270,18 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <div class="jumbotron bg-gradient-danger shadow my-0 rounded-top">
-                        <h1 class="text-light display-4"><b>Bem-vindo à ExplicaJa</b></h1>
-                        <p class="text-light">Aqui poderá gerir as explicações do seu filho, o seu progresso e o seu plano de acesso à ExplicaJa.</p>
-                      </div>
-                      <div class="card bg-light shadow text-dark">
-                        <div class="card-body rounded-bottom"><img src="../images/ExplicaJa.PNG" class="rounded mx-auto d-block"></div>
-                      </div>
-            
-            </div>
+                    <div class="card shadow mb-4 w-75" style="margin:auto">
+                        <div class="card-header bg-gradient-warning">
+                            <h3 class="h3 mb-0 text-light">Ficheiros - Disciplinas</h3>
+                        </div>
+                        <div class="card-body" id="disciplinasAluno">
+                            <p class="card-text">Selecione uma <b>disciplina</b>.</p>
+                        </div>
+                    </div>
+                
                 
                      <!-- Footer -->
-            <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white w-75 " style="margin:auto">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Grupo 3 - Projeto de Engenharia de Requisitos - ExplicaJa 2021</span>
@@ -284,7 +289,7 @@
                 </div>
             </footer>
             <!-- End of Footer -->
-
+       
         </div>
         <!-- End of Content Wrapper -->
 

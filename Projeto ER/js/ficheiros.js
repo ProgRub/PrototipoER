@@ -19,12 +19,16 @@ const { format } = require("mysql");
     var tipoFicheiro = document.querySelector('input[name="tipoFicheiro"]:checked').value;
     var titulo = document.getElementById("tituloFicheiro").value;
     console.log(titulo);
+    if(ficheiro == null){
+      alert("Por favor, insira um ficheiro.");
+      return;
+    }
     if(!ficheiroAux.endsWith(".pdf")){
       alert("Por favor, insira um ficheiro no formato PDF.");
       return;
     }
-    if(ficheiro == null || titulo == ""){
-      alert("Campos em falta.");
+    if(titulo == ""){
+      alert("Escreva o título do ficheiro.");
       return;
     }
     var nomeFicheiro = ficheiroAux.split("C:\\fakepath\\")[1];
@@ -90,7 +94,7 @@ function listarDisciplinas(){
       var link = document.createTextNode("Continuar");
       a.appendChild(link);
       a.title = "Continuar";
-      a.setAttribute("class", "btn btn-primary");
+      a.setAttribute("class", "btn btn-primary bg-gradient-primary");
       a.href = "recursoExtra.html";
       a.onclick = function() {
         var x = document.getElementById("disciplinaEscolhida").value;
@@ -217,7 +221,7 @@ function ficheirosDisciplinaAluno(){
     } else {
 
       var div1 = document.createElement("div");
-      div1.setAttribute("class","card-header bg-warning");
+      div1.setAttribute("class","card-header bg-gradient-warning");
       var titulo = document.createElement("H3");
       titulo.setAttribute("class", "h3 mb-0 text-light");
       titulo.innerHTML = "Ficheiros - "+sessionStorage.getItem("disciplina_nome");
@@ -324,17 +328,18 @@ function editar_apagar_ficheiros(){
       var i=1;
       result.forEach((ficheiro) => {
         var accordion = document.createElement("div");
-        accordion.setAttribute("class","card-header alert-primary btn-link shadow");
+        accordion.setAttribute("class","card-header alert-primary btn-link bg-gradient-light shadow rounded-top");
         accordion.id = "ficheiroNº"+i;
         
+        var aux = (ficheiro.disciName+ficheiro.Titulo+i).replaceAll(" ", "_").replaceAll(/[^\x00-\x7F]/g, "");
 
         var collapseName = document.createElement("button");
-        collapseName.setAttribute("href", "#"+ficheiro.disciName+ficheiro.Titulo+i);
+        collapseName.setAttribute("href", "#"+aux);
         collapseName.setAttribute("class", "btn btn-link");
         collapseName.setAttribute("data-toggle","collapse");
-        collapseName.setAttribute("data-target","#"+ficheiro.disciName+ficheiro.Titulo+i);
+        collapseName.setAttribute("data-target","#"+aux);
         collapseName.setAttribute("aria-expanded","false");
-        collapseName.setAttribute("aria-controls",""+ficheiro.disciName+ficheiro.Titulo+i);
+        collapseName.setAttribute("aria-controls",aux);
 
         
         var data = document.createElement("h8");
@@ -358,10 +363,10 @@ function editar_apagar_ficheiros(){
         formulario.setAttribute("class","collapse");
         formulario.setAttribute("aria-labelledby","ficheiroNº"+i);
         formulario.setAttribute("data-parent","#accordioned");
-        formulario.id = ""+ficheiro.disciName+ficheiro.Titulo+i;
+        formulario.id = aux;
         console.log(formulario);
         var formularioAux = document.createElement("div");
-        formularioAux.setAttribute("class","card-body shadow");
+        formularioAux.setAttribute("class","card-body shadow rounded-bottom");
 
         var p = document.createElement("p");
         p.innerHTML = "<b>Novo título:</b>"
@@ -384,18 +389,24 @@ function editar_apagar_ficheiros(){
           query = "UPDATE ficheiro SET Titulo='"+ document.getElementById("novoTitulo").value +"' WHERE id='"+ ficheiro.id +"'";
           console.log(query);
           connectDataBase();
-          connection.query(query, function (err, result) {
-            if (err) {
-              console.log(err);
-            } else {
-              window.location.replace("editarFicheiros.html");
-            }
-          });
+          if(document.getElementById("novoTitulo").value == "") {
+            alert("Escreva um Titulo.");
+          }else{
+            connection.query(query, function (err, result) {
+              if (err) {
+                console.log(err);
+              } else {
+                window.location.replace("editarFicheiros.html");
+              }
+            });
+          }
+
+          
         };
 
         formularioAux.appendChild(a);
         var apagar = document.createElement("a");
-        apagar.setAttribute("class","btn btn-danger btn-xs");
+        apagar.setAttribute("class","btn btn-danger bg-gradient-danger btn-xs");
         apagar.setAttribute("style","float: right");
         apagar.onclick = function(){
           var r = confirm("Deseja apagar o ficheiro?");
