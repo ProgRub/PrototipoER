@@ -138,7 +138,7 @@ function paragrafo(elemento){
 //listar alunos do disciplina  //ver algo que verifique em que pagina estou(funcao listar alunos e listar disciplina) com if para nao estar a repetir funcoes iguais muda só:a.href = "editarNotas.html";
 function listarDisciplinas2(){
   var id = sessionStorage.getItem("idUser");
-  query = "SELECT id, nome FROM disciplina WHERE explicador_user_id = '"+ id +"'";
+  query = "SELECT id, nome FROM disciplina WHERE explicador_user_id = '"+ id +"' ORDER BY id";
   console.log(query);
   connectDataBase();
 
@@ -186,7 +186,7 @@ function listarDisciplinas2(){
 
 function listarDisciplinas(){
   var id = sessionStorage.getItem("idUser");
-  query = "SELECT id, nome FROM disciplina WHERE explicador_user_id = '"+ id +"'";
+  query = "SELECT id, nome FROM disciplina WHERE explicador_user_id = '"+ id +"' ORDER BY id";
   console.log(query);
   connectDataBase();
 
@@ -236,19 +236,125 @@ function listarDisciplinas(){
 
 function listarEditarApagarNotas(){
   var idExplicador = sessionStorage.getItem("idUser");
-  query = "SELECT * FROM explicando_tem_explicador WHERE explicador_user_id = "+idExplicador+"";
+  var idAluno = sessionStorage.getItem("aluno_id");
+  var IdDisciplina = sessionStorage.getItem("disciplina_id");
+
+  var verifica = 1;
+  query = "SELECT * FROM explicando_tem_explicador WHERE explicador_user_id = "+idExplicador+" AND explicando_user_id ="+idAluno+" AND disciplina_id = "+IdDisciplina+"";
   console.log(query);
   connectDataBase();
   connection.query(query, function (err, result) {
     if (err) {
       console.log(err);
     } else {
-      result.forEach((explicando_tem_explicador) => {
-        
+      verifica = 0;
+      //document.getElementById("testarNota").innerHTML = result[0].notas;
 
-      })
+      var accordion = document.createElement("div");
+      accordion.setAttribute("class","card-header alert-primary btn-link shadow");
+      accordion.id = "10";
 
+      var collapseName = document.createElement("button");
+      collapseName.setAttribute("href", "#"+"ligacao");
+      collapseName.setAttribute("class", "btn btn-link");
+      collapseName.setAttribute("data-toggle","collapse");
+      collapseName.setAttribute("data-target","#"+"ligacao");
+      collapseName.setAttribute("aria-expanded","false");
+      collapseName.setAttribute("aria-controls","ligacao");
+
+      var data = document.createElement("h8");
+      data.setAttribute("class", "text-secondary");
+      data.setAttribute("style", "float:right");
+      data.innerHTML = "1";
+
+      console.log(collapseName);
+
+      var nome = document.createElement("H6");
+      nome.setAttribute("class","m-0 font-weight-bold text-dark");
+      nome.innerHTML=result[0].notas;
+      accordion.appendChild(data);
+      collapseName.appendChild(nome);
+
+      accordion.appendChild(collapseName);
+      document.getElementById("listaNotas").appendChild(accordion);
+
+      var formulario = document.createElement("div");
+      formulario.setAttribute("class","collapse");
+      formulario.setAttribute("aria-labelledby","10");
+      formulario.setAttribute("data-parent","#accordioned");
+      formulario.id ="ligacao";
+      console.log(formulario);
+      var formularioAux = document.createElement("div");
+      formularioAux.setAttribute("class","card-body shadow");
+
+
+      var p = document.createElement("p");
+      p.innerHTML = "<b>Nova Nota:</b>"
+      formularioAux.appendChild(p);
+
+      var form = document.createElement("input");
+      form.type="text";
+      form.setAttribute("class","form-control w-75");
+      form.id = "novaNota"
+      formularioAux.appendChild(form);
+      var paragrafo = document.createElement("br");
+      formularioAux.appendChild(paragrafo);
+
+
+      var a = document.createElement("button");
+      var link = document.createTextNode("Confirmar Edição");
+      a.appendChild(link);
+      a.title = "Confirmar";
+      a.setAttribute("class", "btn btn-success");
+      a.onclick = function() {
+        query = "UPDATE explicando_tem_explicador SET notas='"+ document.getElementById("novaNota").value +"' WHERE explicador_user_id = "+idExplicador+" AND explicando_user_id ="+idAluno+" AND disciplina_id = "+IdDisciplina+"";
+        console.log(query);
+        connectDataBase();
+        connection.query(query, function (err, result) {
+          if (err) {
+            console.log(err);
+          } else {
+            window.location.replace("editarNotas.html");
+          }
+        });
+      };
+
+      formularioAux.appendChild(a);
+      var apagar = document.createElement("a");
+      apagar.setAttribute("class","btn btn-danger btn-xs");
+      apagar.setAttribute("style","float: right");
+      apagar.onclick = function(){
+        var r = confirm("Deseja apagar o ficheiro?");
+        if (r == true) {
+          query = "DELETE FROM explicando_tem_explicador WHERE explicador_user_id = "+idExplicador+" AND explicando_user_id = "+idAluno+" AND disciplina_id = "+IdDisciplina+"";
+          console.log(query);
+          connectDataBase();
+          connection.query(query, function (err, result) {
+            if (err) {
+              console.log(err);
+            } else {
+              window.location.replace("editarNotas.html");
+            }
+          });
+        }
+      };
+
+      var auxApagar = document.createElement("i");
+      auxApagar.setAttribute("class","fas fa-trash");
+      
+      apagar.appendChild(auxApagar);
+      formularioAux.appendChild(apagar);
+      formulario.appendChild(formularioAux);
+      document.getElementById("listaNotas").appendChild(formulario);
+    }
+    if(verifica){
+      var nome = document.createElement("li");
+      nome.setAttribute("class","alert alert-danger");
+      nome.innerHTML="<b>Não tem Notas.</b> Faça upload de ficheiros <a href='disciplinaFicheiros.html' class='alert-link'>aqui</a>.";
+  
+      document.getElementById("listaNotas").appendChild(nome);
     }
   });
+  closeConnectionDataBase();
 
 }
