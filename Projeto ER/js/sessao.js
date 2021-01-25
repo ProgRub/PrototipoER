@@ -43,6 +43,17 @@ function obterDisciplinas() {
 			console.log(err);
 		} else {
 			let primeiro = true;
+			let divGeral = document.createElement("div");
+			divGeral.className = "radio";
+			let divLinha = document.createElement("div");
+			divLinha.className = "row";
+			let numeroDisciplinas = result.length;
+			let disciplinasPorColuna = Math.floor(numeroDisciplinas / 3);
+			console.log(numeroDisciplinas);
+			console.log(disciplinasPorColuna);
+			let index = 0;
+			var divColuna = document.createElement("div");
+			divColuna.className = "col-md-4";
 			result.forEach((disciplina) => {
 				let radio = document.createElement("input");
 				radio.setAttribute("type", "radio");
@@ -50,31 +61,80 @@ function obterDisciplinas() {
 				radio.setAttribute("name", "disciplina");
 				radio.setAttribute("id", "disciplina_" + disciplina.id);
 				let label = document.createElement("label");
+				// label.appendChild(radio);
 				label.setAttribute("for", "disciplina_" + disciplina.id);
 				label.innerHTML = " " + disciplina.nome;
 				if (primeiro) {
 					radio.checked = true;
 					primeiro = false;
 				}
-				paragrafo.appendChild(radio);
-				paragrafo.appendChild(label);
-				paragrafo.appendChild(document.createElement("br"));
-				paragrafo.appendChild(botao);
+				// paragrafo.appendChild(radio);
+				// paragrafo.appendChild(label);
+				// paragrafo.appendChild(document.createElement("br"));
+				// paragrafo.appendChild(botao);
+				divColuna.appendChild(radio);
+				divColuna.appendChild(label);
+				divColuna.appendChild(document.createElement("br"));
+				index++;
+				if (index % disciplinasPorColuna == 0) {
+					divLinha.appendChild(divColuna);
+					divColuna = document.createElement("div");
+					divColuna.className = "col-md-4";
+				}
 			});
+			divGeral.appendChild(divLinha);
+			paragrafo.appendChild(divGeral);
+			paragrafo.appendChild(document.createElement("br"));
+			paragrafo.appendChild(botao);
 			closeConnectionDataBase();
 		}
 	});
+	let erroSessao = document.createElement("div");
+	erroSessao.id = "erroMarcar";
+	erroSessao.className = "alert alert-danger";
+	erroSessao.setAttribute("role", "alert");
+	document.getElementById("disciplinasAluno").appendChild(erroSessao);
+	$("#erroMarcar").hide();
 	botao.addEventListener("click", function (event) {
-		let prevenirSubmit = false;
 		let inputData = document.getElementById("inputData");
 		console.log(inputData.value);
+		if (inputData.value === "") {
+			erroSessao.innerHTML = "É preciso selecionar a data.";
+			$("#erroMarcar")
+				.stop(true, true)
+				.fadeTo(5000, 500)
+				.slideUp(500, function () {
+					$("#erroMarcar").slideUp(500);
+				});
+			return;
+		}
 		sessionStorage.setItem("dataSelecionada", inputData.value);
 		let inputTempoInicial = document.getElementById("inputTempoInicial");
 		console.log(inputTempoInicial.value);
 		sessionStorage.setItem("tempoInicial", inputTempoInicial.value);
+		if (inputTempoInicial.value === "") {
+			erroSessao.innerHTML = "É preciso selecionar o tempo de início.";
+			$("#erroMarcar")
+				.stop(true, true)
+				.fadeTo(5000, 500)
+				.slideUp(500, function () {
+					$("#erroMarcar").slideUp(500);
+				});
+			return;
+		}
 		let inputTempoFinal = document.getElementById("inputTempoFinal");
 		sessionStorage.setItem("tempoFinal", inputTempoFinal.value);
 		console.log(inputTempoFinal.value);
+		if (inputTempoFinal.value === "") {
+			erroSessao.innerHTML = "É preciso selecionar o tempo de fim da sessão.";
+			$("#erroMarcar")
+				.stop(true, true)
+				.fadeTo(5000, 500)
+				.slideUp(500, function () {
+					$("#erroMarcar").slideUp(500);
+				});
+			return;
+		}
 		let radios = document.getElementsByName("disciplina");
 		let id_disciplina = -1;
 		for (var i = 0, length = radios.length; i < length; i++) {
@@ -85,188 +145,207 @@ function obterDisciplinas() {
 		}
 		console.log(id_disciplina);
 		if (new Date(inputData.value) < new Date()) {
-			console.log("Data passada!");
-			prevenirSubmit = true;
+			// console.log(new Date(inputData.value));
+			// console.log(new Date());
+			erroSessao.innerHTML = "Só pode marcar sessão em dias futuros.";
+			$("#erroMarcar")
+				.stop(true, true)
+				.fadeTo(5000, 500)
+				.slideUp(500, function () {
+					$("#erroMarcar").slideUp(500);
+				});
+			return;
 		}
 		let tempoInicial = parseInt(inputTempoInicial.value.split(":")[0], 10) * 60 + parseInt(inputTempoInicial.value.split(":")[1], 10);
 		let tempoFinal = parseInt(inputTempoFinal.value.split(":")[0], 10) * 60 + parseInt(inputTempoFinal.value.split(":")[1], 10);
 		if (tempoInicial > tempoFinal) {
-			console.log("Tempo Final inferior ao Tempo Inicial!");
-			prevenirSubmit = true;
+			erroSessao.innerHTML = "O tempo de fim da sessão não pode ser inferior ao tempo de início da sessão.";
+			$("#erroMarcar")
+				.stop(true, true)
+				.fadeTo(5000, 500)
+				.slideUp(500, function () {
+					$("#erroMarcar").slideUp(500);
+				});
+			return;
 		}
 		//  console.log(sessionStorage.getItem("idUser"));
-		if (!prevenirSubmit) {
-			connectDataBase();
-			let query = "SELECT planoAcesso_id FROM explicando WHERE user_id=" + sessionStorage.getItem("idUser");
-			var planoAcessoID = -1;
-			connection.query(query, function (err, result) {
-				if (err) {
-					console.log(err);
-				} else {
-					planoAcessoID = result[0].planoAcesso_id;
-					let diaHoje = new Date();
-					let diaSelecionado = new Date(inputData.value);
-					if (planoAcessoID != -1) {
-						query = "SELECT tipo FROM planoacesso WHERE id=" + planoAcessoID;
-						// console.log(query);
-						connection.query(query, function (err, result) {
-							if (err) {
-								console.log(err);
-							} else {
-								if (result[0].tipo == "mensal") {
-									if (diaHoje.getMonth() != diaSelecionado.getMonth()) {
-										console.log("Fim do plano mensal");
-										prevenirSubmit = true;
-									}
-								} else if (result[0].tipo == "anual") {
-									if (diaHoje.getFullYear() != diaSelecionado.getFullYear()) {
-										console.log("Fim do plano anual");
-										prevenirSubmit = true;
-									}
-								}
-								if (!prevenirSubmit) {
-									var diasSemana = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
-									query = "SELECT * FROM periododisponibilidade,disciplina WHERE disciplina.id=" + id_disciplina + " AND disciplina.explicador_user_id=periododisponibilidade.explicador_user_id";
-									let explicadoresDisponiveis = [];
-									// console.log(query);
-									connection.query(query, function (err, result) {
-										if (err) {
-											console.log(err);
-										} else {
-											result.forEach((periododisponibilidade) => {
-												if (diasSemana[diaSelecionado.getDay()] == periododisponibilidade.diaSemana) {
-													let tempoInicialDisponibilidade = parseInt(periododisponibilidade.tempoInicio.split(":")[0], 10) * 60 + parseInt(periododisponibilidade.tempoInicio.split(":")[1], 10);
-													let tempoFinalDisponibilidade = parseInt(periododisponibilidade.tempoFim.split(":")[0], 10) * 60 + parseInt(periododisponibilidade.tempoFim.split(":")[1], 10);
-													console.log(tempoInicialDisponibilidade);
-													console.log(tempoFinalDisponibilidade);
-													console.log(tempoInicial);
-													console.log(tempoFinal);
-													if (tempoInicial >= tempoInicialDisponibilidade && tempoFinal <= tempoFinalDisponibilidade) {
-														query = "SELECT * FROM marcacao WHERE explicador_user_id=" + periododisponibilidade.explicador_user_id;
-														 console.log(query);
-														connection.query(query, function (err, result) {
-															if (err) {
-																console.log(err);
-															} else {
-																// console.log(result);
-																if(result.length > 0){
-																	result.forEach((sessao) => {
-																		let dataSessao = new Date(sessao.data);
-																		// console.log(dataSessao);
-																		// console.log(diaSelecionado);
-																		// console.log(dataSessao.toDateString() === diaSelecionado.toDateString());
-																		if (dataSessao.toDateString() === diaSelecionado.toDateString()) {
-																			let tempoInicioSessao = parseInt(sessao.tempoInicio.split(":")[0], 10) * 60 + parseInt(sessao.tempoInicio.split(":")[1], 10);
-																			let tempoFinalSessao = parseInt(sessao.tempoFinal.split(":")[0], 10) * 60 + parseInt(sessao.tempoFinal.split(":")[1], 10);
-																			console.log(sessao.tempoInicio);
-																			console.log(sessao.tempoFinal);
-																			if ((tempoInicial < tempoInicioSessao && tempoFinal < tempoInicioSessao) || tempoInicial > tempoFinalSessao) {
-																				// console.log(explicadoresDisponiveis);
-																				if (!explicadoresDisponiveis.includes(periododisponibilidade.explicador_user_id)) {
-																					explicadoresDisponiveis.push(periododisponibilidade.explicador_user_id);
-																					console.log("VALIDO");
-																				}
-																			}
-																		}else{
-																			if (!explicadoresDisponiveis.includes(periododisponibilidade.explicador_user_id)) {
-																				explicadoresDisponiveis.push(periododisponibilidade.explicador_user_id);
-																				console.log("VALIDO");
-																			}
-																		}
-																	});
-																}else{
-																	if (!explicadoresDisponiveis.includes(periododisponibilidade.explicador_user_id)) {
-																		explicadoresDisponiveis.push(periododisponibilidade.explicador_user_id);
-																		console.log("VALIDO");
-																	}
-																}
-																
-																// closeConnectionDataBase();
-															}
-														});
-													}
-												}
-											});
-											setTimeout(function () {
-												let headerListaExplicadores = document.createElement("dt");
-												headerListaExplicadores.setAttribute("id", "listaExplicadores");
-												headerListaExplicadores.innerHTML = "Explicadores disponíveis";
-												// let idExplicador = explicadoresDisponiveis[0];
-												if (explicadoresDisponiveis.length > 0) {
-													document.getElementById("formSessao").parentNode.removeChild(document.getElementById("formSessao"));
-													explicadoresDisponiveis.forEach((explicadorID) => {
-														query = "SELECT nome FROM explicador WHERE user_id=" + explicadorID;
-														connection.query(query, function (err, result) {
-															if (err) {
-																console.log(err);
-															} else {
-																var explicador = document.createElement("li");
-																var linkExplicador = document.createElement("a");
-																linkExplicador.href = "#";
-																linkExplicador.setAttribute("onclick", "inserirSessao(" + explicadorID + "," + id_disciplina + ")");
-																linkExplicador.innerHTML = result[0].nome;
-																explicador.appendChild(linkExplicador);
-																headerListaExplicadores.appendChild(explicador);
-																document.getElementById("disciplinasAluno").appendChild(headerListaExplicadores);
-																// closeConnectionDataBase();
-															}
-														});
-													});
-													// var data_js = {
-													// 	access_token: "y2ju54usv2ct8w0shn2jmsnp", // sent after you sign up
-													// };
-													// function toParams(data_js) {
-													// 	var form_data = [];
-													// 	for (var key in data_js) {
-													// 		form_data.push(encodeURIComponent(key) + "=" + encodeURIComponent(data_js[key]));
-													// 	}
-
-													// 	return form_data.join("&");
-													// }
-													// function js_send() {
-													// 	var request = new XMLHttpRequest();
-													// 	request.onreadystatechange = function () {
-													// 		if (request.readyState == 4 && request.status == 200) {
-													// 			console.log("GOOD");
-													// 		} else if (request.readyState == 4) {
-													// 			console.log("BAD");
-													// 		}
-													// 	};
-
-													// 	var subject = "Confirmação sessão";
-													// 	var message = "Teste";
-													// 	data_js["subject"] = subject;
-													// 	data_js["text"] = message;
-													// 	var params = toParams(data_js);
-
-													// 	request.open("POST", "https://postmail.invotes.com/send", true);
-													// 	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-													// 	request.send(params);
-
-													// 	return false;
-													// }
-													// js_send();
-												} else {
-													document.getElementById("formSessao").parentNode.removeChild(document.getElementById("formSessao"));
-													var explicador = document.createElement("li");
-													explicador.innerHTML = "Não há explicadores disponíveis";
-													headerListaExplicadores.appendChild(explicador);
-													document.getElementById("disciplinasAluno").appendChild(headerListaExplicadores);
-												}
-											}, 50);
-										}
-									});
-								} else {
+		connectDataBase();
+		let query = "SELECT planoAcesso_id FROM explicando WHERE user_id=" + sessionStorage.getItem("idUser");
+		var planoAcessoID = -1;
+		connection.query(query, function (err, result) {
+			if (err) {
+				console.log(err);
+			} else {
+				planoAcessoID = result[0].planoAcesso_id;
+				let diaHoje = new Date();
+				let diaSelecionado = new Date(inputData.value);
+				if (planoAcessoID != -1) {
+					query = "SELECT tipo FROM planoacesso WHERE id=" + planoAcessoID;
+					// console.log(query);
+					connection.query(query, function (err, result) {
+						if (err) {
+							console.log(err);
+						} else {
+							if (result[0].tipo == "mensal") {
+								if (diaHoje.getMonth() != diaSelecionado.getMonth()) {
+									console.log("Fim do plano mensal");
+									erroSessao.innerHTML = "Não pode marcar sessão após fim do seu plano mensal.";
+									$("#erroMarcar")
+										.stop(true, true)
+										.fadeTo(5000, 500)
+										.slideUp(500, function () {
+											$("#erroMarcar").slideUp(500);
+										});
 									closeConnectionDataBase();
+									return;
+								}
+							} else if (result[0].tipo == "anual") {
+								if (diaHoje.getFullYear() != diaSelecionado.getFullYear()) {
+									console.log("Fim do plano anual");
+									erroSessao.innerHTML = "Não pode marcar sessão após fim do seu plano anual.";
+									$("#erroMarcar")
+										.stop(true, true)
+										.fadeTo(5000, 500)
+										.slideUp(500, function () {
+											$("#erroMarcar").slideUp(500);
+										});
+									closeConnectionDataBase();
+									return;
 								}
 							}
-						});
-					} else {
-						prevenirSubmit = true;
-					}
+							var diasSemana = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
+							query = "SELECT * FROM periododisponibilidade,disciplina WHERE disciplina.id=" + id_disciplina + " AND disciplina.explicador_user_id=periododisponibilidade.explicador_user_id";
+							let explicadoresDisponiveis = [];
+							// console.log(query);
+							connection.query(query, function (err, result) {
+								if (err) {
+									console.log(err);
+								} else {
+									result.forEach((periododisponibilidade) => {
+										if (diasSemana[diaSelecionado.getDay()] == periododisponibilidade.diaSemana) {
+											let tempoInicialDisponibilidade = parseInt(periododisponibilidade.tempoInicio.split(":")[0], 10) * 60 + parseInt(periododisponibilidade.tempoInicio.split(":")[1], 10);
+											let tempoFinalDisponibilidade = parseInt(periododisponibilidade.tempoFim.split(":")[0], 10) * 60 + parseInt(periododisponibilidade.tempoFim.split(":")[1], 10);
+											// console.log(tempoInicialDisponibilidade);
+											// console.log(tempoFinalDisponibilidade);
+											// console.log(tempoInicial);
+											// console.log(tempoFinal);
+											if (tempoInicial >= tempoInicialDisponibilidade && tempoFinal <= tempoFinalDisponibilidade && !explicadoresDisponiveis.includes(periododisponibilidade.explicador_user_id)) {
+												if (!explicadoresDisponiveis.includes(periododisponibilidade.explicador_user_id)) {
+													explicadoresDisponiveis.push(periododisponibilidade.explicador_user_id);
+													console.log("VALIDO");
+												}
+												query = "SELECT * FROM marcacao WHERE explicador_user_id=" + periododisponibilidade.explicador_user_id;
+												console.log(query);
+												connection.query(query, function (err, result) {
+													if (err) {
+														console.log(err);
+													} else {
+														// console.log(result);
+														if (result.length > 0) {
+															result.forEach((sessao) => {
+																let dataSessao = new Date(sessao.data);
+																// console.log(dataSessao);
+																// console.log(diaSelecionado);
+																// console.log(dataSessao.toDateString() === diaSelecionado.toDateString());
+																if (dataSessao.toDateString() === diaSelecionado.toDateString()) {
+																	let tempoInicioSessao = parseInt(sessao.tempoInicio.split(":")[0], 10) * 60 + parseInt(sessao.tempoInicio.split(":")[1], 10);
+																	let tempoFinalSessao = parseInt(sessao.tempoFinal.split(":")[0], 10) * 60 + parseInt(sessao.tempoFinal.split(":")[1], 10);
+																	// console.log(tempoInicial);
+																	// console.log(tempoFinal);
+																	// console.log(tempoInicioSessao);
+																	// console.log(tempoFinalSessao);
+																	// console.log(tempoInicial < tempoInicioSessao && tempoFinal < tempoInicioSessao);
+																	// console.log(tempoInicial > tempoFinalSessao);
+																	if (!((tempoInicial < tempoInicioSessao && tempoFinal < tempoInicioSessao) || tempoInicial > tempoFinalSessao)) {
+																		explicadoresDisponiveis.splice(explicadoresDisponiveis.indexOf(periododisponibilidade.explicador_user_id));
+																	}
+																}
+															});
+														}
+													}
+												});
+											}
+										}
+									});
+									setTimeout(function () {
+										let headerListaExplicadores = document.createElement("dt");
+										headerListaExplicadores.setAttribute("id", "listaExplicadores");
+										headerListaExplicadores.innerHTML = "Explicadores disponíveis";
+										// let idExplicador = explicadoresDisponiveis[0];
+										if (explicadoresDisponiveis.length > 0) {
+											document.getElementById("formSessao").parentNode.removeChild(document.getElementById("formSessao"));
+											explicadoresDisponiveis.forEach((explicadorID) => {
+												query = "SELECT nome FROM explicador WHERE user_id=" + explicadorID;
+												connection.query(query, function (err, result) {
+													if (err) {
+														console.log(err);
+													} else {
+														var explicador = document.createElement("li");
+														var linkExplicador = document.createElement("a");
+														linkExplicador.href = "#";
+														linkExplicador.setAttribute("onclick", "inserirSessao(" + explicadorID + "," + id_disciplina + ")");
+														linkExplicador.innerHTML = result[0].nome;
+														explicador.appendChild(linkExplicador);
+														headerListaExplicadores.appendChild(explicador);
+														document.getElementById("disciplinasAluno").appendChild(headerListaExplicadores);
+														// closeConnectionDataBase();
+													}
+												});
+											});
+											// var data_js = {
+											// 	access_token: "y2ju54usv2ct8w0shn2jmsnp", // sent after you sign up
+											// };
+											// function toParams(data_js) {
+											// 	var form_data = [];
+											// 	for (var key in data_js) {
+											// 		form_data.push(encodeURIComponent(key) + "=" + encodeURIComponent(data_js[key]));
+											// 	}
+
+											// 	return form_data.join("&");
+											// }
+											// function js_send() {
+											// 	var request = new XMLHttpRequest();
+											// 	request.onreadystatechange = function () {
+											// 		if (request.readyState == 4 && request.status == 200) {
+											// 			console.log("GOOD");
+											// 		} else if (request.readyState == 4) {
+											// 			console.log("BAD");
+											// 		}
+											// 	};
+
+											// 	var subject = "Confirmação sessão";
+											// 	var message = "Teste";
+											// 	data_js["subject"] = subject;
+											// 	data_js["text"] = message;
+											// 	var params = toParams(data_js);
+
+											// 	request.open("POST", "https://postmail.invotes.com/send", true);
+											// 	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+											// 	request.send(params);
+
+											// 	return false;
+											// }
+											// js_send();
+										} else {
+											document.getElementById("formSessao").parentNode.removeChild(document.getElementById("formSessao"));
+											var explicador = document.createElement("li");
+											explicador.innerHTML = "Não há explicadores disponíveis";
+											headerListaExplicadores.appendChild(explicador);
+											document.getElementById("disciplinasAluno").appendChild(headerListaExplicadores);
+										}
+									}, 50);
+								}
+							});
+
+							// closeConnectionDataBase();
+						}
+					});
+				} else {
+					closeConnectionDataBase();
+					return;
 				}
-			});
-		}
+			}
+		});
 	});
 }
