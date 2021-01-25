@@ -137,33 +137,50 @@ function obterDisciplinas() {
 												if (diasSemana[diaSelecionado.getDay()] == periododisponibilidade.diaSemana) {
 													let tempoInicialDisponibilidade = parseInt(periododisponibilidade.tempoInicio.split(":")[0], 10) * 60 + parseInt(periododisponibilidade.tempoInicio.split(":")[1], 10);
 													let tempoFinalDisponibilidade = parseInt(periododisponibilidade.tempoFim.split(":")[0], 10) * 60 + parseInt(periododisponibilidade.tempoFim.split(":")[1], 10);
+													console.log(tempoInicialDisponibilidade);
+													console.log(tempoFinalDisponibilidade);
+													console.log(tempoInicial);
+													console.log(tempoFinal);
 													if (tempoInicial >= tempoInicialDisponibilidade && tempoFinal <= tempoFinalDisponibilidade) {
 														query = "SELECT * FROM marcacao WHERE explicador_user_id=" + periododisponibilidade.explicador_user_id;
-														// console.log(query);
+														 console.log(query);
 														connection.query(query, function (err, result) {
 															if (err) {
 																console.log(err);
 															} else {
 																// console.log(result);
-																result.forEach((sessao) => {
-																	let dataSessao = new Date(sessao.data);
-																	// console.log(dataSessao);
-																	// console.log(diaSelecionado);
-																	// console.log(dataSessao.toDateString() === diaSelecionado.toDateString());
-																	if (dataSessao.toDateString() === diaSelecionado.toDateString()) {
-																		let tempoInicioSessao = parseInt(sessao.tempoInicio.split(":")[0], 10) * 60 + parseInt(sessao.tempoInicio.split(":")[1], 10);
-																		let tempoFinalSessao = parseInt(sessao.tempoFinal.split(":")[0], 10) * 60 + parseInt(sessao.tempoFinal.split(":")[1], 10);
-																		console.log(sessao.tempoInicio);
-																		console.log(sessao.tempoFinal);
-																		if ((tempoInicial < tempoInicioSessao && tempoFinal < tempoInicioSessao) || tempoInicial > tempoFinalSessao) {
-																			// console.log(explicadoresDisponiveis);
+																if(result.length > 0){
+																	result.forEach((sessao) => {
+																		let dataSessao = new Date(sessao.data);
+																		// console.log(dataSessao);
+																		// console.log(diaSelecionado);
+																		// console.log(dataSessao.toDateString() === diaSelecionado.toDateString());
+																		if (dataSessao.toDateString() === diaSelecionado.toDateString()) {
+																			let tempoInicioSessao = parseInt(sessao.tempoInicio.split(":")[0], 10) * 60 + parseInt(sessao.tempoInicio.split(":")[1], 10);
+																			let tempoFinalSessao = parseInt(sessao.tempoFinal.split(":")[0], 10) * 60 + parseInt(sessao.tempoFinal.split(":")[1], 10);
+																			console.log(sessao.tempoInicio);
+																			console.log(sessao.tempoFinal);
+																			if ((tempoInicial < tempoInicioSessao && tempoFinal < tempoInicioSessao) || tempoInicial > tempoFinalSessao) {
+																				// console.log(explicadoresDisponiveis);
+																				if (!explicadoresDisponiveis.includes(periododisponibilidade.explicador_user_id)) {
+																					explicadoresDisponiveis.push(periododisponibilidade.explicador_user_id);
+																					console.log("VALIDO");
+																				}
+																			}
+																		}else{
 																			if (!explicadoresDisponiveis.includes(periododisponibilidade.explicador_user_id)) {
 																				explicadoresDisponiveis.push(periododisponibilidade.explicador_user_id);
 																				console.log("VALIDO");
 																			}
 																		}
+																	});
+																}else{
+																	if (!explicadoresDisponiveis.includes(periododisponibilidade.explicador_user_id)) {
+																		explicadoresDisponiveis.push(periododisponibilidade.explicador_user_id);
+																		console.log("VALIDO");
 																	}
-																});
+																}
+																
 																// closeConnectionDataBase();
 															}
 														});
