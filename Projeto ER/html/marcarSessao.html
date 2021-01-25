@@ -46,60 +46,53 @@
                 <!-- Divider -->
                 <hr class="sidebar-divider my-0">
 
-                <!-- Nav Item - Dashboard -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="dashboard_explicando.html">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Página Inicial</span></a>
-                </li>
+                        <!-- Nav Item - Dashboard -->
+                    <li class="nav-item active">
+                        <a class="nav-link" href="dashboard_explicando.html">
+                            <i class="fas fa-fw fa-pen"></i>
+                            <span>Página Inicial</span></a>
+                    </li>
 
-                <!-- Divider -->
-                <hr class="sidebar-divider">
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
 
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    ExplicaJa
-                </div>
+                    <!-- Heading -->
+                    <div class="sidebar-heading">
+                        ExplicaJa - Explicando
+                    </div>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="recursoExtraAluno.html">
-                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                        <span>Recursos Extra</span></a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard_explicando.html">
+                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                            <span>Recursos Extra</span></a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="recursoExtraAluno.html">
-                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                        <span>Disciplinas</span></a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="marcarSessao.html">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <span>Marcações</span></a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                        <span>Marcações</span></a>
-                </li>
+                    <!-- Nav Item - Charts -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="verNotas.html">
+                            <i class="fa fa-line-chart" aria-hidden="true"></i>
+                            <span>Progresso</span></a>
+                    </li>
 
-                <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fa fa-line-chart" aria-hidden="true"></i>
-                        <span>Progresso</span></a>
-                </li>
+                    <!-- Nav Item - Tables -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <span>Horário</span></a>
+                    </li>
+                        <!-- Divider -->
+                        <hr class="sidebar-divider d-none d-md-block">
 
-                <!-- Nav Item - Tables -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                        <span>Horários</span></a>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block">
-
-                <!-- Sidebar Toggler (Sidebar) -->
-                <div class="text-center d-none d-md-inline">
-                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
+                        <!-- Sidebar Toggler (Sidebar) -->
+                        <div class="text-center d-none d-md-inline">
+                            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                        </div>
 
             </ul>
             <!-- End of Sidebar -->
@@ -281,18 +274,18 @@
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
                         <div class="card shadow mb-4 w-75" style="margin:auto">
-                            <div class="card-header">
-                                <h3 class="h3 mb-0 text-gray-800">Marcação</h3>
+                            <div class="card-header bg-warning">
+                                <h3 class="h3 mb-0 text-light">Marcação</h3>
                             </div>
                             <div class="card-body" id="disciplinasAluno">
                                 <p class="card-text" id="formSessao">
                                 <!-- <form id="formSessao" method="POST"> -->
-                                    <label for="inputData" id="label1">Data da sessão: </label><br><input type="date"
-                                        id="inputData"><br>
-                                    <label for="inputTempoInicial"  id="label2">Tempo de início da sessão: </label><br><input
-                                        type="time" id="inputTempoInicial"><br>
-                                    <label for="inputTempoFinal"  id="label3">Tempo de fim da sessão: </label><br><input type="time"
-                                        id="inputTempoFinal"><br><br>
+                                    <label for="inputData" id="label1"><b>Data da sessão: </b></label><br><input type="date"
+                                    class="form-control" style="width:180px"  id="inputData"><br>
+                                    <label for="inputTempoInicial"  id="label2"><b>Tempo de início da sessão: </b></label><br><input
+                                    class="form-control" style="width:150px"   type="time" id="inputTempoInicial"><br>
+                                    <label for="inputTempoFinal"  id="label3"><b>Tempo de fim da sessão: </b></label><br><input type="time"
+                                    class="form-control" style="width:150px"  id="inputTempoFinal"><br><br>
 
                                 <!-- </form> -->
                                 </p>

@@ -36,6 +36,7 @@ function obterDisciplinas() {
 	botao.setAttribute("type", "button");
 	botao.setAttribute("value", "Marcar Sessão");
 	botao.setAttribute("id", "submitData");
+	botao.setAttribute("class", "bnt btn-success rounded");
 	connectDataBase();
 	connection.query("SELECT * FROM disciplina", function (err, result) {
 		if (err) {

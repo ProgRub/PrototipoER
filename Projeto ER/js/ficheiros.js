@@ -136,6 +136,7 @@ function mostraDisciplinasAluno(){
     if (err) {
       console.log(err);
     } else {
+      var i = 1;
       result.forEach((disciplina) => {
         console.log(disciplina);
         //CARD:
@@ -145,11 +146,24 @@ function mostraDisciplinasAluno(){
 
         //NOME DISCIPLINA:
         var nome = document.createElement("button");
-        nome.setAttribute("class", "card border-left-warning shadow h-100 py-0 w-100");
+        if(i%2 == 0){
+          nome.setAttribute("class", "card border-left-primary shadow h-100 py-0 w-100");
+        }else{
+          nome.setAttribute("class", "card border-left-info shadow h-100 py-0 w-100");
+        }
+        
+        
         var nomeAux = document.createElement("div");
         nomeAux.setAttribute("class", "card-body w-100");
         var nomeAux2 = document.createElement("div");
-        nomeAux2.setAttribute("class", "text-x font-weight-bold text-danger text-uppercase mb-0");
+        if(i%2 == 0){
+          nomeAux2.setAttribute("class", "text-x font-weight-bold text-primary text-uppercase mb-0");
+        }else{
+          nomeAux2.setAttribute("class", "text-x font-weight-bold text-info text-uppercase mb-0");
+        }
+        
+        
+        i++;
         nomeAux2.innerHTML = disciplina.disciplinaNome;
         nomeAux.appendChild(nomeAux2);
         //NOME EXPLICADOR:
