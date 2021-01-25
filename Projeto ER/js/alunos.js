@@ -140,10 +140,11 @@ function escrevaSumario() {
         var data = document.createElement("div");
         data.setAttribute("class", "card shadow border-left-danger h-100 py-2 w-100");
         var dataAux = document.createElement("div");
-        dataAux.setAttribute("class", "card-body ");
+        dataAux.setAttribute("class", "card-body");
         var dataAux2 = document.createElement("div");
         dataAux2.setAttribute("class", "text-x font-weight-bold text-danger mb-1");
         dataAux2.setAttribute("align","justify");
+        dataAux2.style.fontSize="large";
         dataAux2.innerHTML = sumario.data;
         dataAux.appendChild(dataAux2);
 
