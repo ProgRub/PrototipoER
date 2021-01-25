@@ -137,7 +137,7 @@ function obterDisciplinas() {
 												if (diasSemana[diaSelecionado.getDay()] == periododisponibilidade.diaSemana) {
 													let tempoInicialDisponibilidade = parseInt(periododisponibilidade.tempoInicio.split(":")[0], 10) * 60 + parseInt(periododisponibilidade.tempoInicio.split(":")[1], 10);
 													let tempoFinalDisponibilidade = parseInt(periododisponibilidade.tempoFim.split(":")[0], 10) * 60 + parseInt(periododisponibilidade.tempoFim.split(":")[1], 10);
-													if (tempoInicial > tempoInicialDisponibilidade && tempoFinal < tempoFinalDisponibilidade) {
+													if (tempoInicial >= tempoInicialDisponibilidade && tempoFinal <= tempoFinalDisponibilidade) {
 														query = "SELECT * FROM marcacao WHERE explicador_user_id=" + periododisponibilidade.explicador_user_id;
 														// console.log(query);
 														connection.query(query, function (err, result) {
