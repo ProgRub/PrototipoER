@@ -147,7 +147,7 @@ function paragrafo(elemento){
 //listar alunos do disciplina  //ver algo que verifique em que pagina estou(funcao listar alunos e listar disciplina) com if para nao estar a repetir funcoes iguais muda só:a.href = "editarNotas.html";
 function listarDisciplinas2(){
   var id = sessionStorage.getItem("idUser");
-  query = "SELECT id, nome FROM disciplina WHERE explicador_user_id = '"+ id +"' ORDER BY id";
+  query = "SELECT * FROM disciplina, explicando_tem_explicador WHERE disciplina.explicador_user_id = '"+id+"' AND explicando_tem_explicador.disciplina_id = disciplina.id ORDER BY id";
   console.log(query);
   connectDataBase();
 
@@ -195,7 +195,7 @@ function listarDisciplinas2(){
 
 function listarDisciplinas(){
   var id = sessionStorage.getItem("idUser");
-  query = "SELECT id, nome FROM disciplina WHERE explicador_user_id = '"+ id +"' ORDER BY id";
+  query = "SELECT * FROM disciplina, explicando_tem_explicador WHERE disciplina.explicador_user_id = '"+id+"' AND explicando_tem_explicador.disciplina_id = disciplina.id ORDER BY id";
   console.log(query);
   connectDataBase();
 
