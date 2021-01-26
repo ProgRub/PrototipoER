@@ -375,7 +375,7 @@ function editar_apagar_ficheiros(){
         var form = document.createElement("input");
         form.type="text";
         form.setAttribute("class","form-control w-75");
-        form.id = "novoTitulo"
+        form.id = "novoTitulo"+i;
         formularioAux.appendChild(form);
         var paragrafo = document.createElement("br");
         formularioAux.appendChild(paragrafo);
@@ -386,10 +386,11 @@ function editar_apagar_ficheiros(){
         a.title = "Confirmar";
         a.setAttribute("class", "btn btn-success");
         a.onclick = function() {
-          query = "UPDATE ficheiro SET Titulo='"+ document.getElementById("novoTitulo").value +"' WHERE id='"+ ficheiro.id +"'";
+          var novoTitulo = document.getElementById(form.id).value;
+          query = "UPDATE ficheiro SET Titulo='"+ novoTitulo +"' WHERE id='"+ ficheiro.id +"'";
           console.log(query);
           connectDataBase();
-          if(document.getElementById("novoTitulo").value == "") {
+          if(document.getElementById(form.id).value == "") {
             alert("Escreva um Titulo.");
           }else{
             connection.query(query, function (err, result) {
