@@ -1,0 +1,17 @@
+{
+  "name": "projeto-er",
+  "version": "1.0.0",
+  "description": "",
+  "main": "js/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^11.1.1",
+    "electron-reload": "^1.5.0",
+    "mysql": "^2.18.1",
+    "startbootstrap-sb-admin-2": "^4.1.3"
+  }
+}
