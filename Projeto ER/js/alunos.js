@@ -25,7 +25,7 @@ function mostraDisciplinas() {
 
         //NOME DISCIPLINA:
         var nome = document.createElement("button");
-        nome.setAttribute("class", "card border-left-warning shadow h-100 py-0 w-100");
+        nome.setAttribute("class", "card border-left-info shadow h-100 py-0 w-100");
         var nomeAux = document.createElement("div");
         nomeAux.setAttribute("class", "card-body w-100");
         var nomeAux2 = document.createElement("div");
@@ -78,7 +78,7 @@ function mostraAlunos() {
 
         //NOME ALUNO:
         var nome = document.createElement("button");
-        nome.setAttribute("class", "card border-left-warning shadow h-100 py-0 w-100");
+        nome.setAttribute("class", "card border-left-info shadow h-100 py-0 w-100");
         var nomeAux = document.createElement("div");
         nomeAux.setAttribute("class", "card-body w-100");
         var nomeAux2 = document.createElement("div");
@@ -161,6 +161,9 @@ function escrevaSumario() {
         console.log(err);
       } else {
         if(resultado > 0){
+          var subtitulo = document.createElement("p");
+          subtitulo.innerHTML = "Clique num sumário para <b>editá-lo</b>."
+          document.getElementById("conteudo").appendChild(subtitulo);
           document.getElementById("conteudo").appendChild(document.createTextNode("Sumários:"));
         }
         result.forEach((sumario) => {
@@ -231,7 +234,7 @@ function escrevaSumario() {
           if (edita == "false" || (edita == "true" && (sumario.id != idSumario && sumario.id != idSumarioaux))) {
             var span = document.createElement("span")
             var btn2 = document.createElement("button");
-            btn2.setAttribute("class", "btn btn-danger w-100");
+            btn2.setAttribute("class", "btn btn-danger bg-gradient-danger w-100 mb-2");
             var sp2 = document.createElement("i");
             sp2.setAttribute("class", "icon text-white-50 fa fa-trash");
             btn2.appendChild(sp2);
@@ -275,7 +278,7 @@ function escrevaSumario() {
       }
       textarea.appendChild(conteudotextarea);
       var btn = document.createElement("button");
-      btn.setAttribute("class", "btn btn-primary w-100");
+      btn.setAttribute("class", "btn btn-primary bg-gradient-primary w-100");
       var sp = document.createElement("i");
       sp.setAttribute("class", "icon text-white-50 fas fa-floppy-o");
       btn.appendChild(sp);
