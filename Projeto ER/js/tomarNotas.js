@@ -298,7 +298,7 @@ function listarEditarApagarNotas(){
 
 
         var p = document.createElement("p");
-        p.innerHTML = "<b>Nova Nota:</b>"
+        p.innerHTML = "<b>Editar Nota:</b>"
         formularioAux.appendChild(p);
 
         var form = document.createElement("textarea");

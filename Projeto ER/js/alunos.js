@@ -22,7 +22,7 @@ function mostraDisciplinas() {
         disci.setAttribute("class", "wd-100 mb-1");
         //NOME DISCIPLINA:
         var nome = document.createElement("button");
-        nome.setAttribute("class", "card border-left-warning shadow h-100 py-0 w-100");
+        nome.setAttribute("class", "card border-left-info shadow h-100 py-0 w-100");
         var nomeAux = document.createElement("div");
         nomeAux.setAttribute("class", "card-body w-100");
         var nomeAux2 = document.createElement("div");
@@ -71,7 +71,7 @@ function mostraAlunos() {
 
         //NOME ALUNO:
         var nome = document.createElement("button");
-        nome.setAttribute("class", "card border-left-warning shadow h-100 py-0 w-100");
+        nome.setAttribute("class", "card border-left-info shadow h-100 py-0 w-100");
         var nomeAux = document.createElement("div");
         nomeAux.setAttribute("class", "card-body w-100");
         var nomeAux2 = document.createElement("div");
@@ -142,6 +142,9 @@ function escrevaSumario() {
       console.log(err);
     } else {
       if(resultado > 0){
+        var subtitulo = document.createElement("p");
+        subtitulo.innerHTML = "Clique num sumário para <b>editá-lo</b>."
+        document.getElementById("conteudo").appendChild(subtitulo);
         document.getElementById("conteudo").appendChild(document.createTextNode("Sumários:"));
       }
       result.forEach((sumario) => {
@@ -165,7 +168,6 @@ function escrevaSumario() {
         else if (edita == "true") {
           var data = document.createElement("button");
           data.setAttribute("class", "card shadow border-left-danger h-100 py-2 w-100");
-          
           data.onclick = function () {
             edita = "true";
             sessionStorage.setItem("idExplicando", idExpndo);
@@ -213,7 +215,6 @@ function escrevaSumario() {
           btn2.appendChild(sp2);
           var btntext2 = document.createTextNode(" Eliminar");
           btn2.appendChild(btntext2);
-
           btn2.onclick = function () {
             eliminaSumario(sumario.id);
           };
