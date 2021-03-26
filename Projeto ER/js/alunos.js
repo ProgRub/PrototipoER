@@ -1,4 +1,4 @@
-//LISTA DISCIPLINAS DO ALUNO:
+//LISTA DISCIPLINAS DO QUAL O EXPLICADOR ENSINA
 function mostraDisciplinas() {
   var id = sessionStorage.getItem("idUser");
   var disciplinas = true;
@@ -6,9 +6,7 @@ function mostraDisciplinas() {
     "'";
 
   console.log(query);
-  connectDataBase();
-
-  connection.query(query, function (err, result) {
+  connectDataBase();connection.query(query, function (err, result) {
     if (err) {
       console.log(err);
     } else {
@@ -22,7 +20,6 @@ function mostraDisciplinas() {
         var disci = document.createElement("div");
         disci.value = disciplina.id;
         disci.setAttribute("class", "wd-100 mb-1");
-
         //NOME DISCIPLINA:
         var nome = document.createElement("button");
         nome.setAttribute("class", "card border-left-warning shadow h-100 py-0 w-100");
@@ -32,8 +29,6 @@ function mostraDisciplinas() {
         nomeAux2.setAttribute("class", "text-x font-weight-bold text-danger text-uppercase mb-1");
         nomeAux2.innerHTML = disciplina.disciplinaNome;
         nomeAux.appendChild(nomeAux2);
-
-
         nome.onclick = function () {
           sessionStorage.setItem("idDisciplina", disciplina.disciplinaId);
           window.location.assign("../html/alunosNomes.html")
@@ -51,7 +46,7 @@ function mostraDisciplinas() {
   closeConnectionDataBase();
 }
 
-//LISTA DISCIPLINAS DO ALUNO:
+//LISTA OS ALUNOS PERTENCENTE A DISCIPLINA ESCOLHIDA ANTERIORMENTE
 function mostraAlunos() {
   var id = sessionStorage.getItem("idUser");
   var idDisc = sessionStorage.getItem("idDisciplina");
@@ -59,8 +54,6 @@ function mostraAlunos() {
   query = "SELECT explicando.user_id as idExplicando, explicando.nome as nomeExplicando FROM explicando, explicando_tem_explicador, explicador WHERE explicando.user_id = explicando_tem_explicador.explicando_user_id AND explicando_tem_explicador.explicador_user_id = explicador.user_id AND explicando_tem_explicador.explicador_user_id = '" + id + "' AND explicando_tem_explicador.disciplina_id = '" + idDisc + "'";
   console.log(query);
   connectDataBase();
-
-
   connection.query(query, function (err, result) {
     if (err) {
       console.log(err);
@@ -94,7 +87,7 @@ function mostraAlunos() {
           sessionStorage.setItem("idDisciplina", idDisc);
           sessionStorage.setItem("edita", edita);
           sessionStorage.setItem("idSumario", idSumario);
-          verificaData(aux);
+          verificaData(1);
         };
         nome.appendChild(nomeAux);
 
@@ -109,22 +102,10 @@ function mostraAlunos() {
   closeConnectionDataBase();
 }
 
-  function verificaQuery() {
-    query = "SELECT id, data, sumario FROM sumario";
-    console.log(query);
-    connectDataBase();
-    connection.query(query, function (err, result) {
-      if (err) {
-        console.log(err);
-      } else {
-        var x = result.length;
-        console.log(x);
-        sessionStorage.setItem("resultado", x);
-      }
-    });
-    closeConnectionDataBase();
-  }
-
+//LISTA OS FORMULARIOS EXISTENTES E PERMITE ESCREVER UM NOVO FORMULARIO CASO
+//NÃO EXISTA NENHUM FORMULARIO OU JÁ TENHA PASSADO 1 SEMANA DESDE ULTIMO FORMULARIO
+//EXISTENTE NA BASE DE DADOS OU EDITAR UM FORMULARIO EXISTENTE TANTO O DA SEMANA
+//ATUAL COMO OS DAS SEMANAS ANTERIORES
 function escrevaSumario() {
   var resultado = sessionStorage.getItem("resultado");
   console.log(resultado);
@@ -153,196 +134,209 @@ function escrevaSumario() {
   console.log(edita);
   console.log(sumText);
   console.log(texto);
-    query = "SELECT sumario.id, sumario.sumario as sum, sumario.data as data FROM sumario WHERE sumario.id_explicando = '" + idExpndo + "' AND sumario.id_explicador = '" + id + "' AND sumario.id_disciplina = '" + idDisc + "'";
-    console.log(query);
-    connectDataBase();
-    connection.query(query, function (err, result) {
-      if (err) {
-        console.log(err);
-      } else {
-        if(resultado > 0){
-          document.getElementById("conteudo").appendChild(document.createTextNode("Sumários:"));
+  query = "SELECT sumario.id, sumario.sumario as sum, sumario.data as data FROM sumario WHERE sumario.id_explicando = '" + idExpndo + "' AND sumario.id_explicador = '" + id + "' AND sumario.id_disciplina = '" + idDisc + "'";
+  console.log(query);
+  connectDataBase();
+  connection.query(query, function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      if(resultado > 0){
+        document.getElementById("conteudo").appendChild(document.createTextNode("Sumários:"));
+      }
+      result.forEach((sumario) => {
+        console.log(sumario);
+        sumario.data = sumario.data.toISOString().split("T")[0]
+        //CARD:
+        var sumariocard = document.createElement("div");
+        sumariocard.value = sumario.id;
+        sumariocard.setAttribute("class", "wd-100 mb-2");
+        //DATA:
+        if (edita == "true" && sumario.id == idSumario) {
+          var data = document.createElement("div");
+          data.setAttribute("class", "card shadow border-left-primary h-100 py-2 w-100");
+          data.style.backgroundColor = "lightblue";
         }
-        result.forEach((sumario) => {
-          console.log(sumario);
-          sumario.data = sumario.data.toISOString().split("T")[0]
-          //CARD:
-          var sumariocard = document.createElement("div");
-          sumariocard.value = sumario.id;
-          sumariocard.setAttribute("class", "wd-100 mb-2");
-
-          //DATA:
-          if (edita == "true" && sumario.id == idSumario) {
-            var data = document.createElement("div");
-            data.setAttribute("class", "card shadow border-left-primary h-100 py-2 w-100");
-            data.style.backgroundColor = "lightblue";
-          }
-
-          else if (edita == "true" && sumario.id == idSumarioaux) {
-            var data = document.createElement("div");
-            data.setAttribute("class", "card shadow border-left-danger h-100 py-2 w-100");
-            data.style.backgroundColor = "pink";
-          }
-          else if (edita == "true") {
-            var data = document.createElement("button");
-            data.setAttribute("class", "card shadow border-left-danger h-100 py-2 w-100");
-            
-            data.onclick = function () {
-              edita = "true";
-              sessionStorage.setItem("idExplicando", idExpndo);
-              sessionStorage.setItem("idDisciplina", idDisc);
-              sessionStorage.setItem("edita", edita);
-              sessionStorage.setItem("sumText", sumario.sum);
-              sessionStorage.setItem("idSumarioaux", idSumario);
-              sessionStorage.setItem("idSumario", sumario.id);
-              window.location.assign("../html/alunoSumario.html")
-            };
-          }
-          else {
-            var data = document.createElement("button");
-            data.setAttribute("class", "card shadow border-left-danger h-100 py-2 w-100");
-
-            data.onclick = function () {
-              edita = "true";
-              sessionStorage.setItem("idExplicando", idExpndo);
-              sessionStorage.setItem("idDisciplina", idDisc);
-              sessionStorage.setItem("edita", edita);
-              sessionStorage.setItem("sumText", sumario.sum);
-              sessionStorage.setItem("idSumario", sumario.id);
-              window.location.assign("../html/alunoSumario.html")
-            };
-          }
-          var dataAux = document.createElement("div");
-          dataAux.setAttribute("class", "card-body w-100");
-          var dataAux2 = document.createElement("div");
-          dataAux2.setAttribute("class", "text-x font-weight-bold text-danger mb-1");
-          dataAux2.setAttribute("align", "justify");
-          dataAux2.style.fontSize = "large";
-          dataAux2.innerHTML = sumario.data;
-          dataAux.appendChild(dataAux2);
-
-          //SUMARIO:
-          var sumariocnt = document.createElement("div");
-          sumariocnt.setAttribute("class", "h9 mb-0 font-weight");
-          sumariocnt.setAttribute("align", "justify");
-          sumariocnt.innerHTML = sumario.sum;
-          console.log(sumario.sum);
-
-          if (edita == "false" || (edita == "true" && (sumario.id != idSumario && sumario.id != idSumarioaux))) {
-            var span = document.createElement("span")
-            var btn2 = document.createElement("button");
-            btn2.setAttribute("class", "btn btn-danger w-100");
-            var sp2 = document.createElement("i");
-            sp2.setAttribute("class", "icon text-white-50 fa fa-trash");
-            btn2.appendChild(sp2);
-            var btntext2 = document.createTextNode(" Eliminar");
-            btn2.appendChild(btntext2);
-
-            btn2.onclick = function () {
-              eliminaSumario(sumario.id);
-            };
-            span.appendChild(btn2);
-          }
-
-          dataAux.appendChild(sumariocnt);
-
-          data.appendChild(dataAux);
-
-          sumariocard.appendChild(data);
-          if (edita == "false" || (edita == "true" && (sumario.id != idSumario && sumario.id != idSumarioaux))) {
-            sumariocard.appendChild(span);
-          }
-          document.getElementById("sumario").appendChild(sumariocard);
-        });
-      }
-      if (resultado <= 0) {
-        document.getElementById("conteudo").appendChild(document.createTextNode("Introduza um novo sumário:"));
-      }
-      else {
-        var div = document.createElement("div");
-        div.setAttribute("class", "mb-3 mt-3");
-        div.appendChild(document.createTextNode("Introduza um novo sumário:"));
-        document.getElementById("sumario").appendChild(div);
-      }
-      var textarea = document.createElement("TEXTAREA");
-      textarea.setAttribute("class", "w-100");
-      console.log(edita);
-      if (edita == "false") {
-        var conteudotextarea = document.createTextNode("");
-      }
-      else {
-        var conteudotextarea = document.createTextNode(sumText);
-      }
-      textarea.appendChild(conteudotextarea);
-      var btn = document.createElement("button");
-      btn.setAttribute("class", "btn btn-primary w-100");
-      var sp = document.createElement("i");
-      sp.setAttribute("class", "icon text-white-50 fas fa-floppy-o");
-      btn.appendChild(sp);
-      var btntext = document.createTextNode(" Guardar");
-      btn.appendChild(btntext);
-      btn.onclick = function () {
-        if (edita == "true") {
-          texto="true";
-          sessionStorage.setItem("edita", edita);
-          sessionStorage.setItem("texto", texto);
-          guardaconteudo(id, idExpndo, idDisc, textarea.value, idSumario);
+        else if (edita == "true" && sumario.id == idSumarioaux) {
+          var data = document.createElement("div");
+          data.setAttribute("class", "card shadow border-left-danger h-100 py-2 w-100");
+          data.style.backgroundColor = "pink";
+        }
+        else if (edita == "true") {
+          var data = document.createElement("button");
+          data.setAttribute("class", "card shadow border-left-danger h-100 py-2 w-100");
+          
+          data.onclick = function () {
+            edita = "true";
+            sessionStorage.setItem("idExplicando", idExpndo);
+            sessionStorage.setItem("idDisciplina", idDisc);
+            sessionStorage.setItem("edita", edita);
+            sessionStorage.setItem("sumText", sumario.sum);
+            sessionStorage.setItem("idSumarioaux", idSumario);
+            sessionStorage.setItem("idSumario", sumario.id);
+            window.location.assign("../html/alunoSumario.html")
+          };
         }
         else {
-          texto="true";
-          sessionStorage.setItem("edita", edita);
-          sessionStorage.setItem("texto", texto);
-          guardaconteudo(id, idExpndo, idDisc, textarea.value);
+          var data = document.createElement("button");
+          data.setAttribute("class", "card shadow border-left-danger h-100 py-2 w-100");
+          data.onclick = function () {
+            edita = "true";
+            sessionStorage.setItem("idExplicando", idExpndo);
+            sessionStorage.setItem("idDisciplina", idDisc);
+            sessionStorage.setItem("edita", edita);
+            sessionStorage.setItem("sumText", sumario.sum);
+            sessionStorage.setItem("idSumario", sumario.id);
+            window.location.assign("../html/alunoSumario.html")
+          };
         }
-      };
-      document.getElementById("sumario").appendChild(textarea);
-      document.getElementById("sumario").appendChild(btn);
-    });
-    closeConnectionDataBase();
+        var dataAux = document.createElement("div");
+        dataAux.setAttribute("class", "card-body w-100");
+        var dataAux2 = document.createElement("div");
+        dataAux2.setAttribute("class", "text-x font-weight-bold text-danger mb-1");
+        dataAux2.setAttribute("align", "justify");
+        dataAux2.style.fontSize = "large";
+        dataAux2.innerHTML = sumario.data;
+        dataAux.appendChild(dataAux2);
+        //SUMARIO:
+        var sumariocnt = document.createElement("div");
+        sumariocnt.setAttribute("class", "h9 mb-0 font-weight");
+        sumariocnt.setAttribute("align", "justify");
+        sumariocnt.innerHTML = sumario.sum;
+        console.log(sumario.sum);
+        if (edita == "false" || (edita == "true" && (sumario.id != idSumario && sumario.id != idSumarioaux))) {
+          var span = document.createElement("span")
+          var btn2 = document.createElement("button");
+          btn2.setAttribute("class", "btn btn-danger w-100");
+          var sp2 = document.createElement("i");
+          sp2.setAttribute("class", "icon text-white-50 fa fa-trash");
+          btn2.appendChild(sp2);
+          var btntext2 = document.createTextNode(" Eliminar");
+          btn2.appendChild(btntext2);
 
-
-
-}
-
-  function guardaconteudo(id, idExpndo, idDisc, textarea, idSumario) {
-    var edita = sessionStorage.getItem("edita");
-    if (edita == "true") {
-      query = "UPDATE sumario SET sumario = '" + textarea + "' WHERE id = '" + idSumario + "'"
-      connectDataBase();
-      connection.query(query, function (err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-          texto = "true";
-          sessionStorage.setItem("idExplicando", idExpndo);
-          sessionStorage.setItem("idDisciplina", idDisc);
-          sessionStorage.setItem("texto", texto);
-          verificaData();
+          btn2.onclick = function () {
+            eliminaSumario(sumario.id);
+          };
+          span.appendChild(btn2);
         }
+        dataAux.appendChild(sumariocnt);
+        data.appendChild(dataAux);
+        sumariocard.appendChild(data);
+        if (edita == "false" || (edita == "true" && (sumario.id != idSumario && sumario.id != idSumarioaux))) {
+          sumariocard.appendChild(span);
+        }
+        document.getElementById("sumario").appendChild(sumariocard);
       });
-      closeConnectionDataBase();
+    }
+    if (resultado <= 0) {
+      document.getElementById("conteudo").appendChild(document.createTextNode("Introduza um novo sumário:"));
     }
     else {
-      query = "INSERT INTO sumario (id_explicando, id_explicador, id_disciplina, sumario, data) VALUES ('" + idExpndo + "', '" + id + "', '" + idDisc + "', '" + textarea + "', CURDATE())";
-      
+      var div = document.createElement("div");
+      div.setAttribute("class", "mb-3 mt-3");
+      div.appendChild(document.createTextNode("Introduza um novo sumário:"));
+      document.getElementById("sumario").appendChild(div);
+    }
+    //TEXTAREA
+    var textarea = document.createElement("TEXTAREA");
+    textarea.setAttribute("class", "w-100");
+    console.log(edita);
+    if (edita == "false") {
+      var conteudotextarea = document.createTextNode("");
+    }
+    else {
+      var conteudotextarea = document.createTextNode(sumText);
+    }
+    textarea.appendChild(conteudotextarea);
+    var btn = document.createElement("button");
+    btn.setAttribute("class", "btn btn-primary w-100");
+    var sp = document.createElement("i");
+    sp.setAttribute("class", "icon text-white-50 fas fa-floppy-o");
+    btn.appendChild(sp);
+    var btntext = document.createTextNode(" Guardar");
+    btn.appendChild(btntext);
+    btn.onclick = function () {
+      if (edita == "true") {
+        texto="true";
+        sessionStorage.setItem("edita", edita);
+        sessionStorage.setItem("texto", texto);
+        guardaconteudo(id, idExpndo, idDisc, textarea.value, idSumario);
+      }
+      else {
+        texto="true";
+        sessionStorage.setItem("edita", edita);
+        sessionStorage.setItem("texto", texto);
+        guardaconteudo(id, idExpndo, idDisc, textarea.value);
+      }
+    };
+    document.getElementById("sumario").appendChild(textarea);
+    document.getElementById("sumario").appendChild(btn);
+  });
+  closeConnectionDataBase();
+}
+
+//VERIFICA QUAL O COMPRIMENTO DA QUERY
+function verificaQuery() {
+  query = "SELECT id, data, sumario FROM sumario";
+  console.log(query);
+  connectDataBase();
+  connection.query(query, function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      var x = result.length;
+      console.log(x);
+      sessionStorage.setItem("resultado", x);
+    }
+  });
+  closeConnectionDataBase();
+}
+
+//GUARDA O CONTEUDO ESCRITO NA TEXTBOX (ATUALIZA CASO ESTEJA SELECIONADO UM SUMARIO
+//OU INSERE UM NOVO SUMARIO)
+function guardaconteudo(id, idExpndo, idDisc, textarea, idSumario) {
+  var edita = sessionStorage.getItem("edita");
+  
+  if (edita == "true") {
+    console.log(edita); 
+    query = "UPDATE sumario SET sumario = '" + textarea + "' WHERE id = '" + idSumario + "'"
     connectDataBase();
     connection.query(query, function (err, result) {
       if (err) {
         console.log(err);
       } else {
         texto = "true";
+        var idSumarioaux = null;
+        sessionStorage.setItem("idSumarioaux", idSumarioaux);
         sessionStorage.setItem("idExplicando", idExpndo);
         sessionStorage.setItem("idDisciplina", idDisc);
         sessionStorage.setItem("texto", texto);
-        verificaData();
+        verificaData(0);
       }
     });
     closeConnectionDataBase();
-    }
+  } else {
+    
+    query = "INSERT INTO sumario (id_explicando, id_explicador, id_disciplina, sumario, data) VALUES ('" + idExpndo + "', '" + id + "', '" + idDisc + "', '" + textarea + "', CURDATE())";
+    connectDataBase();
+    connection.query(query, function (err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        texto = "true";
+        var idSumarioaux = null;
+        sessionStorage.setItem("idSumarioaux", idSumarioaux);
+        sessionStorage.setItem("idExplicando", idExpndo);
+        sessionStorage.setItem("idDisciplina", idDisc);
+        sessionStorage.setItem("texto", texto);
+        verificaData(0);
+      }
+    });
+  closeConnectionDataBase();
   }
+}
 
-
-
+//ELIMINA O SUMARIO
 function eliminaSumario(idSumario) {
   query = "DELETE FROM sumario WHERE id = '" + idSumario + "'"
   console.log(query);
@@ -351,12 +345,14 @@ function eliminaSumario(idSumario) {
     if (err) {
       console.log(err);
     } else {
-      verificaData();
+      verificaData(0);
     }
   });
   closeConnectionDataBase();
 }
 
+//VOLTA ATRÁS UMA PÁGINA
+//NA PÁGINA ALUNOS.HTML, AO CLICAR NO BOTÃO, É ENVIADO PARA A PÁGINA INICIAL
 function goBack() {
   var page = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
   if (page == 'alunos.html') {
@@ -367,11 +363,8 @@ function goBack() {
   }
 }
 
-function actiondw(){
-  console.log(data);
-}
-
-function verificaData() {
+//VERIFICA A DATA ATUAL DO UTILIZADOR LOGADO DE FORMA A VERIFICA SE O
+function verificaData(aux) {
   query = "SELECT id, data, sumario FROM sumario ORDER BY id DESC LIMIT 1";
   console.log(query);
   connectDataBase();
@@ -379,64 +372,51 @@ function verificaData() {
     if (err) {
       console.log(err);
     } else {
+      verificaQuery();
+      if(result.length > 0){
         result.forEach((sumario) => {
           var data = new Date();
           console.log(query);
-          console.log(data);
-          if (isDateInThisWeek(data, sumario.data)) {
-            verificaQuery();
-            var edita = "true";
-            var idSumario = sumario.id;
-            sessionStorage.setItem("edita", edita);
-            sessionStorage.setItem("idSumario", idSumario);
-            sessionStorage.setItem("sumText", sumario.sumario);
-            window.location.replace("../html/alunoSumario.html")
+          if(aux == 0){
+            if (isDateInThisWeek(data, sumario.data)) {
+              var edita = "true";
+              var idSumario = sumario.id;
+              sessionStorage.setItem("edita", edita);
+              sessionStorage.setItem("idSumario", idSumario);
+              sessionStorage.setItem("sumText", sumario.sumario);
+              window.location.replace("../html/alunoSumario.html")
+            }
+            else{
+              var edita = "false";
+              sessionStorage.setItem("edita", edita);
+              window.location.replace("../html/alunoSumario.html")
+            }
           }
           else{
-            window.location.replace("../html/alunoSumario.html")
+            if (isDateInThisWeek(data, sumario.data)) {
+              var edita = "true";
+              var idSumario = sumario.id;
+              sessionStorage.setItem("edita", edita);
+              sessionStorage.setItem("idSumario", idSumario);
+              sessionStorage.setItem("sumText", sumario.sumario);
+              window.location.assign("../html/alunoSumario.html")
+            }
+            else{
+              var edita = "false";
+              sessionStorage.setItem("edita", edita);
+              window.location.assign("../html/alunoSumario.html")
+            }
           }
       });
+      } else {
+      var idSumario = null;
+      var idSumarioaux = null;
+      var sumText = "";
+      sessionStorage.setItem("idSumario", idSumario);
+      sessionStorage.setItem("idSumarioaux", idSumarioaux);
+      sessionStorage.setItem("sumText", sumText);
+       window.location.assign("../html/alunoSumario.html")
     }
-  });
-  closeConnectionDataBase();
-}
-
-function verificaData(aux) {
-  query = "SELECT id, data, sumario FROM sumario ORDER BY id DESC LIMIT 1";
-  
-  connectDataBase();
-  connection.query(query, function (err, result) {
-    if (err) {
-      console.log(err);
-    } else {
-      if(result.length > 0){
-          result.forEach((sumario) => {
-          var data = new Date();
-          if (isDateInThisWeek(data, sumario.data)) {
-            verificaQuery();
-            var edita = "true";
-            var idSumario = sumario.id;
-            sessionStorage.setItem("edita", edita);
-            sessionStorage.setItem("idSumario", idSumario);
-            sessionStorage.setItem("sumText", sumario.sumario);
-            window.location.assign("../html/alunoSumario.html")
-          }
-          else{
-            var idSumario = null;
-            var idSumarioaux = null;
-            sumario.sumario = "";
-            sessionStorage.setItem("idSumario", idSumario);
-            sessionStorage.setItem("idSumarioaux", idSumarioaux);
-            sessionStorage.setItem("sumText", sumario.sumario);
-            window.location.assign("../html/alunoSumario.html")
-          }
-          });
-      }else{
-        verificaQuery();
-         window.location.assign("../html/alunoSumario.html")
-      }
-       
-      
     }
   });
   closeConnectionDataBase();
@@ -446,12 +426,12 @@ function isDateInThisWeek(date, ultimadata) {
   const todayObj = ultimadata;
   const todayDate = todayObj.getDate();
   const todayDay = todayObj.getDay();
-  // get first date of week
+  // Obtem o 1 dia da semana
   const firstDayOfWeek = new Date(todayObj.setDate(todayDate - todayDay));
 
-  // get last date of week
+  // Obtem o ultimo dia da semana
   const lastDayOfWeek = new Date(firstDayOfWeek);
   lastDayOfWeek.setDate(lastDayOfWeek.getDate() + 6);
-  // if date is equal or within the first and last dates of the week
+  // Se a data for igual ou estiver entre o primeiro e ultimo dia da semana
   return date >= firstDayOfWeek && date <= lastDayOfWeek;
 }
